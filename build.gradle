@@ -21,7 +21,7 @@ apply plugin: 'idea'
 sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
 
-version = "1.7.10b-ARI-1"
+version = "1.7.10b-ARI-2"
 group= "noppes" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "mpm"
 

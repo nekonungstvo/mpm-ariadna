@@ -40,7 +40,7 @@ public class GuiSlider
     {
       if (this.dragging)
       {
-        this.sliderValue = ((par2 - (this.xPosition + 4)) / (this.width - 8));
+        this.sliderValue = (float)(par2 - (this.xPosition + 4)) / (float)(this.width - 8);
         
         if (this.sliderValue < 0.0F)
         {
