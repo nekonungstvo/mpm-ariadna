@@ -15,6 +15,7 @@ import net.minecraft.client.renderer.entity.RendererLivingEntity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.MPMEntityUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagByte;
@@ -70,6 +71,7 @@ public class GuiCreationScreen extends GuiModelInterface implements ITextfieldLi
     super.initGui();
     Keyboard.enableRepeatEvents(true);
     String title = "Player";
+
     EntityLivingBase entity = this.playerdata.getEntity(this.mc.theWorld, this.mc.thePlayer);
     this.xOffset = (entity == null ? 0 : 50);
     if (entity != null)
@@ -197,6 +199,7 @@ public class GuiCreationScreen extends GuiModelInterface implements ITextfieldLi
         this.playerdata.setEntityClass(null);
       } else
         this.playerdata.setEntityClass((Class)this.data.get(this.list.get(index)));
+
       initGui();
     }
     if (button.id == 2) {
@@ -289,7 +292,7 @@ public class GuiCreationScreen extends GuiModelInterface implements ITextfieldLi
     super.close();
     if (!this.hash.equals(this.playerdata.getHash())) {
       PlayerDataController.instance.savePlayerData(this.mc.thePlayer, this.playerdata);
-      noppes.mpm.client.Client.sendData(EnumPackets.UPDATE_PLAYER_DATA, new Object[] { this.playerdata.writeToNBT() });
+      noppes.mpm.client.Client.sendData(EnumPackets.UPDATE_PLAYER_DATA, this.playerdata.writeToNBT());
     }
   }
   

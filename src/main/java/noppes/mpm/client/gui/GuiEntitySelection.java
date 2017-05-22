@@ -74,8 +74,7 @@ public class GuiEntitySelection
 //    MPMEntityUtil.Copy(this.mc.thePlayer, player);
 
     EntityLivingBase player = this.player;
-    MPMEntityUtil.Copy(this.mc.thePlayer, player);
-    
+
     int l = this.width / 2 - 180;
     int i1 = this.height / 2 - 90;
     GL11.glEnable(32826);
