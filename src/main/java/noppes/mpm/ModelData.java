@@ -1,6 +1,5 @@
 package noppes.mpm;
 
-import com.mojang.authlib.GameProfile;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -14,10 +13,7 @@ import noppes.mpm.constants.EnumAnimation;
 
 import java.security.MessageDigest;
 
-
-public class ModelData
-        extends ModelDataShared
-        implements IExtendedEntityProperties {
+public class ModelData extends ModelDataShared implements IExtendedEntityProperties {
     public String username;
     public boolean loaded = false;
 
@@ -35,30 +31,28 @@ public class ModelData
     public short soundType = 0;
 
     public String url = "";
+    public boolean slim = false;
+    public byte armsAmputee = 0;
 
     public NBTTagCompound writeToNBT() {
         NBTTagCompound compound = super.writeToNBT();
         compound.setInteger("Revision", this.rev);
-
         compound.setInteger("Animation", this.animation.ordinal());
-
         compound.setShort("SoundType", this.soundType);
-
         compound.setString("CustomSkinUrl", this.url);
-
+        compound.setBoolean("Slim", this.slim);
+        compound.setByte("ArmsAmputee", this.armsAmputee);
         return compound;
     }
 
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
         this.rev = compound.getInteger("Revision");
-
         this.soundType = compound.getShort("SoundType");
-
         this.url = compound.getString("CustomSkinUrl");
-
         setAnimation(compound.getInteger("Animation"));
-
+        this.slim = compound.getBoolean("Slim");
+        this.armsAmputee = compound.getByte("ArmsAmputee");
         this.loaded = false;
     }
 
