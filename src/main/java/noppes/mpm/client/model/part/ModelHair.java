@@ -14,7 +14,7 @@ public class ModelHair extends ModelPartInterface
   public ModelHair(ModelMPM base)
   {
     super(base);
-    this.model = new Model2DRenderer(base, 56.0F, 20.0F, 8, 12, 64.0F, 32.0F);
+    this.model = new Model2DRenderer(base, 56.0F, 20.0F, 8, 12);
     this.model.setRotationPoint(-4.0F, 12.0F, 3.0F);
     this.model.setScale(0.75F);
     addChild(this.model);

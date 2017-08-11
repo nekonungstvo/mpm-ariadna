@@ -55,8 +55,7 @@ public class ModelLegs
   private ModelRenderer frontRightHoof;
   private ModelMPM base;
   
-  public ModelLegs(ModelMPM base, ModelScaleRenderer leg1, ModelScaleRenderer leg2)
-  {
+  public ModelLegs(ModelMPM base, ModelScaleRenderer leg1, ModelScaleRenderer leg2) {
     super(base);
     this.base = base;
     this.leg1 = leg1;
@@ -64,6 +63,16 @@ public class ModelLegs
     
     if (base.isArmor)
       return;
+
+    this.naga = new ModelNagaLegs(base);
+    addChild(this.naga);
+
+    this.digitigrade = new ModelDigitigradeLegs(base);
+    addChild(this.digitigrade);
+
+    int baseHeight = base.textureHeight;
+    base.textureHeight = 32;
+
     this.spider = new ModelRenderer(base);
     addChild(this.spider);
     
@@ -194,15 +203,11 @@ public class ModelLegs
     this.frontRightHoof.addBox(-1.6F, 5.1F, -2.1F, 4, 3, 4);
     this.frontRightHoof.setRotationPoint(0.0F, 7.0F, 0.0F);
     this.frontRightLeg.addChild(this.frontRightHoof);
-    
-    this.naga = new ModelNagaLegs(base);
-    addChild(this.naga);
-    
+
     this.mermaid = new ModelMermaidLegs(base);
     addChild(this.mermaid);
-    
-    this.digitigrade = new ModelDigitigradeLegs(base);
-    addChild(this.digitigrade);
+
+    base.textureHeight = baseHeight;
   }
   
   public void setRotation(ModelRenderer model, float x, float y, float z) { model.rotateAngleX = x;

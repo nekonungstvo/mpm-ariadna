@@ -4,10 +4,12 @@ import net.minecraft.client.gui.GuiScreen;
 import noppes.mpm.ModelPartData;
 import noppes.mpm.client.gui.util.GuiModelInterface;
 import noppes.mpm.client.gui.util.GuiNpcButton;
+import noppes.mpm.client.gui.util.GuiNpcLabel;
 
 public class GuiModelArms extends GuiModelInterface {
     private final String[] arrParticles = {"gui.no", "Both", "Left", "Right"};
     private final String[] arrAmputee = {"gui.no", "Both", "Left", "Right"};
+    private final String[] arrSlim = {"gui.no", "gui.yes"};
     private GuiScreen parent;
 
     public GuiModelArms(GuiScreen parent) {
@@ -30,7 +32,12 @@ public class GuiModelArms extends GuiModelInterface {
         y += 22;
         byte amputee = this.playerdata.armsAmputee;
         addButton(new GuiNpcButton(1, this.guiLeft + 50, y, 70, 20, this.arrAmputee, amputee));
-        addLabel(new noppes.mpm.client.gui.util.GuiNpcLabel(1, "Amputee", this.guiLeft, y + 5, 16777215));
+        addLabel(new GuiNpcLabel(1, "Amputee", this.guiLeft, y + 5, 16777215));
+
+        y += 22;
+        boolean slim = this.playerdata.slim;
+        addButton(new GuiNpcButton(2, this.guiLeft + 50, y, 70, 20, this.arrSlim, slim ? 1 : 0));
+        addLabel(new GuiNpcLabel(2, "Slim", this.guiLeft, y + 5, 16777215));
     }
 
     protected void actionPerformed(net.minecraft.client.gui.GuiButton btn) {
@@ -51,6 +58,11 @@ public class GuiModelArms extends GuiModelInterface {
             nextAmputee++;
             if (nextAmputee > 3) nextAmputee = 0;
             this.playerdata.armsAmputee = nextAmputee;
+            initGui();
+        }
+        if (button.id == 2) {
+            this.playerdata.slim = !this.playerdata.slim;
+            this.playerdata.reloadBoxes = true;
             initGui();
         }
 

@@ -12,7 +12,6 @@ public class GuiModelBody extends noppes.mpm.client.gui.util.GuiModelInterface {
     private final String[] arrParticles = {"gui.no", "Player", "Type1", "Type2", "Rainbow"};
     private final String[] arrfins = {"gui.no", "Player", "Type1"};
     private final String[] arrskirt = {"gui.no", "Player", "Type1"};
-    private final String[] arrSlim = {"gui.no", "gui.yes"};
 
     public GuiModelBody(GuiScreen parent) {
         this.parent = parent;
@@ -54,11 +53,6 @@ public class GuiModelBody extends noppes.mpm.client.gui.util.GuiModelInterface {
         if (skirt != null) {
             addButton(new GuiNpcButton(14, this.guiLeft + 122, y, 40, 20, skirt.getColor()));
         }
-
-        y += 22;
-        boolean slim = this.playerdata.slim;
-        addButton(new GuiNpcButton(5, this.guiLeft + 50, y, 70, 20, this.arrSlim, slim ? 1 : 0));
-        addLabel(new GuiNpcLabel(5, "Slim", this.guiLeft, y + 5, 16777215));
     }
 
     private int getFinIndex(ModelPartData fin) {
@@ -143,11 +137,6 @@ public class GuiModelBody extends noppes.mpm.client.gui.util.GuiModelInterface {
                 if (value == 2)
                     particles.setTexture("skirt/skirt1", 0);
             }
-            initGui();
-        }
-        if (button.id == 5) {
-            this.playerdata.slim = !this.playerdata.slim;
-            this.playerdata.reloadBoxes = true;
             initGui();
         }
 
