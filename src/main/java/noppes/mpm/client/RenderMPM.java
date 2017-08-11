@@ -58,6 +58,14 @@ public class RenderMPM extends RenderPlayer {
 
     public void setModelData(ModelData data, EntityLivingBase entity) {
         this.data = data;
+
+        if (data.reloadBoxes) {
+            this.modelBipedMain.reloadBoxes();
+            this.modelArmorChestplate.reloadBoxes();
+            this.modelArmor.reloadBoxes();
+            data.reloadBoxes = false;
+        }
+
         this.modelBipedMain.setPlayerData(data, entity);
         this.modelArmorChestplate.setPlayerData(data, entity);
         this.modelArmor.setPlayerData(data, entity);

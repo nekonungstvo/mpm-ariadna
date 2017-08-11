@@ -56,13 +56,6 @@ public class ClientProxy
 
     FMLCommonHandler.instance().bus().register(new ClientEventHandler());
     MinecraftForge.EVENT_BUS.register(new RenderEvent());
-    
-//    if (MorePlayerModels.EnableUpdateChecker) {
-//      VersionChecker checker = new VersionChecker();
-//      checker.start();
-//    }
-    AnalyticsTracking tracker = new AnalyticsTracking();
-    tracker.start();
   }
   
   public static void bindTexture(ResourceLocation location) {

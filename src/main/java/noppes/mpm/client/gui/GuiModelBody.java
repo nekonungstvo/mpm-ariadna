@@ -147,6 +147,7 @@ public class GuiModelBody extends noppes.mpm.client.gui.util.GuiModelInterface {
         }
         if (button.id == 5) {
             this.playerdata.slim = !this.playerdata.slim;
+            this.playerdata.reloadBoxes = true;
             initGui();
         }
 

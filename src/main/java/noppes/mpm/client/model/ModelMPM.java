@@ -19,7 +19,6 @@ import org.lwjgl.opengl.GL11;
 import java.util.Random;
 
 public class ModelMPM extends ModelBiped {
-    public ModelData data;
     private ModelPartInterface wings;
     private ModelPartInterface mohawk;
     private ModelPartInterface hair;
@@ -35,6 +34,8 @@ public class ModelMPM extends ModelBiped {
     private ModelLegs legs;
     private ModelScaleRenderer headwear;
     private ModelTail tail;
+
+    public ModelData data;
     public ModelBase entityModel;
     public EntityLivingBase entity;
     public boolean currentlyPlayerTexture;
@@ -46,15 +47,24 @@ public class ModelMPM extends ModelBiped {
     public ModelScaleRenderer bipedRightLegwear;
     public ModelScaleRenderer bipedBodyWear;
 
-    public ModelMPM(float z) {
-        super(z, 0, 64, 64);
-        this.isArmor = (z > 0.0F);
+    private float z;
 
-        bipedCloak = new ModelRenderer(this, 0, 0);
+    public ModelMPM(float z) {
+        super(z, 0, 64, 32);
+        this.z = z;
+        this.isArmor = (z > 0.0F);
+        reloadBoxes();
+    }
+
+    public void reloadBoxes() {
+        this.textureHeight = !isArmor && data != null && data.newSkinFormat ? 64 : 32;
+
+        bipedCloak = new ModelScaleRenderer(this, 0, 0);
         bipedCloak.setTextureSize(64, 32);
         bipedCloak.addBox(-5.0F, 0.0F, -1.0F, 10, 16, 1, z);
 
-        bipedEars = new ModelRenderer(this, 24, 0);
+        // Useless?
+        bipedEars = new ModelScaleRenderer(this, 24, 0);
         bipedEars.addBox(-3.0F, -6.0F, -1.0F, 6, 6, 1, z);
 
         bipedHead = new ModelScaleRenderer(this, 0, 0);
@@ -73,21 +83,39 @@ public class ModelMPM extends ModelBiped {
         bipedBodyWear.addBox(-4.0F, 0.0F, -2.0F, 8, 12, 4, z + 0.25F);
         bipedBody.addChild(bipedBodyWear);
 
-        bipedRightArm = new ModelScaleRenderer(this, 40, 16);
-        bipedRightArm.addBox(-3.0F, -2.0F, -2.0F, 4, 12, 4, z);
-        bipedRightArm.setRotationPoint(-5.0F, 2.0F, 0.0F);
+        if (data != null && data.slim) {
+            bipedLeftArm = new ModelScaleRenderer(this, 32, 48);
+            bipedLeftArm.addBox(-1.0F, -2.0F, -2.0F, 3, 12, 4, z);
+            bipedLeftArm.setRotationPoint(5.0F, 2.5F, 0.0F);
 
-        bipedRightArmwear = new ModelScaleRenderer(this, 40, 32);
-        bipedRightArmwear.addBox(-3.0F, -2.0F, -2.0F, 4, 12, 4, z + 0.25F);
-        bipedRightArm.addChild(bipedRightArmwear);
+            bipedRightArm = new ModelScaleRenderer(this, 40, 16);
+            bipedRightArm.addBox(-2.0F, -2.0F, -2.0F, 3, 12, 4, z);
+            bipedRightArm.setRotationPoint(-5.0F, 2.5F, 0.0F);
 
-        bipedLeftArm = new ModelScaleRenderer(this, 32, 48);
-        bipedLeftArm.addBox(-1.0F, -2.0F, -2.0F, 4, 12, 4, z);
-        bipedLeftArm.setRotationPoint(5.0F, 2.0F, 0.0F);
+            bipedLeftArmwear = new ModelScaleRenderer(this, 48, 48);
+            bipedLeftArmwear.addBox(-1.0F, -2.0F, -2.0F, 3, 12, 4, z + 0.25F);
+            bipedLeftArm.addChild(bipedLeftArmwear);
 
-        bipedLeftArmwear = new ModelScaleRenderer(this, 48, 48);
-        bipedLeftArmwear.addBox(-1.0F, -2.0F, -2.0F, 4, 12, 4, z + 0.25F);
-        bipedLeftArm.addChild(bipedLeftArmwear);
+            bipedRightArmwear = new ModelScaleRenderer(this, 40, 32);
+            bipedRightArmwear.addBox(-2.0F, -2.0F, -2.0F, 3, 12, 4, z + 0.25F);
+            bipedRightArm.addChild(bipedRightArmwear);
+        } else {
+            bipedLeftArm = new ModelScaleRenderer(this, 32, 48);
+            bipedLeftArm.addBox(-1.0F, -2.0F, -2.0F, 4, 12, 4, z);
+            bipedLeftArm.setRotationPoint(5.0F, 2.0F, 0.0F);
+
+            bipedRightArm = new ModelScaleRenderer(this, 40, 16);
+            bipedRightArm.addBox(-3.0F, -2.0F, -2.0F, 4, 12, 4, z);
+            bipedRightArm.setRotationPoint(-5.0F, 2.0F, 0.0F);
+
+            bipedLeftArmwear = new ModelScaleRenderer(this, 48, 48);
+            bipedLeftArmwear.addBox(-1.0F, -2.0F, -2.0F, 4, 12, 4, z + 0.25F);
+            bipedLeftArm.addChild(bipedLeftArmwear);
+
+            bipedRightArmwear = new ModelScaleRenderer(this, 40, 32);
+            bipedRightArmwear.addBox(-3.0F, -2.0F, -2.0F, 4, 12, 4, z + 0.25F);
+            bipedRightArm.addChild(bipedRightArmwear);
+        }
 
         bipedRightLeg = new ModelScaleRenderer(this, 0, 16);
         bipedRightLeg.addBox(-2.0F, 0.0F, -2.0F, 4, 12, 4, z);
@@ -129,26 +157,10 @@ public class ModelMPM extends ModelBiped {
         }
     }
 
-//    private void setSlimLimbs(float z) {
-//        bipedLeftArm = new ModelScaleRenderer(this, 32, 48);
-//        bipedLeftArm.addBox(-1.0F, -2.0F, -2.0F, 3, 12, 4, z);
-//        bipedLeftArm.setRotationPoint(5.0F, 2.5F, 0.0F);
-//
-//        bipedRightArm = new ModelScaleRenderer(this, 40, 16);
-//        bipedRightArm.addBox(-2.0F, -2.0F, -2.0F, 3, 12, 4, z);
-//        bipedRightArm.setRotationPoint(-5.0F, 2.5F, 0.0F);
-//
-//        bipedLeftArmwear = new ModelScaleRenderer(this, 48, 48);
-//        bipedLeftArmwear.addBox(-1.0F, -2.0F, -2.0F, 3, 12, 4, z + 0.25F);
-//        bipedLeftArm.addChild(bipedLeftArmwear);
-//
-//        bipedRightArmwear = new ModelScaleRenderer(this, 40, 32);
-//        bipedRightArmwear.addBox(-2.0F, -2.0F, -2.0F, 3, 12, 4, z + 0.25F);
-//        bipedRightArm.addChild(bipedRightArmwear);
-//    }
+    public void setPlayerData(ModelData newdata, EntityLivingBase entity) {
+        boolean justLoaded = this.data == null;
 
-    public void setPlayerData(ModelData data, EntityLivingBase entity) {
-        this.data = data;
+        this.data = newdata;
         if (!this.isArmor) {
             mohawk.setData(data, entity);
             beard.setData(data, entity);
@@ -165,6 +177,8 @@ public class ModelMPM extends ModelBiped {
         }
         breasts.setData(data, entity);
         legs.setData(data, entity);
+
+        if (justLoaded) reloadBoxes();
     }
 
 

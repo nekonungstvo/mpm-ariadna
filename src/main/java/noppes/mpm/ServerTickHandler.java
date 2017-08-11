@@ -5,7 +5,6 @@ import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import net.minecraft.server.MinecraftServer;
-import noppes.mpm.client.AnalyticsTracking;
 
 
 public class ServerTickHandler
@@ -29,6 +28,5 @@ public class ServerTickHandler
         e = "local";
       this.serverName = e;
     }
-    AnalyticsTracking.sendData(event.player, "join", this.serverName);
   }
 }

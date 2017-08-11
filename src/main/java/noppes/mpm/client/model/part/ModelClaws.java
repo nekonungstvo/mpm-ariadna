@@ -15,7 +15,7 @@ public class ModelClaws
   public ModelClaws(ModelMPM base, boolean isRight) {
     super(base);
     this.isRight = isRight;
-    this.model = new Model2DRenderer(base, 0.0F, 16.0F, 4, 4, 64.0F, 32.0F);
+    this.model = new Model2DRenderer(base, 0.0F, 16.0F, 4, 4);
     if (isRight) {
       this.model.setRotationPoint(-2.0F, 14.0F, -2.0F);
     } else
