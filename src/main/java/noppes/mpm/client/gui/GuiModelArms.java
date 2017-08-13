@@ -34,10 +34,10 @@ public class GuiModelArms extends GuiModelInterface {
         addButton(new GuiNpcButton(1, this.guiLeft + 50, y, 70, 20, this.arrAmputee, amputee));
         addLabel(new GuiNpcLabel(1, "Amputee", this.guiLeft, y + 5, 16777215));
 
-        y += 22;
-        boolean slim = this.playerdata.slim;
-        addButton(new GuiNpcButton(2, this.guiLeft + 50, y, 70, 20, this.arrSlim, slim ? 1 : 0));
-        addLabel(new GuiNpcLabel(2, "Slim", this.guiLeft, y + 5, 16777215));
+//        y += 22;
+//        boolean slim = this.playerdata.slim;
+//        addButton(new GuiNpcButton(2, this.guiLeft + 50, y, 70, 20, this.arrSlim, slim ? 1 : 0));
+//        addLabel(new GuiNpcLabel(2, "Slim", this.guiLeft, y + 5, 16777215));
     }
 
     protected void actionPerformed(net.minecraft.client.gui.GuiButton btn) {

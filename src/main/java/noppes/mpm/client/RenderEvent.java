@@ -21,6 +21,7 @@ import net.minecraftforge.client.event.RenderPlayerEvent;
 import noppes.mpm.ModelData;
 import noppes.mpm.MorePlayerModels;
 import noppes.mpm.PlayerDataController;
+import noppes.mpm.client.model.ModelMPM;
 import noppes.mpm.constants.EnumAnimation;
 import org.lwjgl.opengl.GL11;
 
@@ -34,7 +35,7 @@ public class RenderEvent {
         EntityPlayer player = event.entityPlayer;
         this.data = PlayerDataController.instance.getPlayerData(player);
         renderer.setModelData(this.data, player);
-        setModels(event.renderer);
+        setModels(event.renderer, this.data.newSkinFormat);
         if (!this.data.loaded) {
             if (player.ticksExisted > 20) {
                 this.data.playerResource = renderer.loadResource((AbstractClientPlayer) player);
@@ -58,13 +59,14 @@ public class RenderEvent {
         }
     }
 
-    private void setModels(RenderPlayer render) {
-        if (MPMRendererHelper.getMainModel(render) == renderer.modelBipedMain)
+    private void setModels(RenderPlayer render, boolean newFormat) {
+        ModelMPM playerModel = data.newSkinFormat ? renderer.modelBipedMainNewFormat : renderer.modelBipedMain;
+        if (MPMRendererHelper.getMainModel(render) == playerModel)
             return;
-        ReflectionHelper.setPrivateValue(RenderPlayer.class, render, renderer.modelBipedMain, 1);
+        ReflectionHelper.setPrivateValue(RenderPlayer.class, render, playerModel, 1);
         ReflectionHelper.setPrivateValue(RenderPlayer.class, render, renderer.modelArmorChestplate, 2);
         ReflectionHelper.setPrivateValue(RenderPlayer.class, render, renderer.modelArmor, 3);
-        MPMRendererHelper.setMainModel(render, renderer.modelBipedMain);
+        MPMRendererHelper.setMainModel(render, playerModel);
     }
 
     @SubscribeEvent

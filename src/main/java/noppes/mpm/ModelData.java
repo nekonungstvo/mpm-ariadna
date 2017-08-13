@@ -33,19 +33,12 @@ public class ModelData extends ModelDataShared implements IExtendedEntityPropert
 
     public String url = "";
 
-    public boolean newSkinFormat = false;
-    public boolean slim = false;
-    public byte armsAmputee = 0;
-
     public NBTTagCompound writeToNBT() {
         NBTTagCompound compound = super.writeToNBT();
         compound.setInteger("Revision", this.rev);
         compound.setInteger("Animation", this.animation.ordinal());
         compound.setShort("SoundType", this.soundType);
         compound.setString("CustomSkinUrl", this.url);
-        compound.setBoolean("NewSkinFormat", this.newSkinFormat);
-        compound.setBoolean("Slim", this.slim);
-        compound.setByte("ArmsAmputee", this.armsAmputee);
         return compound;
     }
 
@@ -55,9 +48,6 @@ public class ModelData extends ModelDataShared implements IExtendedEntityPropert
         this.soundType = compound.getShort("SoundType");
         this.url = compound.getString("CustomSkinUrl");
         setAnimation(compound.getInteger("Animation"));
-        this.newSkinFormat = compound.getBoolean("NewSkinFormat");
-        this.slim = compound.getBoolean("Slim");
-        this.armsAmputee = compound.getByte("ArmsAmputee");
         this.loaded = false;
     }
 
@@ -101,7 +91,8 @@ public class ModelData extends ModelDataShared implements IExtendedEntityPropert
             if (this.entityClass != null) {
                 toHash = toHash + this.entityClass.getCanonicalName();
             }
-            toHash = toHash + this.legParts.toString() + this.headwear + this.breasts + this.soundType + this.url;
+            toHash = toHash + this.legParts.toString() + this.headwear + this.breasts + this.soundType + this.url
+                    + newSkinFormat + slim + armsAmputee;
 
             for (String name : this.parts.keySet()) {
                 toHash = toHash + name + ":" + ((ModelPartData) this.parts.get(name)).toString();

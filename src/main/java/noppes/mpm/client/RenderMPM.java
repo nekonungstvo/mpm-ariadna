@@ -32,6 +32,7 @@ import net.minecraftforge.client.MinecraftForgeClient;
 import noppes.mpm.ModelData;
 import noppes.mpm.PlayerDataController;
 import noppes.mpm.client.model.ModelMPM;
+import noppes.mpm.client.model.ModelMpmNewFormat;
 import noppes.mpm.client.model.ModelRenderPassHelper;
 import noppes.mpm.constants.EnumAnimation;
 import org.lwjgl.opengl.GL11;
@@ -42,6 +43,7 @@ import java.util.UUID;
 
 public class RenderMPM extends RenderPlayer {
     public ModelMPM modelBipedMain;
+    public ModelMPM modelBipedMainNewFormat;
     public ModelMPM modelArmorChestplate;
     public ModelMPM modelArmor;
     private ModelData data;
@@ -52,6 +54,7 @@ public class RenderMPM extends RenderPlayer {
     public RenderMPM() {
         setRenderManager(RenderManager.instance);
         this.modelBipedMain = new ModelMPM(0.0F);
+        this.modelBipedMainNewFormat = new ModelMpmNewFormat();
         this.modelArmor = new ModelMPM(0.5F);
         this.modelArmorChestplate = new ModelMPM(1.0F);
     }
@@ -61,16 +64,15 @@ public class RenderMPM extends RenderPlayer {
 
         if (data.reloadBoxes) {
             this.modelBipedMain.reloadBoxes();
-            this.modelArmorChestplate.reloadBoxes();
-            this.modelArmor.reloadBoxes();
+            this.modelBipedMainNewFormat.reloadBoxes();
             data.reloadBoxes = false;
         }
 
         this.modelBipedMain.setPlayerData(data, entity);
+        this.modelBipedMainNewFormat.setPlayerData(data, entity);
         this.modelArmorChestplate.setPlayerData(data, entity);
         this.modelArmor.setPlayerData(data, entity);
     }
-
 
     protected void passSpecialRender(EntityLivingBase base, double x, double y, double z) {
         if ((this.data.isSleeping()) || (this.data.animation == EnumAnimation.CRAWLING)) {
@@ -147,11 +149,13 @@ public class RenderMPM extends RenderPlayer {
         }
         setModelData(this.data, player);
 
+        ModelMPM playerModel = data.newSkinFormat ? modelBipedMainNewFormat : modelBipedMain;
+
         float f = 1.0F;
         GL11.glColor3f(f, f, f);
-        this.modelBipedMain.onGround = 0.0F;
-        this.modelBipedMain.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
-        this.modelBipedMain.renderArms(player, 0.0625F, true);
+        playerModel.onGround = 0.0F;
+        playerModel.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
+        playerModel.renderArms(player, 0.0625F, true);
     }
 
     public void renderItem(EntityPlayer par1AbstractClientPlayer) {
@@ -163,7 +167,10 @@ public class RenderMPM extends RenderPlayer {
 
             float x = (1.0F - this.data.body.scaleX) * 0.25F + (1.0F - this.data.arms.scaleX) * 0.075F;
             GL11.glTranslatef(x, this.data.getBodyY(), 0.0F);
-            this.modelBipedMain.bipedRightArm.postRender(0.0625F);
+
+            ModelMPM playerModel = data.newSkinFormat ? modelBipedMainNewFormat : modelBipedMain;
+            playerModel.bipedRightArm.postRender(0.0625F);
+
             GL11.glTranslatef(-0.0625F, 0.4375F + y, 0.0625F);
 
             if (par1AbstractClientPlayer.fishEntity != null) {
@@ -297,7 +304,10 @@ public class RenderMPM extends RenderPlayer {
             return;
         GL11.glPushMatrix();
         GL11.glTranslatef(0.0F, this.data.getBodyY(), 0.0F);
-        this.modelBipedMain.bipedHead.postRender(0.0625F);
+
+        ModelMPM playerModel = data.newSkinFormat ? modelBipedMainNewFormat : modelBipedMain;
+        playerModel.bipedHead.postRender(0.0625F);
+
         GL11.glScalef(this.data.head.scaleX, this.data.head.scaleY, this.data.head.scaleZ);
 
 
@@ -356,7 +366,10 @@ public class RenderMPM extends RenderPlayer {
         }
 
         GL11.glTranslatef(0.0F, this.data.getBodyY(), 0.14299999F * this.data.body.scaleZ);
-        this.modelBipedMain.bipedBody.postRender(0.065F);
+
+        ModelMPM playerModel = data.newSkinFormat ? modelBipedMainNewFormat : modelBipedMain;
+        playerModel.bipedBody.postRender(0.065F);
+
         if (itemstack.getItem() == Items.bow) {
             GL11.glTranslatef(0.0F, -0.195F, 0.0F);
             GL11.glScalef(1.7F, 1.7F, 1.7F);
@@ -392,8 +405,10 @@ public class RenderMPM extends RenderPlayer {
             this.renderpass.renderer = this.renderEntity;
             this.renderpass.entity = entity;
         }
-        this.modelBipedMain.entityModel = (this.modelArmorChestplate.entityModel = this.modelArmor.entityModel = model);
-        this.modelBipedMain.entity = (this.modelArmorChestplate.entity = this.modelArmor.entity = entity);
+
+        ModelMPM playerModel = data.newSkinFormat ? modelBipedMainNewFormat : modelBipedMain;
+        playerModel.entityModel = (this.modelArmorChestplate.entityModel = this.modelArmor.entityModel = model);
+        playerModel.entity = (this.modelArmorChestplate.entity = this.modelArmor.entity = entity);
     }
 
     protected void renderEquippedItems(EntityLivingBase entityliving, float f) {
