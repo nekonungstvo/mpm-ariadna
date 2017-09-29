@@ -92,7 +92,7 @@ public class ModelData extends ModelDataShared implements IExtendedEntityPropert
                 toHash = toHash + this.entityClass.getCanonicalName();
             }
             toHash = toHash + this.legParts.toString() + this.headwear + this.breasts + this.soundType + this.url
-                    + newSkinFormat + slim + armsAmputee;
+                    + newSkinFormat + slim + armsAmputee + doubleHead;
 
             for (String name : this.parts.keySet()) {
                 toHash = toHash + name + ":" + ((ModelPartData) this.parts.get(name)).toString();

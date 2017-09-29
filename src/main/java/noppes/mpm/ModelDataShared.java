@@ -24,6 +24,7 @@ public class ModelDataShared {
     public boolean newSkinFormat = false;
     public boolean slim = false;
     public byte armsAmputee = 0;
+    public boolean doubleHead = false;
 
     public NBTTagCompound writeToNBT() {
         NBTTagCompound compound = new NBTTagCompound();
@@ -51,6 +52,7 @@ public class ModelDataShared {
         compound.setBoolean("NewSkinFormat", this.newSkinFormat);
         compound.setBoolean("Slim", this.slim);
         compound.setByte("ArmsAmputee", this.armsAmputee);
+        compound.setBoolean("DoubleHead", this.doubleHead);
 
         return compound;
     }
@@ -79,6 +81,7 @@ public class ModelDataShared {
         this.newSkinFormat = compound.getBoolean("NewSkinFormat");
         this.slim = compound.getBoolean("Slim");
         this.armsAmputee = compound.getByte("ArmsAmputee");
+        this.doubleHead = compound.getBoolean("DoubleHead");
     }
 
     private void setEntityClass(String string) {

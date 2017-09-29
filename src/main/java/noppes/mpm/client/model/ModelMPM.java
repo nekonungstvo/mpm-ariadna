@@ -271,6 +271,8 @@ public class ModelMPM extends ModelBiped {
         float y = this.data.getBodyY();
         float z = 0.0F;
 
+        float doubleHeadOffset = data.doubleHead ? data.head.scaleX * 0.3f : 0;
+
         GL11.glPushMatrix();
         if (this.data.animation == EnumAnimation.DANCING) {
             float dancing = entity.ticksExisted / 4.0F;
@@ -279,8 +281,12 @@ public class ModelMPM extends ModelBiped {
         ModelPartConfig head = this.data.head;
         if ((this.bipedHeadwear.showModel) && (!this.bipedHeadwear.isHidden)) {
             if ((this.data.headwear == 1) || (this.isArmor)) {
-                ((ModelScaleRenderer) this.bipedHeadwear).setConfig(head, x, y, z);
+                ((ModelScaleRenderer) this.bipedHeadwear).setConfig(head, x - doubleHeadOffset, y, z);
                 ((ModelScaleRenderer) this.bipedHeadwear).render(f);
+                if (data.doubleHead) {
+                    ((ModelScaleRenderer) this.bipedHeadwear).setConfig(head, x + doubleHeadOffset, y, z);
+                    ((ModelScaleRenderer) this.bipedHeadwear).render(f);
+                }
             } else if (this.data.headwear == 2) {
                 this.headwear.rotateAngleX = this.bipedHeadwear.rotateAngleX;
                 this.headwear.rotateAngleY = this.bipedHeadwear.rotateAngleY;
@@ -288,12 +294,20 @@ public class ModelMPM extends ModelBiped {
                 this.headwear.rotationPointX = this.bipedHeadwear.rotationPointX;
                 this.headwear.rotationPointY = this.bipedHeadwear.rotationPointY;
                 this.headwear.rotationPointZ = this.bipedHeadwear.rotationPointZ;
-                this.headwear.setConfig(head, x, y, z);
+                this.headwear.setConfig(head, x - doubleHeadOffset, y, z);
                 this.headwear.render(f);
+                if (data.doubleHead) {
+                    this.headwear.setConfig(head, x + doubleHeadOffset, y, z);
+                    this.headwear.render(f);
+                }
             }
         }
-        ((ModelScaleRenderer) this.bipedHead).setConfig(head, x, y, z);
+        ((ModelScaleRenderer) this.bipedHead).setConfig(head, x - doubleHeadOffset, y, z);
         ((ModelScaleRenderer) this.bipedHead).render(f);
+        if (data.doubleHead) {
+            ((ModelScaleRenderer) this.bipedHead).setConfig(head, x + doubleHeadOffset, y, z);
+            ((ModelScaleRenderer) this.bipedHead).render(f);
+        }
 
         GL11.glPopMatrix();
     }
