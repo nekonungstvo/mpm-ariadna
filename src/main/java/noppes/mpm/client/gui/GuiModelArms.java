@@ -60,11 +60,6 @@ public class GuiModelArms extends GuiModelInterface {
             this.playerdata.armsAmputee = nextAmputee;
             initGui();
         }
-        if (button.id == 2) {
-            this.playerdata.slim = !this.playerdata.slim;
-            this.playerdata.reloadBoxes = true;
-            initGui();
-        }
 
         if (button.id == 10) {
             this.mc.displayGuiScreen(new GuiModelColor(this, this.playerdata.getPartData("claws")));

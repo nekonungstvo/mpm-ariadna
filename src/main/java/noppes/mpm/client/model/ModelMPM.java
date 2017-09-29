@@ -73,25 +73,14 @@ public class ModelMPM extends ModelBiped {
         this.bipedBody.addBox(-4.0F, 0.0F, -2.0F, 8, 12, 4, z);
         this.bipedBody.setRotationPoint(0.0F, 0.0F, 0.0F);
 
-        if (!isArmor && data != null && data.slim) {
-            this.bipedRightArm = new ModelScaleRenderer(this, 40, 16);
-            this.bipedRightArm.addBox(-2.0F, -2.0F, -2.0F, 3, 12, 4, z);
-            this.bipedRightArm.setRotationPoint(-5.0F, 2.5F, 0.0F);
+        this.bipedRightArm = new ModelScaleRenderer(this, 40, 16);
+        this.bipedRightArm.addBox(-3.0F, -2.0F, -2.0F, 4, 12, 4, z);
+        this.bipedRightArm.setRotationPoint(-5.0F, 2.0F, 0.0F);
 
-            this.bipedLeftArm = new ModelScaleRenderer(this, 40, 16);
-            this.bipedLeftArm.mirror = true;
-            this.bipedLeftArm.addBox(-1.0F, -2.0F, -2.0F, 3, 12, 4, z);
-            this.bipedLeftArm.setRotationPoint(5.0F, 2.5F, 0.0F);
-        } else {
-            this.bipedRightArm = new ModelScaleRenderer(this, 40, 16);
-            this.bipedRightArm.addBox(-3.0F, -2.0F, -2.0F, 4, 12, 4, z);
-            this.bipedRightArm.setRotationPoint(-5.0F, 2.0F, 0.0F);
-
-            this.bipedLeftArm = new ModelScaleRenderer(this, 40, 16);
-            this.bipedLeftArm.mirror = true;
-            this.bipedLeftArm.addBox(-1.0F, -2.0F, -2.0F, 4, 12, 4, z);
-            this.bipedLeftArm.setRotationPoint(5.0F, 2.0F, 0.0F);
-        }
+        this.bipedLeftArm = new ModelScaleRenderer(this, 40, 16);
+        this.bipedLeftArm.mirror = true;
+        this.bipedLeftArm.addBox(-1.0F, -2.0F, -2.0F, 4, 12, 4, z);
+        this.bipedLeftArm.setRotationPoint(5.0F, 2.0F, 0.0F);
 
         this.bipedRightLeg = new ModelScaleRenderer(this, 0, 16);
         this.bipedRightLeg.addBox(-2.0F, 0.0F, -2.0F, 4, 12, 4, z);

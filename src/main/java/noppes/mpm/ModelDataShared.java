@@ -22,7 +22,6 @@ public class ModelDataShared {
     protected HashMap<String, ModelPartData> parts = new HashMap();
 
     public boolean newSkinFormat = false;
-    public boolean slim = false;
     public byte armsAmputee = 0;
     public boolean doubleHead = false;
 
@@ -50,7 +49,6 @@ public class ModelDataShared {
         compound.setTag("Parts", list);
 
         compound.setBoolean("NewSkinFormat", this.newSkinFormat);
-        compound.setBoolean("Slim", this.slim);
         compound.setByte("ArmsAmputee", this.armsAmputee);
         compound.setBoolean("DoubleHead", this.doubleHead);
 
@@ -79,7 +77,6 @@ public class ModelDataShared {
         this.parts = parts;
 
         this.newSkinFormat = compound.getBoolean("NewSkinFormat");
-        this.slim = compound.getBoolean("Slim");
         this.armsAmputee = compound.getByte("ArmsAmputee");
         this.doubleHead = compound.getBoolean("DoubleHead");
     }

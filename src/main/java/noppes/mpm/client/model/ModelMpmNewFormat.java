@@ -41,39 +41,21 @@ public class ModelMpmNewFormat extends ModelMPM {
         bipedBodyWear.addBox(-4.0F, 0.0F, -2.0F, 8, 12, 4, 0.25F);
         bipedBody.addChild(this.bipedBodyWear);
 
-        if (data != null && data.slim) {
-            bipedRightArm = new ModelScaleRenderer(this, 40, 16);
-            bipedRightArm.addBox(-2.0F, -2.0F, -2.0F, 3, 12, 4, 0);
-            bipedRightArm.setRotationPoint(-5.0F, 2.5F, 0.0F);
+        bipedRightArm = new ModelScaleRenderer(this, 40, 16);
+        bipedRightArm.addBox(-3.0F, -2.0F, -2.0F, 4, 12, 4, 0);
+        bipedRightArm.setRotationPoint(-5.0F, 2.0F, 0.0F);
 
-            bipedLeftArm = new ModelScaleRenderer(this, 32, 48);
-            bipedLeftArm.addBox(-1.0F, -2.0F, -2.0F, 3, 12, 4, 0);
-            bipedLeftArm.setRotationPoint(5.0F, 2.5F, 0.0F);
+        bipedLeftArm = new ModelScaleRenderer(this, 32, 48);
+        bipedLeftArm.addBox(-1.0F, -2.0F, -2.0F, 4, 12, 4, 0);
+        bipedLeftArm.setRotationPoint(5.0F, 2.0F, 0.0F);
 
-            bipedRightArmwear = new ModelScaleRenderer(this, 40, 32);
-            bipedRightArmwear.addBox(-2.0F, -2.0F, -2.0F, 3, 12, 4, 0.25F);
-            bipedRightArm.addChild(bipedRightArmwear);
+        bipedRightArmwear = new ModelScaleRenderer(this, 40, 32);
+        bipedRightArmwear.addBox(-3.0F, -2.0F, -2.0F, 4, 12, 4, 0.25F);
+        bipedRightArm.addChild(bipedRightArmwear);
 
-            bipedLeftArmwear = new ModelScaleRenderer(this, 48, 48);
-            bipedLeftArmwear.addBox(-1.0F, -2.0F, -2.0F, 3, 12, 4, 0.25F);
-            bipedLeftArm.addChild(bipedLeftArmwear);
-        } else {
-            bipedRightArm = new ModelScaleRenderer(this, 40, 16);
-            bipedRightArm.addBox(-3.0F, -2.0F, -2.0F, 4, 12, 4, 0);
-            bipedRightArm.setRotationPoint(-5.0F, 2.0F, 0.0F);
-
-            bipedLeftArm = new ModelScaleRenderer(this, 32, 48);
-            bipedLeftArm.addBox(-1.0F, -2.0F, -2.0F, 4, 12, 4, 0);
-            bipedLeftArm.setRotationPoint(5.0F, 2.0F, 0.0F);
-
-            bipedRightArmwear = new ModelScaleRenderer(this, 40, 32);
-            bipedRightArmwear.addBox(-3.0F, -2.0F, -2.0F, 4, 12, 4, 0.25F);
-            bipedRightArm.addChild(bipedRightArmwear);
-
-            bipedLeftArmwear = new ModelScaleRenderer(this, 48, 48);
-            bipedLeftArmwear.addBox(-1.0F, -2.0F, -2.0F, 4, 12, 4, 0.25F);
-            bipedLeftArm.addChild(bipedLeftArmwear);
-        }
+        bipedLeftArmwear = new ModelScaleRenderer(this, 48, 48);
+        bipedLeftArmwear.addBox(-1.0F, -2.0F, -2.0F, 4, 12, 4, 0.25F);
+        bipedLeftArm.addChild(bipedLeftArmwear);
 
         bipedRightLeg = new ModelScaleRenderer(this, 0, 16);
         bipedRightLeg.addBox(-2.0F, 0.0F, -2.0F, 4, 12, 4, 0);
