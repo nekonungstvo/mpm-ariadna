@@ -1,9 +1,7 @@
 package noppes.mpm.client.model;
 
 import net.minecraft.client.model.ModelRenderer;
-import noppes.mpm.client.model.part.ModelBreasts;
-import noppes.mpm.client.model.part.ModelHeadwear;
-import noppes.mpm.client.model.part.ModelLegs;
+import noppes.mpm.client.model.part.*;
 
 public class ModelMpmNewFormat extends ModelMPM {
     private ModelScaleRenderer bipedLeftArmwear;
@@ -95,24 +93,20 @@ public class ModelMpmNewFormat extends ModelMPM {
 
         legs = new ModelLegs(this, (ModelScaleRenderer) bipedRightLeg, (ModelScaleRenderer) bipedLeftLeg);
 
-        this.headwear = new ModelHeadwear(this);
-        this.breasts = new ModelBreasts(this);
-        bipedBody.addChild(this.breasts);
+        headwear = new ModelHeadwear(this);
+        bipedHead.addChild(ears = new ModelEars(this));
+        bipedHead.addChild(mohawk = new ModelMohawk(this));
+        bipedHead.addChild(hair = new ModelHair(this));
+        bipedHead.addChild(beard = new ModelBeard(this));
+        bipedHead.addChild(snout = new ModelSnout(this));
+        bipedHead.addChild(horns = new ModelHorns(this));
 
-        // Textureless features
+        bipedBody.addChild(breasts = new ModelBreasts(this));
+        bipedBody.addChild(tail = new ModelTail(this));
+        bipedBody.addChild(wings = new ModelWings(this));
+        bipedBody.addChild(skirt = new ModelSkirt(this));
 
-        bipedHead.addChild(this.ears);
-        bipedHead.addChild(this.mohawk);
-        bipedHead.addChild(this.hair);
-        bipedHead.addChild(this.beard);
-        bipedHead.addChild(this.snout);
-        bipedHead.addChild(this.horns);
-
-        bipedBody.addChild(this.wings);
-        bipedBody.addChild(this.skirt);
-        bipedBody.addChild(this.fin);
-
-        bipedLeftArm.addChild(this.clawsL);
-        bipedRightArm.addChild(this.clawsR);
+        bipedLeftArm.addChild(clawsL = new ModelClaws(this, false));
+        bipedRightArm.addChild(clawsR = new ModelClaws(this, true));
     }
 }
