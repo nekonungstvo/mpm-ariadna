@@ -1,4 +1,4 @@
-package noppes.mpm.client.model.extraparts.ctenotail;
+package noppes.mpm.client.model.extrapart.ctenotail;
 
 import noppes.mpm.client.model.MCALibrary.animation.*;
 import noppes.mpm.client.model.MCALibrary.math.*;

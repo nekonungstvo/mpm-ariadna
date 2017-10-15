@@ -18,20 +18,8 @@ public class MCAModelRenderer extends ModelScaleRenderer {
      * Custom version, as parent variable is PRIVATE
      */
     private int DDStextureOffsetX;
-
-    /**
-     * Custom version, as parent variable is PRIVATE
-     */
     private int DDStextureOffsetY;
-
-    /**
-     * Custom version, as parent variable is PRIVATE
-     */
     private boolean DDScompiled;
-
-    /**
-     * Custom version, as parent variable is PRIVATE
-     */
     private int DDSdisplayList;
 
     private Matrix4f rotationMatrix = new Matrix4f();

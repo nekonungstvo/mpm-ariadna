@@ -8,8 +8,11 @@ import net.minecraft.util.ResourceLocation;
 import noppes.mpm.ModelData;
 import noppes.mpm.ModelPartData;
 import noppes.mpm.client.ClientProxy;
+import noppes.mpm.client.model.MCALibrary.animation.AnimationHandler;
 import noppes.mpm.client.model.ModelMPM;
 import noppes.mpm.client.model.ModelScaleRenderer;
+import noppes.mpm.client.model.extrapart.ctenotail.AnimationHandlerCtenoTail;
+import noppes.mpm.client.model.extrapart.ctenotail.ModelCtenoTail;
 import noppes.mpm.client.model.part.tails.ModelDragonTail;
 import noppes.mpm.client.model.part.tails.ModelRodentTail;
 import noppes.mpm.client.model.part.tails.ModelSquirrelTail;
@@ -21,12 +24,17 @@ public class ModelTail extends ModelScaleRenderer {
     public ModelData data;
     private EntityLivingBase entity;
     private ModelMPM base;
+
     private ModelRenderer tail;
     private ModelRenderer dragon;
     private ModelRenderer squirrel;
     private ModelRenderer horse;
     private ModelRenderer fin;
     private ModelRenderer rodent;
+
+    private ModelCtenoTail cteno;
+    private AnimationHandlerCtenoTail ctenoAnimations;
+
     private int color = 16777215;
 
     private ResourceLocation location = null;
@@ -64,19 +72,21 @@ public class ModelTail extends ModelScaleRenderer {
         this.horse.addChild(tailTip);
         this.horse.rotateAngleX = 0.5F;
 
-
         addChild(this.dragon = new ModelDragonTail(base));
-
         addChild(this.squirrel = new ModelSquirrelTail(base));
-
         addChild(this.fin = new ModelTailFin(base));
         addChild(this.rodent = new ModelRodentTail(base));
+        addChild(this.cteno = new ModelCtenoTail(base));
     }
 
     public void setData(ModelData data, EntityLivingBase entity) {
         this.data = data;
         this.entity = entity;
+
         initData(data);
+
+        ctenoAnimations = new AnimationHandlerCtenoTail(entity);
+        ctenoAnimations.activateAnimation(AnimationHandlerCtenoTail.ANIM_IDLE, 0);
     }
 
     public void setRotationAngles(float par1, float par2, float par3, float par4, float par5, float par6, Entity entity) {
@@ -123,6 +133,7 @@ public class ModelTail extends ModelScaleRenderer {
         this.squirrel.isHidden = (config.type != 3);
         this.fin.isHidden = (config.type != 4);
         this.rodent.isHidden = (config.type != 5);
+        this.cteno.isHidden = (config.type != 6);
 
         if (!config.playerTexture) {
             this.location = config.getResource();
@@ -150,7 +161,13 @@ public class ModelTail extends ModelScaleRenderer {
             float blue = (this.color & 0xFF) / 255.0F;
             GL11.glColor4f(red, green, blue, 1.0F);
         }
+
+        if (!cteno.isHidden) {
+            AnimationHandler.performAnimationInModel(cteno.parts, ctenoAnimations);
+        }
+
         super.render(par1);
+
         if (bo) {
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         }

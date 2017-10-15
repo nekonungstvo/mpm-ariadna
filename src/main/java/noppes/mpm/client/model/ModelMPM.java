@@ -91,31 +91,30 @@ public class ModelMPM extends ModelBiped {
         this.bipedLeftLeg.addBox(-2.0F, 0.0F, -2.0F, 4, 12, 4, z);
         this.bipedLeftLeg.setRotationPoint(1.9F, 12.0F, 0.0F);
 
-        this.legs = new ModelLegs(this, (ModelScaleRenderer) this.bipedRightLeg, (ModelScaleRenderer) this.bipedLeftLeg);
+        reloadExtraPartBoxes();
+    }
 
-        this.headwear = new ModelHeadwear(this);
-        this.breasts = new ModelBreasts(this);
-        this.bipedBody.addChild(this.breasts);
+    protected void reloadExtraPartBoxes() {
+        legs = new ModelLegs(this, (ModelScaleRenderer) bipedRightLeg, (ModelScaleRenderer) bipedLeftLeg);
+        headwear = new ModelHeadwear(this);
+
+        bipedBody.addChild(breasts = new ModelBreasts(this));
 
         if (!this.isArmor) {
-            this.bipedHead.addChild(this.ears = new ModelEars(this));
-            this.bipedHead.addChild(this.mohawk = new ModelMohawk(this));
-            this.bipedHead.addChild(this.hair = new ModelHair(this));
-            this.bipedHead.addChild(this.beard = new ModelBeard(this));
-            this.bipedHead.addChild(this.snout = new ModelSnout(this));
-            this.bipedHead.addChild(this.horns = new ModelHorns(this));
+            bipedHead.addChild(ears = new ModelEars(this));
+            bipedHead.addChild(mohawk = new ModelMohawk(this));
+            bipedHead.addChild(hair = new ModelHair(this));
+            bipedHead.addChild(beard = new ModelBeard(this));
+            bipedHead.addChild(snout = new ModelSnout(this));
+            bipedHead.addChild(horns = new ModelHorns(this));
 
-            this.tail = new ModelTail(this);
-            this.wings = new ModelWings(this);
-            this.skirt = new ModelSkirt(this);
-            this.fin = new ModelFin(this);
+            bipedBody.addChild(tail = new ModelTail(this));
+            bipedBody.addChild(wings = new ModelWings(this));
+            bipedBody.addChild(skirt = new ModelSkirt(this));
+            bipedBody.addChild(fin = new ModelFin(this));
 
-            this.bipedBody.addChild(this.wings);
-            this.bipedBody.addChild(this.skirt);
-            this.bipedBody.addChild(this.fin);
-
-            this.bipedLeftArm.addChild(this.clawsL = new ModelClaws(this, false));
-            this.bipedRightArm.addChild(this.clawsR = new ModelClaws(this, true));
+            bipedLeftArm.addChild(clawsL = new ModelClaws(this, false));
+            bipedRightArm.addChild(clawsR = new ModelClaws(this, true));
         }
     }
 
@@ -363,10 +362,10 @@ public class ModelMPM extends ModelBiped {
         GL11.glPushMatrix();
         this.legs.setConfig(legs, x, y, z);
         this.legs.render(f);
-        if (!this.isArmor) {
-            this.tail.setConfig(legs, 0.0F, y, z);
-            this.tail.render(f);
-        }
+//        if (!this.isArmor) {
+//            this.tail.setConfig(legs, 0.0F, y, z);
+//            this.tail.render(f);
+//        }
         GL11.glPopMatrix();
     }
 

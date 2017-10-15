@@ -14,11 +14,8 @@ public class ModelMpmNewFormat extends ModelMPM {
         super(0, 64);
     }
 
+    @Override
     public void reloadBoxes() {
-        this.textureHeight = 32;
-        super.reloadBoxes();
-        this.textureHeight = 64;
-
         bipedCloak = new ModelRenderer(this, 0, 0);
         bipedCloak.addBox(-5.0F, 0.0F, -1.0F, 10, 16, 1, 0);
 
@@ -73,22 +70,6 @@ public class ModelMpmNewFormat extends ModelMPM {
         bipedLeftLegwear.addBox(-2.0F, 0.0F, -2.0F, 4, 12, 4, 0.25F);
         bipedLeftLeg.addChild(bipedLeftLegwear);
 
-        legs = new ModelLegs(this, (ModelScaleRenderer) bipedRightLeg, (ModelScaleRenderer) bipedLeftLeg);
-
-        headwear = new ModelHeadwear(this);
-        bipedHead.addChild(ears = new ModelEars(this));
-        bipedHead.addChild(mohawk = new ModelMohawk(this));
-        bipedHead.addChild(hair = new ModelHair(this));
-        bipedHead.addChild(beard = new ModelBeard(this));
-        bipedHead.addChild(snout = new ModelSnout(this));
-        bipedHead.addChild(horns = new ModelHorns(this));
-
-        bipedBody.addChild(breasts = new ModelBreasts(this));
-        bipedBody.addChild(tail = new ModelTail(this));
-        bipedBody.addChild(wings = new ModelWings(this));
-        bipedBody.addChild(skirt = new ModelSkirt(this));
-
-        bipedLeftArm.addChild(clawsL = new ModelClaws(this, false));
-        bipedRightArm.addChild(clawsR = new ModelClaws(this, true));
+        reloadExtraPartBoxes();
     }
 }

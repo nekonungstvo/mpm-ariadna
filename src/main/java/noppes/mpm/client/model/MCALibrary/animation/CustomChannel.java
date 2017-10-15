@@ -2,8 +2,8 @@ package noppes.mpm.client.model.MCALibrary.animation;
 
 import java.util.HashMap;
 
+import net.minecraft.entity.Entity;
 import noppes.mpm.client.model.MCALibrary.MCAModelRenderer;
-import noppes.mpm.client.model.MCALibrary.IMCAnimatedEntity;
 
 public class CustomChannel extends Channel {
 
@@ -31,7 +31,7 @@ public class CustomChannel extends Channel {
 	public int getKeyFramePosition(KeyFrame keyFrame) {return -1;}
 	
 	/** Write the actual behaviour of this custom animation here. It will called every tick until the animation is active. */
-	public void update(HashMap<String, MCAModelRenderer> parts, IMCAnimatedEntity entity) {
+	public void update(HashMap<String, MCAModelRenderer> parts, AnimationHandler animationHandler) {
 		//This must be filled in the actual custom channels!
 	}
 }

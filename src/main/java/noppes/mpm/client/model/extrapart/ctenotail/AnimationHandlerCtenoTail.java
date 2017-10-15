@@ -1,22 +1,21 @@
-package noppes.mpm.client.model.extraparts.ctenotail;
+package noppes.mpm.client.model.extrapart.ctenotail;
 
-import noppes.mpm.client.model.MCALibrary.IMCAnimatedEntity;
+import net.minecraft.entity.Entity;
 import noppes.mpm.client.model.MCALibrary.animation.AnimationHandler;
 import noppes.mpm.client.model.MCALibrary.animation.Channel;
 
 import java.util.HashMap;
 
 public class AnimationHandlerCtenoTail extends AnimationHandler {
-    /**
-     * Map with all the animations.
-     */
-    public static HashMap<String, Channel> animChannels = new HashMap<String, Channel>();
+    public static final String ANIM_IDLE = "idle";
+
+    public static HashMap<String, Channel> animChannels = new HashMap<>();
 
     static {
-        animChannels.put("tailIdle", new ChannelTailIdle("tailIdle", 0.3F, 3, Channel.LOOP));
+        animChannels.put(ANIM_IDLE, new ChannelTailIdle(ANIM_IDLE, 0.3F, 3, Channel.LOOP));
     }
 
-    public AnimationHandlerCtenoTail(IMCAnimatedEntity entity) {
+    public AnimationHandlerCtenoTail(Entity entity) {
         super(entity);
     }
 

@@ -1,17 +1,16 @@
-package noppes.mpm.client.model.extraparts.ctenotail;
+package noppes.mpm.client.model.extrapart.ctenotail;
 
-import net.minecraft.client.model.ModelBase;
-import net.minecraft.entity.Entity;
 import noppes.mpm.client.model.MCALibrary.MCAModelRenderer;
-import noppes.mpm.client.model.MCALibrary.animation.AnimationHandler;
+import noppes.mpm.client.model.MCALibrary.MCAToMPMModelRenderer;
 import noppes.mpm.client.model.MCALibrary.math.Matrix4f;
 import noppes.mpm.client.model.MCALibrary.math.Quaternion;
 import noppes.mpm.client.model.ModelMPM;
 import noppes.mpm.client.model.ModelScaleRenderer;
+import org.lwjgl.opengl.GL11;
 
 import java.util.HashMap;
 
-public class ModelCtenoTail extends ModelScaleRenderer {
+public class ModelCtenoTail extends MCAToMPMModelRenderer {
     public HashMap<String, MCAModelRenderer> parts = new HashMap<>();
 
     MCAModelRenderer segment1;
@@ -51,10 +50,11 @@ public class ModelCtenoTail extends ModelScaleRenderer {
         segment1 = new MCAModelRenderer(base, "segment1", 0, 32);
         segment1.mirror = false;
         segment1.addBox(-2.5F, -1.0F, -2.0F, 5, 4, 3);
-        segment1.setInitialRotationPoint(0.0F, -3.0F, -2.0F);
+        segment1.setInitialRotationPoint(0.0F, 0.0F, -2.0F);
         segment1.setInitialRotationMatrix(new Matrix4f().set(new Quaternion(-0.0784591F, 0.0F, 0.0F, 0.9969173F)).transpose());
         segment1.setTextureSize(64, 64);
         parts.put(segment1.boxName, segment1);
+        addChild(segment1);
 
         segment2 = new MCAModelRenderer(base, "segment2", 0, 39);
         segment2.mirror = false;
@@ -298,10 +298,5 @@ public class ModelCtenoTail extends ModelScaleRenderer {
         topBulb.setTextureSize(64, 64);
         parts.put(topBulb.boxName, topBulb);
         segment6.addChild(topBulb);
-
-    }
-
-    public void animate(float par1, float par2, float par3, float par4, float par5, float par6, Entity par7Entity) {
-
     }
 }
