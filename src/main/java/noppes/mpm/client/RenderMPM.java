@@ -42,10 +42,11 @@ import java.util.Map;
 import java.util.UUID;
 
 public class RenderMPM extends RenderPlayer {
-    public ModelMPM modelBipedMain;
-    public ModelMPM modelBipedMainNewFormat;
-    public ModelMPM modelArmorChestplate;
-    public ModelMPM modelArmor;
+    ModelMPM modelBipedMain;
+    ModelMPM modelBipedMainNewFormat;
+    ModelMPM modelArmorChestplate;
+    ModelMPM modelArmor;
+
     private ModelData data;
     private RendererLivingEntity renderEntity;
     private EntityLivingBase entity;

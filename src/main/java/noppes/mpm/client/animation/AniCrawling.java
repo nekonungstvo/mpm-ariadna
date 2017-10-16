@@ -1,6 +1,5 @@
-package noppes.mpm.client.model.animation;
+package noppes.mpm.client.animation;
 
-import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import noppes.mpm.client.model.ModelMPM;
 

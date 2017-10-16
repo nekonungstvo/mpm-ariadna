@@ -1,4 +1,4 @@
-package noppes.mpm.client.model.MCALibrary.math;
+package noppes.mpm.client.MCALibrary.math;
 
 public class FastMath {
 	/** A "close to zero" double epsilon value for use*/

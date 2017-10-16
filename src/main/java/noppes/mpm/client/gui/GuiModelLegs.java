@@ -58,15 +58,15 @@ public class GuiModelLegs extends GuiModelInterface {
         if (data.type == 1)
             return 6;
         if (data.type == 2)
-            return 5;
+            return 5; // Horse
         if (data.type == 3)
-            return 7;
+            return 7; // Squirrel
         if (data.type == 4)
             return 8;
         if (data.type == 5)
             return 9;
         if (data.type == 6)
-            return 10;
+            return 10; // Cteno
 
         return 0;
     }

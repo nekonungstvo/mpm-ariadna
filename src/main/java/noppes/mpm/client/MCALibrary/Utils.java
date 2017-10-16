@@ -1,12 +1,12 @@
-package noppes.mpm.client.model.MCALibrary;
+package noppes.mpm.client.MCALibrary;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
-import noppes.mpm.client.model.MCALibrary.math.Matrix4f;
-import noppes.mpm.client.model.MCALibrary.math.Quaternion;
-import noppes.mpm.client.model.MCALibrary.math.Vector3f;
+import noppes.mpm.client.MCALibrary.math.Matrix4f;
+import noppes.mpm.client.MCALibrary.math.Quaternion;
+import noppes.mpm.client.MCALibrary.math.Vector3f;
 
 public class Utils {
 	/**

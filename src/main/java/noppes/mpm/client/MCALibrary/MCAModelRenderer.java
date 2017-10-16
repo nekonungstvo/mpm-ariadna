@@ -1,13 +1,13 @@
-package noppes.mpm.client.model.MCALibrary;
+package noppes.mpm.client.MCALibrary;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GLAllocation;
 import net.minecraft.client.renderer.Tessellator;
-import noppes.mpm.client.model.MCALibrary.math.Matrix4f;
-import noppes.mpm.client.model.MCALibrary.math.Quaternion;
-import noppes.mpm.client.model.MCALibrary.math.Vector3f;
+import noppes.mpm.client.MCALibrary.math.Matrix4f;
+import noppes.mpm.client.MCALibrary.math.Quaternion;
+import noppes.mpm.client.MCALibrary.math.Vector3f;
 import noppes.mpm.client.model.ModelScaleRenderer;
 import org.lwjgl.opengl.GL11;
 
@@ -152,7 +152,7 @@ public class MCAModelRenderer extends ModelScaleRenderer {
     }
 
     /**
-     * Set default rotation point (model with no animations) and set the current rotation point.
+     * Set default rotation point (model with no legsAnimationHandler) and set the current rotation point.
      */
     public void setInitialRotationPoint(float par1, float par2, float par3) {
         this.defaultRotationPointX = par1;
@@ -184,7 +184,7 @@ public class MCAModelRenderer extends ModelScaleRenderer {
     }
 
     /**
-     * Set rotation matrix setting also an initial default value (model with no animations).
+     * Set rotation matrix setting also an initial default value (model with no legsAnimationHandler).
      */
     public void setInitialRotationMatrix(Matrix4f matrix) {
         defaultRotationMatrix = matrix;

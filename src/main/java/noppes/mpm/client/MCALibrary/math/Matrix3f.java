@@ -1,4 +1,4 @@
-package noppes.mpm.client.model.MCALibrary.math;
+package noppes.mpm.client.MCALibrary.math;
 
 import java.nio.FloatBuffer;
 import java.util.logging.Logger;

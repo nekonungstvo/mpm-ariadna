@@ -8,10 +8,11 @@ import net.minecraft.util.ResourceLocation;
 import noppes.mpm.ModelData;
 import noppes.mpm.ModelPartData;
 import noppes.mpm.client.ClientProxy;
-import noppes.mpm.client.model.MCALibrary.animation.AnimationHandler;
+import noppes.mpm.client.MCALibrary.animation.AnimationHandler;
+import noppes.mpm.client.animation.MPMAnimationHandler;
 import noppes.mpm.client.model.ModelMPM;
 import noppes.mpm.client.model.ModelScaleRenderer;
-import noppes.mpm.client.model.extrapart.ctenotail.AnimationHandlerCtenoTail;
+import noppes.mpm.client.model.extrapart.ctenotail.ChannelCtenoIdle;
 import noppes.mpm.client.model.extrapart.ctenotail.ModelCtenoTail;
 import noppes.mpm.client.model.part.tails.ModelDragonTail;
 import noppes.mpm.client.model.part.tails.ModelRodentTail;
@@ -33,7 +34,6 @@ public class ModelTail extends ModelScaleRenderer {
     private ModelRenderer rodent;
 
     private ModelCtenoTail cteno;
-    private AnimationHandlerCtenoTail ctenoAnimations;
 
     private int color = 16777215;
 
@@ -84,19 +84,22 @@ public class ModelTail extends ModelScaleRenderer {
         this.entity = entity;
 
         initData(data);
-
-        ctenoAnimations = new AnimationHandlerCtenoTail(entity);
-        ctenoAnimations.activateAnimation(AnimationHandlerCtenoTail.ANIM_IDLE, 0);
     }
 
     public void setRotationAngles(float par1, float par2, float par3, float par4, float par5, float par6, Entity entity) {
-        this.rotateAngleY = (MathHelper.cos(par1 * 0.6662F) * 0.2F * par2);
-        this.rotateAngleX = (MathHelper.sin(par3 * 0.067F) * 0.05F);
+        // Special Cteno idle wiggle
+        if (!cteno.isHidden) {
+//            AnimationHandler.performAnimationInModel(cteno.parts, data.animationHandler);
+        }
+        else {
+            this.rotateAngleY = (MathHelper.cos(par1 * 0.6662F) * 0.2F * par2);
+            this.rotateAngleX = (MathHelper.sin(par3 * 0.067F) * 0.05F);
+        }
 
         if (this.data.animation == EnumAnimation.WAG) {
-            this.rotateAngleY = ((float) (Math.sin(entity.ticksExisted * 0.5F) * 0.30000001192092896D));
+            this.rotateAngleY = ((float) (Math.sin(entity.ticksExisted * 0.5F) * 0.3f));
         }
-        if (this.data.legParts.type == 2) {
+        if (this.data.legParts.type == 2) { // Horsie
             this.rotationPointY = 13.0F;
             this.rotationPointZ = (14.0F * this.data.legs.scaleZ);
 
@@ -106,7 +109,7 @@ public class ModelTail extends ModelScaleRenderer {
 
                 this.rotateAngleX = -0.7853982F;
             }
-        } else if (this.data.legParts.type == 3) {
+        } else if (this.data.legParts.type == 3) { // Squirrel
             this.rotationPointY = 8.6F;
             this.rotationPointZ = (19.0F * this.data.legs.scaleZ);
         } else {
@@ -125,20 +128,27 @@ public class ModelTail extends ModelScaleRenderer {
             this.isHidden = true;
             return;
         }
-        this.color = config.color;
-        this.isHidden = false;
-        this.tail.isHidden = (config.type != 0);
-        this.dragon.isHidden = (config.type != 1);
-        this.horse.isHidden = (config.type != 2);
-        this.squirrel.isHidden = (config.type != 3);
-        this.fin.isHidden = (config.type != 4);
-        this.rodent.isHidden = (config.type != 5);
-        this.cteno.isHidden = (config.type != 6);
+
+        color = config.color;
+        isHidden = false;
+        tail.isHidden = (config.type != 0);
+        dragon.isHidden = (config.type != 1);
+        horse.isHidden = (config.type != 2);
+        squirrel.isHidden = (config.type != 3);
+        fin.isHidden = (config.type != 4);
+        rodent.isHidden = (config.type != 5);
+        cteno.isHidden = (config.type != 6);
 
         if (!config.playerTexture) {
             this.location = config.getResource();
         } else {
             this.location = null;
+        }
+
+        if (!cteno.isHidden) {
+            data.animationHandler.keepAnimation(ChannelCtenoIdle.ANIM_IDLE, 0);
+        } else {
+            data.animationHandler.stopAnimation(ChannelCtenoIdle.ANIM_IDLE);
         }
     }
 
@@ -162,9 +172,7 @@ public class ModelTail extends ModelScaleRenderer {
             GL11.glColor4f(red, green, blue, 1.0F);
         }
 
-        if (!cteno.isHidden) {
-            AnimationHandler.performAnimationInModel(cteno.parts, ctenoAnimations);
-        }
+        AnimationHandler.performAnimationInModel(cteno.parts, data.animationHandler);
 
         super.render(par1);
 

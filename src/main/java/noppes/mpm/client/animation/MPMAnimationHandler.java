@@ -1,22 +1,21 @@
-package noppes.mpm.client.model.extrapart.ctenotail;
+package noppes.mpm.client.animation;
 
-import net.minecraft.entity.Entity;
-import noppes.mpm.client.model.MCALibrary.animation.AnimationHandler;
-import noppes.mpm.client.model.MCALibrary.animation.Channel;
+import noppes.mpm.ModelData;
+import noppes.mpm.client.MCALibrary.animation.AnimationHandler;
+import noppes.mpm.client.MCALibrary.animation.Channel;
+import noppes.mpm.client.model.extrapart.ctenotail.ChannelCtenoIdle;
 
 import java.util.HashMap;
 
-public class AnimationHandlerCtenoTail extends AnimationHandler {
-    public static final String ANIM_IDLE = "idle";
-
+public class MPMAnimationHandler extends AnimationHandler {
     public static HashMap<String, Channel> animChannels = new HashMap<>();
 
     static {
-        animChannels.put(ANIM_IDLE, new ChannelTailIdle(ANIM_IDLE, 0.3F, 3, Channel.LOOP));
+        put(new ChannelCtenoIdle(ChannelCtenoIdle.ANIM_IDLE, 1.0F, 4, Channel.LOOP));
     }
 
-    public AnimationHandlerCtenoTail(Entity entity) {
-        super(entity);
+    public MPMAnimationHandler(ModelData model) {
+        super(model);
     }
 
     @Override
@@ -35,5 +34,9 @@ public class AnimationHandlerCtenoTail extends AnimationHandler {
 
     @Override
     public void fireAnimationEventServerSide(Channel anim, float prevFrame, float frame) {
+    }
+
+    private static void put(Channel channel) {
+        MPMAnimationHandler.animChannels.put(channel.name, channel);
     }
 }

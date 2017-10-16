@@ -1,4 +1,4 @@
-package noppes.mpm.client.model.MCALibrary.animation;
+package noppes.mpm.client.MCALibrary.animation;
 
 import java.util.HashMap;
 import java.util.Map;

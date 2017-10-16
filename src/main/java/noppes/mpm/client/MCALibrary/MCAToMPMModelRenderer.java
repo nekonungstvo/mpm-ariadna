@@ -1,4 +1,4 @@
-package noppes.mpm.client.model.MCALibrary;
+package noppes.mpm.client.MCALibrary;
 
 import noppes.mpm.client.model.ModelMPM;
 import noppes.mpm.client.model.ModelScaleRenderer;

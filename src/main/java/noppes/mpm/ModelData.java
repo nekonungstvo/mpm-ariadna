@@ -9,29 +9,30 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
+import noppes.mpm.client.animation.MPMAnimationHandler;
 import noppes.mpm.constants.EnumAnimation;
 
 import java.security.MessageDigest;
 
 public class ModelData extends ModelDataShared implements IExtendedEntityProperties {
-    public String username;
+    public int rev = MorePlayerModels.Revision;
+
     public boolean loaded = false;
     public boolean reloadBoxes = false;
 
     public ResourceLocation playerResource;
-    public int rev = MorePlayerModels.Revision;
 
     public ItemStack backItem;
 
-    public int inLove = 0;
-    public int animationTime = 0;
-
     public EnumAnimation animation = EnumAnimation.NONE;
     public int animationStart = 0;
+    public int animationTime = 0;
 
+    public int inLove = 0;
     public short soundType = 0;
 
     public String url = "";
+    public MPMAnimationHandler animationHandler = new MPMAnimationHandler(this);
 
     public NBTTagCompound writeToNBT() {
         NBTTagCompound compound = super.writeToNBT();
@@ -48,6 +49,7 @@ public class ModelData extends ModelDataShared implements IExtendedEntityPropert
         this.soundType = compound.getShort("SoundType");
         this.url = compound.getString("CustomSkinUrl");
         setAnimation(compound.getInteger("Animation"));
+
         this.loaded = false;
     }
 
@@ -66,9 +68,9 @@ public class ModelData extends ModelDataShared implements IExtendedEntityPropert
             return null;
         if (this.entity == null) {
             try {
-                this.entity = ((EntityLivingBase) this.entityClass.getConstructor(World.class).newInstance(world));
-
+                this.entity = this.entityClass.getConstructor(World.class).newInstance(world);
                 this.entity.readEntityFromNBT(this.extra);
+
                 if ((this.entity instanceof EntityLiving)) {
                     EntityLiving living = (EntityLiving) this.entity;
                     living.setCurrentItemOrArmor(0, player.getHeldItem());
@@ -95,12 +97,12 @@ public class ModelData extends ModelDataShared implements IExtendedEntityPropert
                     + newSkinFormat + armsAmputee + doubleHead;
 
             for (String name : this.parts.keySet()) {
-                toHash = toHash + name + ":" + ((ModelPartData) this.parts.get(name)).toString();
+                toHash = toHash + name + ":" + this.parts.get(name).toString();
             }
             byte[] hash = digest.digest(toHash.getBytes("UTF-8"));
             StringBuilder sb = new StringBuilder(2 * hash.length);
             for (byte b : hash) {
-                sb.append(String.format("%02x", new Object[]{Integer.valueOf(b & 0xFF)}));
+                sb.append(String.format("%02x", b & 0xFF));
             }
 
             return sb.toString();

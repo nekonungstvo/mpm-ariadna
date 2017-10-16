@@ -1,4 +1,4 @@
-package noppes.mpm.client.model.MCALibrary;
+package noppes.mpm.client.MCALibrary;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

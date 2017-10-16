@@ -7,19 +7,20 @@ import net.minecraft.nbt.NBTTagList;
 import java.util.HashMap;
 
 public class ModelDataShared {
+    protected EntityLivingBase entity;
+    public Class<? extends EntityLivingBase> entityClass;
+
+    public ModelPartConfig head = new ModelPartConfig();
     public ModelPartConfig arms = new ModelPartConfig();
     public ModelPartConfig body = new ModelPartConfig();
     public ModelPartConfig legs = new ModelPartConfig();
-    public ModelPartConfig head = new ModelPartConfig();
     public ModelPartData legParts = new ModelPartData();
 
-    public Class<? extends EntityLivingBase> entityClass;
     public NBTTagCompound extra = new NBTTagCompound();
+    protected HashMap<String, ModelPartData> parts = new HashMap<>();
+
     public byte breasts = 0;
     public byte headwear = 2;
-
-    protected EntityLivingBase entity;
-    protected HashMap<String, ModelPartData> parts = new HashMap();
 
     public boolean newSkinFormat = false;
     public byte armsAmputee = 0;
@@ -36,6 +37,7 @@ public class ModelDataShared {
         compound.setTag("LegsConfig", this.legs.writeToNBT());
         compound.setTag("HeadConfig", this.head.writeToNBT());
         compound.setTag("LegParts", this.legParts.writeToNBT());
+
         compound.setByte("Headwear", this.headwear);
         compound.setByte("Breasts", this.breasts);
         compound.setTag("ExtraData", this.extra);
@@ -62,6 +64,7 @@ public class ModelDataShared {
         this.legs.readFromNBT(compound.getCompoundTag("LegsConfig"));
         this.head.readFromNBT(compound.getCompoundTag("HeadConfig"));
         this.legParts.readFromNBT(compound.getCompoundTag("LegParts"));
+
         this.headwear = compound.getByte("Headwear");
         this.breasts = compound.getByte("Breasts");
         this.extra = compound.getCompoundTag("ExtraData");
@@ -81,20 +84,20 @@ public class ModelDataShared {
         this.doubleHead = compound.getBoolean("DoubleHead");
     }
 
+    public Class<? extends EntityLivingBase> getEntityClass() {
+        return this.entityClass;
+    }
+
     private void setEntityClass(String string) {
         this.entityClass = null;
         this.entity = null;
         try {
             Class<?> cls = Class.forName(string);
-            if (EntityLivingBase.class.isAssignableFrom(cls)) {
-                this.entityClass = cls.asSubclass(EntityLivingBase.class);
+            if (cls.isAssignableFrom(EntityLivingBase.class)) {
+                setEntityClass(cls.asSubclass(EntityLivingBase.class));
             }
         } catch (ClassNotFoundException e) {
         }
-    }
-
-    public Class<? extends EntityLivingBase> getEntityClass() {
-        return this.entityClass;
     }
 
     public void setEntityClass(Class<? extends EntityLivingBase> entityClass) {
@@ -103,18 +106,18 @@ public class ModelDataShared {
         this.extra = new NBTTagCompound();
     }
 
+    public void clearEntity() {
+        this.entity = null;
+    }
+
     public float offsetY() {
         if (this.entity == null)
             return -getBodyY();
         return this.entity.height - 1.8F;
     }
 
-    public void clearEntity() {
-        this.entity = null;
-    }
-
     public ModelPartData getPartData(String type) {
-        return (ModelPartData) this.parts.get(type);
+        return this.parts.get(type);
     }
 
     public void removePart(String type) {
@@ -122,7 +125,7 @@ public class ModelDataShared {
     }
 
     public ModelPartData getOrCreatePart(String type) {
-        ModelPartData part = (ModelPartData) this.parts.get(type);
+        ModelPartData part = this.parts.get(type);
         if (part == null)
             this.parts.put(type, part = new ModelPartData());
         return part;

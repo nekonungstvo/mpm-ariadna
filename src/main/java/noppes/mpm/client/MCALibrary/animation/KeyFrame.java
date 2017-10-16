@@ -1,9 +1,9 @@
-package noppes.mpm.client.model.MCALibrary.animation;
+package noppes.mpm.client.MCALibrary.animation;
 
 import java.util.HashMap;
 
-import noppes.mpm.client.model.MCALibrary.math.Quaternion;
-import noppes.mpm.client.model.MCALibrary.math.Vector3f;
+import noppes.mpm.client.MCALibrary.math.Quaternion;
+import noppes.mpm.client.MCALibrary.math.Vector3f;
 
 public class KeyFrame {
 	public HashMap<String, Quaternion> modelRenderersRotations = new HashMap<String, Quaternion>();
@@ -17,5 +17,12 @@ public class KeyFrame {
 	public boolean useBoxInTranslations(String boxName)
 	{
 		return modelRenderersTranslations.get(boxName) != null;
+	}
+
+	public KeyFrame copy() {
+		KeyFrame c = new KeyFrame();
+		c.modelRenderersRotations.putAll(modelRenderersRotations);
+		c.modelRenderersTranslations.putAll(modelRenderersTranslations);
+		return c;
 	}
 }

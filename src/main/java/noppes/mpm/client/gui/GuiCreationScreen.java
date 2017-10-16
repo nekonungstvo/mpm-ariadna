@@ -23,7 +23,7 @@ import java.lang.reflect.Modifier;
 import java.util.*;
 
 public class GuiCreationScreen extends GuiModelInterface implements ITextfieldListener {
-    public HashMap<String, Class<? extends EntityLivingBase>> data = new HashMap();
+    public HashMap<String, Class<? extends EntityLivingBase>> data = new HashMap<>();
     private List<String> list;
     private final String[] ignoredTags = {"CanBreakDoors", "Bred", "PlayerCreated", "Tame", "HasReproduced"};
 
@@ -31,7 +31,7 @@ public class GuiCreationScreen extends GuiModelInterface implements ITextfieldLi
 
     private GuiNpcButton next;
     public String hash;
-    private HashMap<Integer, String> mapped = new HashMap();
+    private HashMap<Integer, String> mapped = new HashMap<>();
 
     public GuiCreationScreen() {
         this.hash = this.playerdata.getHash();
@@ -40,7 +40,7 @@ public class GuiCreationScreen extends GuiModelInterface implements ITextfieldLi
             Class<?> c = (Class) mapping.get(name);
             try {
                 if (EntityLiving.class.isAssignableFrom(c))
-                    if ((c.getConstructor(new Class[]{World.class}) != null) && (!Modifier.isAbstract(c.getModifiers())) &&
+                    if ((c.getConstructor(World.class) != null) && (!Modifier.isAbstract(c.getModifiers())) &&
                             ((RenderManager.instance.getEntityClassRenderObject(c) instanceof RendererLivingEntity))) {
                         this.data.put(name.toString(), c.asSubclass(EntityLivingBase.class));
                     }
@@ -192,7 +192,7 @@ public class GuiCreationScreen extends GuiModelInterface implements ITextfieldLi
             if (index < 0) {
                 this.playerdata.setEntityClass(null);
             } else
-                this.playerdata.setEntityClass((Class) this.data.get(this.list.get(index)));
+                this.playerdata.setEntityClass(this.data.get(this.list.get(index)));
 
             initGui();
         }
@@ -201,7 +201,7 @@ public class GuiCreationScreen extends GuiModelInterface implements ITextfieldLi
             if (!this.next.enabled)
                 return;
             index++;
-            this.playerdata.setEntityClass((Class) this.data.get(this.list.get(index)));
+            this.playerdata.setEntityClass(this.data.get(this.list.get(index)));
 
             initGui();
         }
@@ -272,7 +272,7 @@ public class GuiCreationScreen extends GuiModelInterface implements ITextfieldLi
             this.mc.displayGuiScreen(new GuiEditButtons(this));
         }
         if (button.id >= 100) {
-            String name = (String) this.mapped.get(Integer.valueOf(button.id - 100));
+            String name = this.mapped.get(button.id - 100);
             if (name != null) {
                 this.playerdata.extra.setBoolean(name, button.getValue() == 1);
                 this.playerdata.clearEntity();

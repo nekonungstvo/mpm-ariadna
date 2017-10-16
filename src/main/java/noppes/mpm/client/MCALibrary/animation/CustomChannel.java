@@ -1,9 +1,8 @@
-package noppes.mpm.client.model.MCALibrary.animation;
+package noppes.mpm.client.MCALibrary.animation;
 
 import java.util.HashMap;
 
-import net.minecraft.entity.Entity;
-import noppes.mpm.client.model.MCALibrary.MCAModelRenderer;
+import noppes.mpm.client.MCALibrary.MCAModelRenderer;
 
 public class CustomChannel extends Channel {
 
