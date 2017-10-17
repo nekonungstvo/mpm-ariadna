@@ -11,7 +11,7 @@ public class MPMAnimationHandler extends AnimationHandler {
     public static HashMap<String, Channel> animChannels = new HashMap<>();
 
     static {
-        put(new ChannelCtenoIdle(ChannelCtenoIdle.ANIM_IDLE, 1.0F, 4, Channel.LOOP));
+        put(new ChannelCtenoIdle(ChannelCtenoIdle.ANIM_IDLE, 1.0F, 3, Channel.Mode.LOOP_SIN));
     }
 
     public MPMAnimationHandler(ModelData model) {

@@ -1,5 +1,7 @@
 package noppes.mpm.client.MCALibrary.math;
 
+import net.minecraft.util.MathHelper;
+
 public class FastMath {
 	/** A "close to zero" double epsilon value for use*/
 	public static final double DBL_EPSILON = 2.220446049250313E-16d;
@@ -15,6 +17,8 @@ public class FastMath {
     public static final float HALF_PI = 0.5f * PI;
     /** The value PI/4 as a float. (45 degrees) */
     public static final float QUARTER_PI = 0.25f * PI;
+
+	public static final float FOUR_PI = 4.0f * PI;
 
 	/**
 	 * Returns the square root of a given value.
@@ -41,11 +45,11 @@ public class FastMath {
 	}
 	
 	public static float sin(float v) {
-		return (float) Math.sin(v);
+		return MathHelper.sin(v);
 	}
 
 	public static float cos(float v) {
-		return (float) Math.cos(v);
+		return MathHelper.cos(v);
 	}
 	
     /**

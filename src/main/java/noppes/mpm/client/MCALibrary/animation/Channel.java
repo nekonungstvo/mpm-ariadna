@@ -4,11 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Channel {
-	public static final byte LINEAR = 0;
-	public static final byte LOOP = 1;
-	public static final byte CYCLE = 2;
-	public static final byte CUSTOM = 3;
-
 	public String name;
 	/** The speed of the whole channel (frames per second). */
 	public float fps;
@@ -17,8 +12,7 @@ public class Channel {
 	/** KeyFrames. Key is the position of that keyFrame in the frames list. */
 	public HashMap<Integer, KeyFrame> keyFrames = new HashMap<Integer, KeyFrame>();
 	/** How this animation should behave: 0 = Normal; 1 = Loop; 2 = Cycle. */
-	public byte mode = LINEAR;
-
+	public Mode mode = Mode.LINEAR;
 	public Channel(String _name)
 	{
 		this.name = _name;
@@ -27,12 +21,17 @@ public class Channel {
 		this.initializeAllFrames();
 	}
 
-	public Channel(String _name, float _fps, int _totalFrames, byte _mode)
+	public Channel(String _name, float _fps, int _totalFrames, Mode _mode)
 	{
 		this(_name);
 		this.fps = _fps;
 		this.totalFrames = _totalFrames;
 		this.mode = _mode;
+	}
+
+	/** Check if an animation should stop, restart or whatever. */
+	public static boolean shouldAnimationStop() {
+		return false;
 	}
 
 	/** Create all the frames and add them in the list in the correct order. */
@@ -154,8 +153,18 @@ public class Channel {
 		return -1;
 	}
 
-	/** Check if an animation should stop, restart or whatever. */
-	public static boolean shouldAnimationStop() {	
-		return false;
+	public enum Mode {
+		LINEAR, LOOP, LOOP_SIN, CYCLE, CUSTOM;
+
+		public boolean isLoop() {
+			switch (this) {
+				case LOOP:
+				case LOOP_SIN:
+				case CYCLE:
+					return true;
+				default:
+					return false;
+			}
+		}
 	}
 }

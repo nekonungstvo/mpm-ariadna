@@ -5,8 +5,10 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.Entity;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.MathHelper;
 import noppes.mpm.ModelData;
 import noppes.mpm.client.MCALibrary.MCAModelRenderer;
+import noppes.mpm.client.MCALibrary.math.FastMath;
 import noppes.mpm.client.MCALibrary.math.Quaternion;
 import noppes.mpm.client.MCALibrary.math.Vector3f;
 
@@ -157,15 +159,24 @@ public abstract class AnimationHandler {
      * Update animation values. Return false if the animation should stop.
      */
     public static boolean updateAnimation(Channel channel, HashMap<String, Long> prevTimeAnim, HashMap<String, Float> prevFrameAnim) {
-        if (FMLCommonHandler.instance().getEffectiveSide().isServer() || (FMLCommonHandler.instance().getEffectiveSide().isClient() && !isGamePaused())) {
-            if (!(channel.mode == Channel.CUSTOM)) {
+        Side side = FMLCommonHandler.instance().getEffectiveSide();
+        if (side.isServer() || (side.isClient() && !isGamePaused())) {
+            if (channel.mode != Channel.Mode.CUSTOM) {
                 long prevTime = prevTimeAnim.get(channel.name);
                 float prevFrame = prevFrameAnim.get(channel.name);
 
                 long currentTime = System.nanoTime();
                 double deltaTime = (currentTime - prevTime) / 1000000000.0;
-                float numberOfSkippedFrames = (float) (deltaTime * channel.fps);
 
+                float fps = channel.fps;
+                if (channel.mode == Channel.Mode.LOOP_SIN) {
+                    final float progress = prevFrame / (channel.totalFrames - 1);
+                    final float sin = MathHelper.sin(progress * FastMath.FOUR_PI - FastMath.HALF_PI);
+                    final float rate = mapSin(sin, 0.05f, 1f);
+                    fps *= rate;
+                }
+
+                float numberOfSkippedFrames = (float) (deltaTime * fps);
                 float currentFrame = prevFrame + numberOfSkippedFrames;
 
                 if (currentFrame < channel.totalFrames - 1) //-1 as the first frame mustn't be "executed" as it is the starting situation
@@ -174,7 +185,7 @@ public abstract class AnimationHandler {
                     prevFrameAnim.put(channel.name, currentFrame);
                     return true;
                 } else {
-                    if (channel.mode == Channel.LOOP) {
+                    if (channel.mode.isLoop()) {
                         prevTimeAnim.put(channel.name, currentTime);
                         prevFrameAnim.put(channel.name, 0F);
                         return true;
@@ -212,7 +223,7 @@ public abstract class AnimationHandler {
             boolean anyCustomAnimationRunning = false;
 
             for (Channel channel : animationHandler.animCurrentChannels) {
-                if (channel.mode != Channel.CUSTOM) {
+                if (channel.mode != Channel.Mode.CUSTOM) {
                     float currentFrame = animationHandler.animCurrentFrame.get(channel.name);
 
                     //Rotations
@@ -302,5 +313,15 @@ public abstract class AnimationHandler {
 
     public static boolean isWorldRemote(Entity animatedEntity) {
         return animatedEntity.worldObj.isRemote;
+    }
+
+    private static float mapSin(float v, float min, float max) {
+        final float nv = (v + 1f) / 2f;
+        return min + nv * (max - min);
+    }
+
+    private static float map(float v, float min, float max, float min2, float max2) {
+        final float nv = (v - min) / (max - min);
+        return min2 + nv * (max2 - min2);
     }
 }

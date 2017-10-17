@@ -8,7 +8,7 @@ public class CustomChannel extends Channel {
 
 	public CustomChannel(String _name) {
 		super(_name);
-		this.mode = Channel.CUSTOM;
+		this.mode = Channel.Mode.CUSTOM;
 	}
 
 	@Override
