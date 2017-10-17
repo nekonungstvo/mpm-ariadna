@@ -6,12 +6,12 @@ import noppes.mpm.client.gui.util.GuiNpcButton;
 import noppes.mpm.client.gui.util.GuiNpcLabel;
 
 public class GuiModelBody extends noppes.mpm.client.gui.util.GuiModelInterface {
-    private GuiScreen parent;
     private final String[] arrWing = {"gui.no", "Player", "Type1", "Type2", "Type3"};
     private final String[] arrBreasts = {"gui.no", "Type1", "Type2", "Type3"};
     private final String[] arrParticles = {"gui.no", "Player", "Type1", "Type2", "Rainbow"};
     private final String[] arrfins = {"gui.no", "Player", "Type1"};
     private final String[] arrskirt = {"gui.no", "Player", "Type1"};
+    private GuiScreen parent;
 
     public GuiModelBody(GuiScreen parent) {
         this.parent = parent;

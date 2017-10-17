@@ -18,6 +18,10 @@ public class MPMAnimationHandler extends AnimationHandler {
         super(model);
     }
 
+    private static void put(Channel channel) {
+        MPMAnimationHandler.animChannels.put(channel.name, channel);
+    }
+
     @Override
     public void activateAnimation(String name, float startingFrame) {
         super.activateAnimation(animChannels, name, startingFrame);
@@ -34,9 +38,5 @@ public class MPMAnimationHandler extends AnimationHandler {
 
     @Override
     public void fireAnimationEventServerSide(Channel anim, float prevFrame, float frame) {
-    }
-
-    private static void put(Channel channel) {
-        MPMAnimationHandler.animChannels.put(channel.name, channel);
     }
 }

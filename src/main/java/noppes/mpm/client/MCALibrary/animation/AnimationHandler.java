@@ -20,10 +20,6 @@ import java.util.Map;
 public abstract class AnimationHandler {
     public static final AnimTickHandler animTickHandler = new AnimTickHandler();
     /**
-     * Owner of this handler.
-     */
-    private ModelData animatedModel;
-    /**
      * List of all the activate legsAnimationHandler of this Entity.
      */
     public ArrayList<Channel> animCurrentChannels = new ArrayList<>();
@@ -35,6 +31,10 @@ public abstract class AnimationHandler {
      * Current frame of every active animation.
      */
     public HashMap<String, Float> animCurrentFrame = new HashMap<String, Float>();
+    /**
+     * Owner of this handler.
+     */
+    private ModelData animatedModel;
     /**
      * Contains the unique names of the events that have been already fired during each animation.
      * It becomes empty at the end of every animation. The key is the animation name and the value is the list of already-called events.
@@ -49,111 +49,6 @@ public abstract class AnimationHandler {
 //	public Entity getEntity() {
 //		return animatedEntity;
 //	}
-
-    public void activateAnimation(HashMap<String, Channel> animChannels, String name, float startingFrame) {
-        if (animChannels.get(name) != null) {
-            Channel selectedChannel = animChannels.get(name);
-            int indexToRemove = animCurrentChannels.indexOf(selectedChannel);
-            if (indexToRemove != -1) {
-                animCurrentChannels.remove(indexToRemove);
-            }
-
-            animCurrentChannels.add(selectedChannel);
-            animPrevTime.put(name, System.nanoTime());
-            animCurrentFrame.put(name, startingFrame);
-            animationEvents.computeIfAbsent(name, k -> new ArrayList<>());
-        } else {
-            System.out.println("The animation called " + name + " doesn't exist!");
-        }
-    }
-
-    public void keepAnimation(String name, float startingFrame) {
-        if (!isAnimationActive(name))
-            activateAnimation(name, startingFrame);
-    }
-
-    public abstract void activateAnimation(String name, float startingFrame);
-
-    public void stopAnimation(HashMap<String, Channel> animChannels, String name) {
-        Channel selectedChannel = animChannels.get(name);
-        if (selectedChannel != null) {
-            int indexToRemove = animCurrentChannels.indexOf(selectedChannel);
-            if (indexToRemove != -1) {
-                animCurrentChannels.remove(indexToRemove);
-                animPrevTime.remove(name);
-                animCurrentFrame.remove(name);
-                animationEvents.get(name).clear();
-            }
-        } else {
-            System.out.println("The animation called " + name + " doesn't exist!");
-        }
-    }
-
-    public abstract void stopAnimation(String name);
-
-    public void animationsUpdate() {
-        for (Iterator<Channel> it = animCurrentChannels.iterator(); it.hasNext(); ) {
-            Channel anim = it.next();
-            float prevFrame = animCurrentFrame.get(anim.name);
-            boolean animStatus = updateAnimation(anim, animPrevTime, animCurrentFrame);
-            if (animCurrentFrame.get(anim.name) != null) {
-                fireAnimationEvent(anim, prevFrame, animCurrentFrame.get(anim.name));
-            }
-            if (!animStatus) {
-                it.remove();
-                animPrevTime.remove(anim.name);
-                animCurrentFrame.remove(anim.name);
-                animationEvents.get(anim.name).clear();
-            }
-        }
-    }
-
-    public boolean isAnimationActive(String name) {
-        boolean animAlreadyUsed = false;
-        for (Channel anim : animatedModel.animationHandler.animCurrentChannels) {
-            if (anim.name.equals(name)) {
-                animAlreadyUsed = true;
-                break;
-            }
-        }
-
-        return animAlreadyUsed;
-    }
-
-    private void fireAnimationEvent(Channel anim, float prevFrame, float frame) {
-        if (MinecraftServer.getServer().isDedicatedServer()) {
-            fireAnimationEventServerSide(anim, prevFrame, frame);
-        } else {
-            fireAnimationEventClientSide(anim, prevFrame, frame);
-        }
-    }
-
-    @SideOnly(Side.CLIENT)
-    public abstract void fireAnimationEventClientSide(Channel anim, float prevFrame, float frame);
-
-    public abstract void fireAnimationEventServerSide(Channel anim, float prevFrame, float frame);
-
-    /**
-     * Check if the animation event has already been called.
-     */
-    public boolean alreadyCalledEvent(String animName, String eventName) {
-        if (animationEvents.get(animName) == null) {
-            System.out.println("Cannot check for event " + eventName + "! Animation " + animName + "does not exist or is not active.");
-            return true;
-        }
-        return animationEvents.get(animName).contains(eventName);
-    }
-
-    /**
-     * Set the animation event as "called", so it won't be fired again.
-     */
-    public void setCalledEvent(String animName, String eventName) {
-        if (animationEvents.get(animName) != null) {
-            animationEvents.get(animName).add(eventName);
-        } else {
-            System.out.println("Cannot set event " + eventName + "! Animation " + animName + "does not exist or is not active.");
-        }
-    }
 
     /**
      * Update animation values. Return false if the animation should stop.
@@ -323,5 +218,110 @@ public abstract class AnimationHandler {
     private static float map(float v, float min, float max, float min2, float max2) {
         final float nv = (v - min) / (max - min);
         return min2 + nv * (max2 - min2);
+    }
+
+    public void activateAnimation(HashMap<String, Channel> animChannels, String name, float startingFrame) {
+        if (animChannels.get(name) != null) {
+            Channel selectedChannel = animChannels.get(name);
+            int indexToRemove = animCurrentChannels.indexOf(selectedChannel);
+            if (indexToRemove != -1) {
+                animCurrentChannels.remove(indexToRemove);
+            }
+
+            animCurrentChannels.add(selectedChannel);
+            animPrevTime.put(name, System.nanoTime());
+            animCurrentFrame.put(name, startingFrame);
+            animationEvents.computeIfAbsent(name, k -> new ArrayList<>());
+        } else {
+            System.out.println("The animation called " + name + " doesn't exist!");
+        }
+    }
+
+    public void keepAnimation(String name, float startingFrame) {
+        if (!isAnimationActive(name))
+            activateAnimation(name, startingFrame);
+    }
+
+    public abstract void activateAnimation(String name, float startingFrame);
+
+    public void stopAnimation(HashMap<String, Channel> animChannels, String name) {
+        Channel selectedChannel = animChannels.get(name);
+        if (selectedChannel != null) {
+            int indexToRemove = animCurrentChannels.indexOf(selectedChannel);
+            if (indexToRemove != -1) {
+                animCurrentChannels.remove(indexToRemove);
+                animPrevTime.remove(name);
+                animCurrentFrame.remove(name);
+                animationEvents.get(name).clear();
+            }
+        } else {
+            System.out.println("The animation called " + name + " doesn't exist!");
+        }
+    }
+
+    public abstract void stopAnimation(String name);
+
+    public void animationsUpdate() {
+        for (Iterator<Channel> it = animCurrentChannels.iterator(); it.hasNext(); ) {
+            Channel anim = it.next();
+            float prevFrame = animCurrentFrame.get(anim.name);
+            boolean animStatus = updateAnimation(anim, animPrevTime, animCurrentFrame);
+            if (animCurrentFrame.get(anim.name) != null) {
+                fireAnimationEvent(anim, prevFrame, animCurrentFrame.get(anim.name));
+            }
+            if (!animStatus) {
+                it.remove();
+                animPrevTime.remove(anim.name);
+                animCurrentFrame.remove(anim.name);
+                animationEvents.get(anim.name).clear();
+            }
+        }
+    }
+
+    public boolean isAnimationActive(String name) {
+        boolean animAlreadyUsed = false;
+        for (Channel anim : animatedModel.animationHandler.animCurrentChannels) {
+            if (anim.name.equals(name)) {
+                animAlreadyUsed = true;
+                break;
+            }
+        }
+
+        return animAlreadyUsed;
+    }
+
+    private void fireAnimationEvent(Channel anim, float prevFrame, float frame) {
+        if (MinecraftServer.getServer().isDedicatedServer()) {
+            fireAnimationEventServerSide(anim, prevFrame, frame);
+        } else {
+            fireAnimationEventClientSide(anim, prevFrame, frame);
+        }
+    }
+
+    @SideOnly(Side.CLIENT)
+    public abstract void fireAnimationEventClientSide(Channel anim, float prevFrame, float frame);
+
+    public abstract void fireAnimationEventServerSide(Channel anim, float prevFrame, float frame);
+
+    /**
+     * Check if the animation event has already been called.
+     */
+    public boolean alreadyCalledEvent(String animName, String eventName) {
+        if (animationEvents.get(animName) == null) {
+            System.out.println("Cannot check for event " + eventName + "! Animation " + animName + "does not exist or is not active.");
+            return true;
+        }
+        return animationEvents.get(animName).contains(eventName);
+    }
+
+    /**
+     * Set the animation event as "called", so it won't be fired again.
+     */
+    public void setCalledEvent(String animName, String eventName) {
+        if (animationEvents.get(animName) != null) {
+            animationEvents.get(animName).add(eventName);
+        } else {
+            System.out.println("Cannot set event " + eventName + "! Animation " + animName + "does not exist or is not active.");
+        }
     }
 }

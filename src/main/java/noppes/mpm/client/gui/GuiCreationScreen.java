@@ -23,14 +23,12 @@ import java.lang.reflect.Modifier;
 import java.util.*;
 
 public class GuiCreationScreen extends GuiModelInterface implements ITextfieldListener {
-    public HashMap<String, Class<? extends EntityLivingBase>> data = new HashMap<>();
-    private List<String> list;
     private final String[] ignoredTags = {"CanBreakDoors", "Bred", "PlayerCreated", "Tame", "HasReproduced"};
-
-    private GuiNpcButton prev;
-
-    private GuiNpcButton next;
+    public HashMap<String, Class<? extends EntityLivingBase>> data = new HashMap<>();
     public String hash;
+    private List<String> list;
+    private GuiNpcButton prev;
+    private GuiNpcButton next;
     private HashMap<Integer, String> mapped = new HashMap<>();
 
     public GuiCreationScreen() {

@@ -16,16 +16,15 @@ import org.lwjgl.opengl.GL11;
 
 public class GuiModelInterface
         extends GuiInterface {
-    public ModelData playerdata;
     private static int rotation = 0;
+    private static float zoomed = 60.0F;
+    public ModelData playerdata;
+    public int xOffset = 0;
     private GuiNpcButton left;
     private GuiNpcButton right;
     private GuiNpcButton zoom;
     private GuiNpcButton unzoom;
     private AbstractClientPlayer player;
-    private static float zoomed = 60.0F;
-
-    public int xOffset = 0;
 
     public GuiModelInterface() {
         this.xSize = 380;

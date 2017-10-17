@@ -1,17 +1,16 @@
 package noppes.mpm.client.model.extrapart.ctenotail;
 
-import java.util.HashMap;
-
 import noppes.mpm.client.MCALibrary.MCAModelRenderer;
 import noppes.mpm.client.MCALibrary.MCAToMPMModelRenderer;
-import noppes.mpm.client.MCALibrary.animation.AnimationHandler;
 import noppes.mpm.client.MCALibrary.math.Matrix4f;
 import noppes.mpm.client.MCALibrary.math.Quaternion;
 import noppes.mpm.client.model.ModelMPM;
 
+import java.util.HashMap;
+
 public class ModelCtenoTail extends MCAToMPMModelRenderer {
     public HashMap<String, MCAModelRenderer> parts = new HashMap<>();
-    
+
     MCAModelRenderer segment1;
     MCAModelRenderer thorn14;
     MCAModelRenderer thorn15;

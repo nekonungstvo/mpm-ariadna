@@ -11,10 +11,10 @@ import org.lwjgl.opengl.GL11;
 public class ModelScaleRenderer extends ModelRenderer {
     public boolean compiled;
     public int displayList;
-    protected ModelPartConfig config;
     public float x;
     public float y;
     public float z;
+    protected ModelPartConfig config;
 
     public ModelScaleRenderer(ModelBase par1ModelBase) {
         super(par1ModelBase);

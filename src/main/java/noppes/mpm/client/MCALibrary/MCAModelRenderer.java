@@ -193,13 +193,6 @@ public class MCAModelRenderer extends ModelScaleRenderer {
     }
 
     /**
-     * Set the rotation matrix values based on the given matrix.
-     */
-    public void setRotationMatrix(Matrix4f matrix) {
-        rotationMatrix.set(matrix);
-    }
-
-    /**
      * Reset the rotation matrix to the default one.
      */
     public void resetRotationMatrix() {
@@ -208,6 +201,13 @@ public class MCAModelRenderer extends ModelScaleRenderer {
 
     public Matrix4f getRotationMatrix() {
         return this.rotationMatrix;
+    }
+
+    /**
+     * Set the rotation matrix values based on the given matrix.
+     */
+    public void setRotationMatrix(Matrix4f matrix) {
+        rotationMatrix.set(matrix);
     }
 
     public Quaternion getDefaultRotationAsQuaternion() {

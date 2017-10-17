@@ -1,7 +1,6 @@
 package noppes.mpm.client.model;
 
 import net.minecraft.client.model.ModelRenderer;
-import noppes.mpm.client.model.part.*;
 
 public class ModelMpmNewFormat extends ModelMPM {
     private ModelScaleRenderer bipedLeftArmwear;

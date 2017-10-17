@@ -12,7 +12,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.GameRules;
 import net.minecraftforge.common.MinecraftForge;
-import noppes.mpm.client.MCALibrary.animation.AnimationHandler;
 import noppes.mpm.commands.*;
 import noppes.mpm.config.ConfigLoader;
 import noppes.mpm.config.ConfigProp;
@@ -34,23 +33,15 @@ public class MorePlayerModels {
     public static MorePlayerModels instance;
 
     public static int Revision = 5;
-
-    public File dir;
-
     public static boolean HasServerSide = false;
-
     @ConfigProp(info = "Enable different perspective heights for different model sizes")
     public static boolean EnablePOV = true;
-
     @ConfigProp(info = "Enables the item on your back")
     public static boolean EnableBackItem = true;
-
     @ConfigProp(info = "Enables chat bubbles")
     public static boolean EnableChatBubbles = true;
-
     @ConfigProp(info = "Enables MorePlayerModels startup update message")
     public static boolean EnableUpdateChecker = true;
-
     @ConfigProp(info = "Used to register buttons to legsAnimationHandler")
     public static int button1 = EnumAnimation.SLEEPING_SOUTH.ordinal();
     @ConfigProp(info = "Used to register buttons to legsAnimationHandler")
@@ -61,7 +52,7 @@ public class MorePlayerModels {
     public static int button4 = EnumAnimation.HUG.ordinal();
     @ConfigProp(info = "Used to register buttons to legsAnimationHandler")
     public static int button5 = EnumAnimation.DANCING.ordinal();
-
+    public File dir;
     public ConfigLoader configLoader;
 
 

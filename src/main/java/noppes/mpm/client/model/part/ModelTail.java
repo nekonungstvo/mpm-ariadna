@@ -9,7 +9,6 @@ import noppes.mpm.ModelData;
 import noppes.mpm.ModelPartData;
 import noppes.mpm.client.ClientProxy;
 import noppes.mpm.client.MCALibrary.animation.AnimationHandler;
-import noppes.mpm.client.animation.MPMAnimationHandler;
 import noppes.mpm.client.model.ModelMPM;
 import noppes.mpm.client.model.ModelScaleRenderer;
 import noppes.mpm.client.model.extrapart.ctenotail.ChannelCtenoIdle;
@@ -90,8 +89,7 @@ public class ModelTail extends ModelScaleRenderer {
         // Special Cteno idle wiggle
         if (!cteno.isHidden) {
 //            AnimationHandler.performAnimationInModel(cteno.parts, data.animationHandler);
-        }
-        else {
+        } else {
             this.rotateAngleY = (MathHelper.cos(par1 * 0.6662F) * 0.2F * par2);
             this.rotateAngleX = (MathHelper.sin(par3 * 0.067F) * 0.05F);
         }

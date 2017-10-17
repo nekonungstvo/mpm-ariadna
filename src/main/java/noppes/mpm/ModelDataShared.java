@@ -7,24 +7,20 @@ import net.minecraft.nbt.NBTTagList;
 import java.util.HashMap;
 
 public class ModelDataShared {
-    protected EntityLivingBase entity;
     public Class<? extends EntityLivingBase> entityClass;
-
     public ModelPartConfig head = new ModelPartConfig();
     public ModelPartConfig arms = new ModelPartConfig();
     public ModelPartConfig body = new ModelPartConfig();
     public ModelPartConfig legs = new ModelPartConfig();
     public ModelPartData legParts = new ModelPartData();
-
     public NBTTagCompound extra = new NBTTagCompound();
-    protected HashMap<String, ModelPartData> parts = new HashMap<>();
-
     public byte breasts = 0;
     public byte headwear = 2;
-
     public boolean newSkinFormat = false;
     public byte armsAmputee = 0;
     public boolean doubleHead = false;
+    protected EntityLivingBase entity;
+    protected HashMap<String, ModelPartData> parts = new HashMap<>();
 
     public NBTTagCompound writeToNBT() {
         NBTTagCompound compound = new NBTTagCompound();
@@ -88,6 +84,12 @@ public class ModelDataShared {
         return this.entityClass;
     }
 
+    public void setEntityClass(Class<? extends EntityLivingBase> entityClass) {
+        this.entityClass = entityClass;
+        this.entity = null;
+        this.extra = new NBTTagCompound();
+    }
+
     private void setEntityClass(String string) {
         this.entityClass = null;
         this.entity = null;
@@ -98,12 +100,6 @@ public class ModelDataShared {
             }
         } catch (ClassNotFoundException e) {
         }
-    }
-
-    public void setEntityClass(Class<? extends EntityLivingBase> entityClass) {
-        this.entityClass = entityClass;
-        this.entity = null;
-        this.extra = new NBTTagCompound();
     }
 
     public void clearEntity() {

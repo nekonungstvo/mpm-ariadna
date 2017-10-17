@@ -7,17 +7,15 @@ import noppes.mpm.client.gui.util.GuiNpcButton;
 import noppes.mpm.client.gui.util.GuiNpcLabel;
 
 public class GuiModelHead extends GuiModelInterface {
-    private GuiScreen parent;
     private final String[] arrHeadwear = {"gui.no", "gui.yes", "Solid"};
     private final String[] arrHair = {"gui.no", "Player", "Long", "Thin", "Stylish", "Ponytail"};
     private final String[] arrBeard = {"gui.no", "Player", "Standard", "Viking", "Long", "Short"};
     private final String[] arrMohawk = {"gui.no", "Type1"};
     private final String[] arrSnout = {"gui.no", "Player Small", "Player Medium", "Player Large", "Player Bunny", "Small1", "Medium1", "Large1", "Bunny1", "Beak1"};
-
     private final String[] arrEars = {"gui.no", "Player", "Player Bunny", "Bunny", "Type1"};
     private final String[] arrHorns = {"gui.no", "Player Bull", "Player Antlers", "Player AntennasB", "Player AntennasF", "Bull", "Antlers", "AntennasB", "AntennasF"};
-
     private final String[] arrDoubleHead = {"gui.no", "gui.yes"};
+    private GuiScreen parent;
 
     public GuiModelHead(GuiScreen parent) {
         this.parent = parent;
