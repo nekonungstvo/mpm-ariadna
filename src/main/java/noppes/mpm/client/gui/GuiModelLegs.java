@@ -4,6 +4,7 @@ import net.minecraft.client.gui.GuiScreen;
 import noppes.mpm.ModelPartData;
 import noppes.mpm.client.gui.util.GuiModelInterface;
 import noppes.mpm.client.gui.util.GuiNpcButton;
+import org.lwjgl.input.Keyboard;
 
 public class GuiModelLegs extends GuiModelInterface {
     private final String[] arrLegs = {"gui.no", "Player", "Player Naga", "Spider", "Horse", "Naga", "Mermaid", "Digitigrade"};
@@ -122,8 +123,17 @@ public class GuiModelLegs extends GuiModelInterface {
                     data.setTexture("tail/fin1", 4);
                 if (value == 9)
                     data.setTexture("tail/rodent1", 5);
-                if (value == 10)
-                    data.setTexture("", 6); // Cteno
+
+                // Premium parts
+                if (value > 9) {
+                    if (Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
+                        if (value == 10)
+                            data.setTexture("", 6); // Cteno
+                    } else {
+                        button.setValue(0);
+                        data.setTexture("", 0);
+                    }
+                }
 
                 initGui();
             }

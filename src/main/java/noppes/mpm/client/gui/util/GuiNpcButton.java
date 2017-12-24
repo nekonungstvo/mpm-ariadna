@@ -39,6 +39,9 @@ public class GuiNpcButton extends GuiButton {
         return this.displayValue;
     }
 
+    public void setValue(int value) {
+        this.displayValue = value;
+    }
 
     public void drawButton(Minecraft minecraft, int i, int j) {
         if (!this.shown)
