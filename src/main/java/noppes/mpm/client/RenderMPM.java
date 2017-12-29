@@ -106,38 +106,61 @@ public class RenderMPM extends RenderPlayer {
         if (this.data.loaded)
             return this.data.playerResource;
 
-        Minecraft mc = Minecraft.getMinecraft();
-        SkinManager skinmanager = mc.func_152342_ad();
+        final Minecraft mc = Minecraft.getMinecraft();
+        final SkinManager skinmanager = mc.func_152342_ad();
+        final GameProfile gp = player.getGameProfile();
+        final Map map = skinmanager.func_152788_a(gp);
 
-        GameProfile gp = player.getGameProfile();
-        Map map = skinmanager.func_152788_a(gp);
-        String url;
+        final File skinsDir = new File((File) ObfuscationReflectionHelper.getPrivateValue(SkinManager.class, skinmanager, 3), gp.getName().substring(0, 2));
+
+        final String url;
 
         if ((this.data.url != null) && (!this.data.url.isEmpty())) {
             url = this.data.url;
         } else {
-            MinecraftProfileTexture profile_skin = (MinecraftProfileTexture) map.get(MinecraftProfileTexture.Type.SKIN);
+            final MinecraftProfileTexture profile_skin = (MinecraftProfileTexture) map.get(MinecraftProfileTexture.Type.SKIN);
             if (profile_skin == null) {
+                this.data.loaded = true;
                 return player.getLocationSkin();
             } else {
                 url = profile_skin.getUrl();
             }
         }
 
-        File dir = new File((File) ObfuscationReflectionHelper.getPrivateValue(SkinManager.class, skinmanager, 3), gp.getName().substring(0, 2));
-        File file = new File(dir, gp.getName());
-        if (file.exists())
-            file.delete();
+        final File skinFile = new File(skinsDir, gp.getName());
+        if (skinFile.exists())
+            skinFile.delete();
 
-        ResourceLocation location = new ResourceLocation("skins/" + gp.getName());
-        func_110301_a(file, location, url);
+        final ResourceLocation location = new ResourceLocation("skins/" + gp.getName());
+        func_110301_a(skinFile, location, url);
         player.func_152121_a(MinecraftProfileTexture.Type.SKIN, location);
 
-        this.data.playerResource = location;
-        this.data.loaded = true;
+        data.playerResource = location;
+        data.loaded = true;
         return location;
     }
 
+    public ResourceLocation loadExtraTexture(AbstractClientPlayer player) {
+        if (data.extraUrl == null || data.extraUrl.isEmpty()) return null;
+        if (data.extraLoaded) return data.playerExtraTexture;
+
+        final Minecraft mc = Minecraft.getMinecraft();
+        final SkinManager skinmanager = mc.func_152342_ad();
+        final GameProfile gp = player.getGameProfile();
+
+        final String fileName = "__extra_" + gp.getName();
+        final File skinsDir = new File((File) ObfuscationReflectionHelper.getPrivateValue(SkinManager.class, skinmanager, 3), gp.getName().substring(0, 2));
+        final File skinFile = new File(skinsDir, fileName);
+        if (skinFile.exists())
+            skinFile.delete();
+
+        final ResourceLocation location = new ResourceLocation("skins/" + fileName);
+        func_110301_a(skinFile, location, data.extraUrl);
+
+        data.playerExtraTexture = location;
+        data.extraLoaded = true;
+        return location;
+    }
 
     public void renderFirstPersonArm(EntityPlayer player) {
         this.data = PlayerDataController.instance.getPlayerData(player);
@@ -147,6 +170,9 @@ public class RenderMPM extends RenderPlayer {
                 this.data.playerResource = loadResource((AbstractClientPlayer) player);
             } else
                 this.data.playerResource = ((AbstractClientPlayer) player).getLocationSkin();
+        }
+        if (!data.extraUrl.isEmpty() && !data.extraLoaded && data.loaded) {
+            this.data.playerExtraTexture = loadExtraTexture((AbstractClientPlayer) player);
         }
         setModelData(this.data, player);
 

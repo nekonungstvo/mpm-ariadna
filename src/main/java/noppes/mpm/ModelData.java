@@ -12,15 +12,19 @@ import net.minecraftforge.common.IExtendedEntityProperties;
 import noppes.mpm.client.animation.MPMAnimationHandler;
 import noppes.mpm.constants.EnumAnimation;
 
+import javax.xml.bind.DatatypeConverter;
 import java.security.MessageDigest;
 
 public class ModelData extends ModelDataShared implements IExtendedEntityProperties {
     public int rev = MorePlayerModels.Revision;
 
     public boolean loaded = false;
+    public boolean extraLoaded = false;
     public boolean reloadBoxes = false;
 
+    public MPMAnimationHandler animationHandler = new MPMAnimationHandler(this);
     public ResourceLocation playerResource;
+    public ResourceLocation playerExtraTexture;
 
     public ItemStack backItem;
 
@@ -32,7 +36,7 @@ public class ModelData extends ModelDataShared implements IExtendedEntityPropert
     public short soundType = 0;
 
     public String url = "";
-    public MPMAnimationHandler animationHandler = new MPMAnimationHandler(this);
+    public String extraUrl = "";
 
     public NBTTagCompound writeToNBT() {
         NBTTagCompound compound = super.writeToNBT();
@@ -40,6 +44,7 @@ public class ModelData extends ModelDataShared implements IExtendedEntityPropert
         compound.setInteger("Animation", this.animation.ordinal());
         compound.setShort("SoundType", this.soundType);
         compound.setString("CustomSkinUrl", this.url);
+        compound.setString("ExtraSkinUrl", this.extraUrl);
         return compound;
     }
 
@@ -48,9 +53,10 @@ public class ModelData extends ModelDataShared implements IExtendedEntityPropert
         this.rev = compound.getInteger("Revision");
         this.soundType = compound.getShort("SoundType");
         this.url = compound.getString("CustomSkinUrl");
+        this.extraUrl = compound.getString("ExtraSkinUrl");
         setAnimation(compound.getInteger("Animation"));
-
         this.loaded = false;
+        this.extraLoaded = false;
     }
 
     public void setAnimation(int i) {
@@ -87,25 +93,36 @@ public class ModelData extends ModelDataShared implements IExtendedEntityPropert
 
     public String getHash() {
         try {
-            MessageDigest digest = MessageDigest.getInstance("MD5");
-            String toHash = this.arms.toString() + this.legs.toString() + this.body.toString() + this.head.toString();
-
-            if (this.entityClass != null) {
-                toHash = toHash + this.entityClass.getCanonicalName();
-            }
-            toHash = toHash + this.legParts.toString() + this.headwear + this.breasts + this.soundType + this.url
-                    + newSkinFormat + armsAmputee + doubleHead;
+            final MessageDigest digest = MessageDigest.getInstance("MD5");
+            final StringBuilder toHash = new StringBuilder()
+                    .append(this.head.toString())
+                    .append(this.body.toString())
+                    .append(this.arms.toString())
+                    .append(this.legs.toString())
+                    // Parts, url
+                    .append(this.legParts.toString())
+                    .append(this.headwear)
+                    .append(this.breasts)
+                    .append(this.soundType)
+                    .append(this.url)
+                    .append(this.extraUrl)
+                    // Ari extra
+                    .append(newSkinFormat)
+                    .append(armsAmputee)
+                    .append(doubleHead);
 
             for (String name : this.parts.keySet()) {
-                toHash = toHash + name + ":" + this.parts.get(name).toString();
-            }
-            byte[] hash = digest.digest(toHash.getBytes("UTF-8"));
-            StringBuilder sb = new StringBuilder(2 * hash.length);
-            for (byte b : hash) {
-                sb.append(String.format("%02x", b & 0xFF));
+                toHash.append(name)
+                        .append(":")
+                        .append(this.parts.get(name).toString());
             }
 
-            return sb.toString();
+            if (this.entityClass != null) {
+                toHash.append(this.entityClass.getCanonicalName());
+            }
+
+            byte[] hash = digest.digest(toHash.toString().getBytes("UTF-8"));
+            return DatatypeConverter.printHexBinary(hash);
         } catch (Exception e) {
         }
 

@@ -12,6 +12,7 @@ import net.minecraft.nbt.NBTTagByte;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import noppes.mpm.ModelData;
+import noppes.mpm.ModelPartData;
 import noppes.mpm.MorePlayerModels;
 import noppes.mpm.PlayerDataController;
 import noppes.mpm.client.EntityFakeLiving;
@@ -91,8 +92,21 @@ public class GuiCreationScreen extends GuiModelInterface implements ITextfieldLi
 
         addButton(new GuiNpcButton(44, this.guiLeft + 310, this.guiTop + 14, 80, 20, "Save Settings"));
         addButton(new GuiNpcButton(45, this.guiLeft + 310, this.guiTop + 36, 80, 20, "Load Settings"));
-        addLabel(new GuiNpcLabel(52, "Skin Url", this.guiLeft, this.guiTop + 163, 16777215));
-        addTextField(new GuiNpcTextField(52, this, this.guiLeft, this.guiTop + 173, 160, 20, this.playerdata.url));
+
+        {
+            int y = this.guiTop + 173;
+            addLabel(new GuiNpcLabel(52, "Skin Url", this.guiLeft, y, 16777215));
+            addTextField(new GuiNpcTextField(52, this, this.guiLeft, y + 10, 160, 20, this.playerdata.url));
+
+            // Premiums with extra texture
+            if (entity == null) {
+                final ModelPartData tail = this.playerdata.getPartData("tail");
+                if (tail.extraTexture) { // Or any other
+                    y += 32;
+                    addTextField(new GuiNpcTextField(53, this, this.guiLeft, y, 160, 20, this.playerdata.extraUrl));
+                }
+            }
+        }
     }
 
     private void showPlayerButtons() {
@@ -292,7 +306,13 @@ public class GuiCreationScreen extends GuiModelInterface implements ITextfieldLi
     }
 
     public void unFocused(GuiNpcTextField guiNpcTextField) {
-        this.playerdata.url = guiNpcTextField.getText();
-        this.playerdata.loaded = false;
+        if (guiNpcTextField.id == 52) {
+            playerdata.url = guiNpcTextField.getText();
+            playerdata.loaded = false;
+        }
+        else if (guiNpcTextField.id == 53) {
+            playerdata.extraUrl = guiNpcTextField.getText();
+            playerdata.extraLoaded = false;
+        }
     }
 }

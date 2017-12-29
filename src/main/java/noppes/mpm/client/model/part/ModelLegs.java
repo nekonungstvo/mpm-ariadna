@@ -206,11 +206,11 @@ public class ModelLegs
         base.textureHeight = baseHeight;
     }
 
-    public void setRotation(ModelRenderer model, float x, float y, float z) {
-        model.rotateAngleX = x;
-        model.rotateAngleY = y;
-        model.rotateAngleZ = z;
-    }
+//    public void setRotation(ModelRenderer model, float x, float y, float z) {
+//        model.rotateAngleX = x;
+//        model.rotateAngleY = y;
+//        model.rotateAngleZ = z;
+//    }
 
     public void setRotationAngles(float par1, float par2, float par3, float par4, float par5, float par6, Entity entity) {
         ModelPartData part = this.data.legParts;

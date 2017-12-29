@@ -1,13 +1,15 @@
 package noppes.mpm;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
 
 public class ModelPartData {
     public int color = 16777215;
     public String texture;
     public byte type = 0;
     public boolean playerTexture;
-    private net.minecraft.util.ResourceLocation location;
+    public boolean extraTexture;
+    private ResourceLocation location;
 
     public ModelPartData() {
         this.playerTexture = true;
@@ -16,6 +18,7 @@ public class ModelPartData {
     public ModelPartData(String texture) {
         this.texture = texture;
         this.playerTexture = false;
+        this.extraTexture = false;
     }
 
     public NBTTagCompound writeToNBT() {
@@ -25,6 +28,7 @@ public class ModelPartData {
         if ((this.texture != null) && (!this.texture.isEmpty()))
             compound.setString("Texture", this.texture);
         compound.setBoolean("PlayerTexture", this.playerTexture);
+        compound.setBoolean("ExtraTexture", this.extraTexture);
         return compound;
     }
 
@@ -33,13 +37,14 @@ public class ModelPartData {
         this.color = compound.getInteger("Color");
         this.texture = compound.getString("Texture");
         this.playerTexture = compound.getBoolean("PlayerTexture");
+        this.extraTexture = compound.getBoolean("ExtraTexture");
         this.location = null;
     }
 
-    public net.minecraft.util.ResourceLocation getResource() {
+    public ResourceLocation getResource() {
         if (this.location != null)
             return this.location;
-        this.location = new net.minecraft.util.ResourceLocation(this.texture);
+        this.location = new ResourceLocation(this.texture);
         return this.location;
     }
 
@@ -50,8 +55,8 @@ public class ModelPartData {
             this.playerTexture = true;
             this.texture = texture;
         } else {
-            this.texture = ("moreplayermodels:textures/" + texture + ".png");
             this.playerTexture = false;
+            this.texture = ("moreplayermodels:textures/" + texture + ".png");
         }
     }
 

@@ -50,9 +50,9 @@ public class ModelHeadwear extends ModelScaleRenderer {
         addChild(bottom);
     }
 
-    public void setRotation(ModelRenderer model, float x, float y, float z) {
-        model.rotateAngleX = x;
-        model.rotateAngleY = y;
-        model.rotateAngleZ = z;
-    }
+//    public void setRotation(ModelRenderer model, float x, float y, float z) {
+//        model.rotateAngleX = x;
+//        model.rotateAngleY = y;
+//        model.rotateAngleZ = z;
+//    }
 }

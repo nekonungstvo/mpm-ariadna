@@ -12,6 +12,8 @@ import noppes.mpm.client.MCALibrary.animation.AnimationHandler;
 import noppes.mpm.client.model.ModelMPM;
 import noppes.mpm.client.model.ModelScaleRenderer;
 import noppes.mpm.client.model.extrapart.ctenotail.ChannelCtenoIdle;
+import noppes.mpm.client.model.extrapart.ctenotail.ChannelCtenoLowered;
+import noppes.mpm.client.model.extrapart.ctenotail.ChannelCtenoSit;
 import noppes.mpm.client.model.extrapart.ctenotail.ModelCtenoTail;
 import noppes.mpm.client.model.part.tails.ModelDragonTail;
 import noppes.mpm.client.model.part.tails.ModelRodentTail;
@@ -19,6 +21,8 @@ import noppes.mpm.client.model.part.tails.ModelSquirrelTail;
 import noppes.mpm.client.model.part.tails.ModelTailFin;
 import noppes.mpm.constants.EnumAnimation;
 import org.lwjgl.opengl.GL11;
+
+import java.util.stream.Stream;
 
 public class ModelTail extends ModelScaleRenderer {
     public ModelData data;
@@ -81,18 +85,17 @@ public class ModelTail extends ModelScaleRenderer {
     public void setData(ModelData data, EntityLivingBase entity) {
         this.data = data;
         this.entity = entity;
-
         initData(data);
     }
 
     public void setRotationAngles(float par1, float par2, float par3, float par4, float par5, float par6, Entity entity) {
         // Special Cteno idle wiggle
         if (!cteno.isHidden) {
-//            AnimationHandler.performAnimationInModel(cteno.parts, data.animationHandler);
+            AnimationHandler.performAnimationInModel(cteno.parts, data.animationHandler);
         } else {
-            this.rotateAngleY = (MathHelper.cos(par1 * 0.6662F) * 0.2F * par2);
-            this.rotateAngleX = (MathHelper.sin(par3 * 0.067F) * 0.05F);
+            this.rotateAngleX = (MathHelper.sin(par3 * 0.067F) * 0.05F); // Idle vert wiggle
         }
+        this.rotateAngleY = (MathHelper.cos(par1 * 0.6662F) * 0.2F * par2); // Walking wiggle
 
         if (this.data.animation == EnumAnimation.WAG) {
             this.rotateAngleY = ((float) (Math.sin(entity.ticksExisted * 0.5F) * 0.3f));
@@ -114,7 +117,10 @@ public class ModelTail extends ModelScaleRenderer {
             this.rotationPointY = 11.0F;
             this.rotationPointZ = -1.0F;
         }
-        this.rotationPointZ += this.base.bipedRightLeg.rotationPointZ + 0.5F;
+//        this.rotationPointZ += this.base.bipedRightLeg.rotationPointZ + 0.5F;
+
+//        if (base.isSneak)
+//            this.rotationPointZ = 0;
     }
 
     public void setLivingAnimations(ModelPartData data, EntityLivingBase entity, float par2, float par3, float par4) {
@@ -137,16 +143,21 @@ public class ModelTail extends ModelScaleRenderer {
         rodent.isHidden = (config.type != 5);
         cteno.isHidden = (config.type != 6);
 
-        if (!config.playerTexture) {
+        if (config.type > 5) { // Premium extra parts gets extra texture
+            this.location = data.playerExtraTexture;
+        } else if (!config.playerTexture) {
             this.location = config.getResource();
         } else {
             this.location = null;
         }
 
         if (!cteno.isHidden) {
-            data.animationHandler.keepAnimation(ChannelCtenoIdle.ANIM_IDLE, 0);
-        } else {
-            data.animationHandler.stopAnimation(ChannelCtenoIdle.ANIM_IDLE);
+            final String anim = ModelCtenoTail.getAnimation(data.animation);
+            Stream.of(ChannelCtenoIdle.ANIM_NAME, ChannelCtenoLowered.ANIM_NAME, ChannelCtenoSit.ANIM_NAME)
+                .filter(s -> !s.equals(anim))
+                .forEach(data.animationHandler::stopAnimation);
+
+            data.animationHandler.keepAnimation(anim, 0);
         }
     }
 

@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Channel {
-    public String name;
+    public final String name;
     /**
      * The speed of the whole channel (frames per second).
      */

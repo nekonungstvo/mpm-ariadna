@@ -35,10 +35,10 @@ public class GuiModelInterface
     public void initGui() {
         super.initGui();
 
-        addButton(this.unzoom = new GuiNpcButton(666, this.guiLeft + 148 + this.xOffset, this.guiTop + 200, 20, 20, "-"));
-        addButton(this.zoom = new GuiNpcButton(667, this.guiLeft + 214 + this.xOffset, this.guiTop + 200, 20, 20, "+"));
-        addButton(this.left = new GuiNpcButton(668, this.guiLeft + 170 + this.xOffset, this.guiTop + 200, 20, 20, "<"));
-        addButton(this.right = new GuiNpcButton(669, this.guiLeft + 192 + this.xOffset, this.guiTop + 200, 20, 20, ">"));
+        addButton(this.unzoom = new GuiNpcButton(666, this.guiLeft + 148 + this.xOffset, this.guiTop + 210, 20, 20, "-"));
+        addButton(this.zoom = new GuiNpcButton(667, this.guiLeft + 214 + this.xOffset, this.guiTop + 210, 20, 20, "+"));
+        addButton(this.left = new GuiNpcButton(668, this.guiLeft + 170 + this.xOffset, this.guiTop + 210, 20, 20, "<"));
+        addButton(this.right = new GuiNpcButton(669, this.guiLeft + 192 + this.xOffset, this.guiTop + 210, 20, 20, ">"));
 
         addButton(new GuiNpcButton(66, this.width - 22, 2, 20, 20, "X"));
     }

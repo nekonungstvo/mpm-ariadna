@@ -42,6 +42,10 @@ public class RenderEvent {
             } else
                 this.data.playerResource = ((AbstractClientPlayer) player).getLocationSkin();
         }
+        if (!data.extraUrl.isEmpty() && !this.data.extraLoaded && data.loaded) {
+            this.data.playerExtraTexture = renderer.loadExtraTexture((AbstractClientPlayer) player);
+        }
+
         if (!(event.renderer instanceof RenderMPM)) {
             RenderManager.instance.entityRenderMap.put(EntityPlayer.class, renderer);
             RenderManager.instance.entityRenderMap.put(EntityPlayerSP.class, renderer);

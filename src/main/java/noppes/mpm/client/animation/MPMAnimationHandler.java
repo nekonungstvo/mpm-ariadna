@@ -4,6 +4,8 @@ import noppes.mpm.ModelData;
 import noppes.mpm.client.MCALibrary.animation.AnimationHandler;
 import noppes.mpm.client.MCALibrary.animation.Channel;
 import noppes.mpm.client.model.extrapart.ctenotail.ChannelCtenoIdle;
+import noppes.mpm.client.model.extrapart.ctenotail.ChannelCtenoLowered;
+import noppes.mpm.client.model.extrapart.ctenotail.ChannelCtenoSit;
 
 import java.util.HashMap;
 
@@ -11,7 +13,9 @@ public class MPMAnimationHandler extends AnimationHandler {
     public static HashMap<String, Channel> animChannels = new HashMap<>();
 
     static {
-        put(new ChannelCtenoIdle(ChannelCtenoIdle.ANIM_IDLE, 1.0F, 3, Channel.Mode.LOOP_SIN));
+        put(new ChannelCtenoIdle(1f, 3, Channel.Mode.LOOP_SIN));
+        put(new ChannelCtenoLowered(1f, 2, Channel.Mode.LOOP));
+        put(new ChannelCtenoSit(1f, 2, Channel.Mode.LOOP));
     }
 
     public MPMAnimationHandler(ModelData model) {

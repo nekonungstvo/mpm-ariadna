@@ -4,6 +4,8 @@ import net.minecraft.client.gui.GuiScreen;
 import noppes.mpm.ModelPartData;
 import noppes.mpm.client.gui.util.GuiModelInterface;
 import noppes.mpm.client.gui.util.GuiNpcButton;
+import noppes.mpm.client.gui.util.GuiNpcLabel;
+import noppes.mpm.client.gui.util.GuiNpcTextField;
 import org.lwjgl.input.Keyboard;
 
 public class GuiModelLegs extends GuiModelInterface {
@@ -31,8 +33,9 @@ public class GuiModelLegs extends GuiModelInterface {
         y += 22;
         addButton(new GuiNpcButton(2, this.guiLeft + 50, y, 70, 20, this.arrTail, getTailIndex(tail)));
         addLabel(new noppes.mpm.client.gui.util.GuiNpcLabel(2, "Tail", this.guiLeft, y + 5, 16777215));
-        if (tail != null)
+        if (tail != null) {
             addButton(new GuiNpcButton(12, this.guiLeft + 122, y, 40, 20, tail.getColor()));
+        }
     }
 
     private int getNagaIndex(ModelPartData data) {
@@ -103,11 +106,12 @@ public class GuiModelLegs extends GuiModelInterface {
             int value = button.getValue();
             if (value == 0) {
                 this.playerdata.removePart("tail");
+                initGui();
             } else {
                 ModelPartData data = this.playerdata.getOrCreatePart("tail");
                 if (value == 1)
                     data.setTexture("", 0);
-                if (value == 2)
+                if (value == 2) // Dragon player
                     data.setTexture("", 1);
                 if (value == 3)
                     data.setTexture("tail/tail1", 0);
@@ -115,7 +119,7 @@ public class GuiModelLegs extends GuiModelInterface {
                     data.setTexture("tail/tail2", 0);
                 if (value == 5)
                     data.setTexture("tail/horse1", 2);
-                if (value == 6)
+                if (value == 6) // Dragon
                     data.setTexture("tail/dragon1", 1);
                 if (value == 7)
                     data.setTexture("tail/squirrel1", 3);
@@ -125,10 +129,13 @@ public class GuiModelLegs extends GuiModelInterface {
                     data.setTexture("tail/rodent1", 5);
 
                 // Premium parts
+                data.extraTexture = false;
                 if (value > 9) {
                     if (Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-                        if (value == 10)
-                            data.setTexture("", 6); // Cteno
+                        if (value == 10) {
+                            data.setTexture("", 6);
+                            data.extraTexture = true;
+                        }
                     } else {
                         button.setValue(0);
                         data.setTexture("", 0);
@@ -137,13 +144,14 @@ public class GuiModelLegs extends GuiModelInterface {
 
                 initGui();
             }
-            if (button.id == 11) {
-                this.mc.displayGuiScreen(new GuiModelColor(this, this.playerdata.legParts));
-            }
+        }
 
-            if (button.id == 12) {
-                this.mc.displayGuiScreen(new GuiModelColor(this, this.playerdata.getPartData("tail")));
-            }
+        if (button.id == 11) { // Legs color
+            this.mc.displayGuiScreen(new GuiModelColor(this, this.playerdata.legParts));
+        }
+
+        if (button.id == 12) { // Tail color
+            this.mc.displayGuiScreen(new GuiModelColor(this, this.playerdata.getPartData("tail")));
         }
     }
 
