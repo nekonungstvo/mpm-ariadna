@@ -101,7 +101,7 @@ public class GuiCreationScreen extends GuiModelInterface implements ITextfieldLi
             // Premiums with extra texture
             if (entity == null) {
                 final ModelPartData tail = this.playerdata.getPartData("tail");
-                if (tail.extraTexture) { // Or any other
+                if (tail != null && tail.extraTexture) { // Or any other
                     y += 32;
                     addTextField(new GuiNpcTextField(53, this, this.guiLeft, y, 160, 20, this.playerdata.extraUrl));
                 }
