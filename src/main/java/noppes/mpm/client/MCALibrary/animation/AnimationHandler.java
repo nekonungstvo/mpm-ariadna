@@ -3,8 +3,6 @@ package noppes.mpm.client.MCALibrary.animation;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.entity.Entity;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.MathHelper;
 import noppes.mpm.ModelData;
 import noppes.mpm.client.MCALibrary.MCAModelRenderer;
