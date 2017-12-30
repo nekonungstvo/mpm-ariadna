@@ -46,10 +46,6 @@ public abstract class AnimationHandler {
         animatedModel = model;
     }
 
-//	public Entity getEntity() {
-//		return animatedEntity;
-//	}
-
     /**
      * Update animation values. Return false if the animation should stop.
      */
@@ -206,10 +202,6 @@ public abstract class AnimationHandler {
         }
     }
 
-    public static boolean isWorldRemote(Entity animatedEntity) {
-        return animatedEntity.worldObj.isRemote;
-    }
-
     private static float mapSin(float v, float min, float max) {
         final float nv = (v + 1f) / 2f;
         return min + nv * (max - min);
@@ -264,11 +256,7 @@ public abstract class AnimationHandler {
     public void animationsUpdate() {
         for (Iterator<Channel> it = animCurrentChannels.iterator(); it.hasNext(); ) {
             Channel anim = it.next();
-            float prevFrame = animCurrentFrame.get(anim.name);
             boolean animStatus = updateAnimation(anim, animPrevTime, animCurrentFrame);
-            if (animCurrentFrame.get(anim.name) != null) {
-                fireAnimationEvent(anim, prevFrame, animCurrentFrame.get(anim.name));
-            }
             if (!animStatus) {
                 it.remove();
                 animPrevTime.remove(anim.name);
@@ -289,19 +277,6 @@ public abstract class AnimationHandler {
 
         return animAlreadyUsed;
     }
-
-    private void fireAnimationEvent(Channel anim, float prevFrame, float frame) {
-        if (MinecraftServer.getServer().isDedicatedServer()) {
-            fireAnimationEventServerSide(anim, prevFrame, frame);
-        } else {
-            fireAnimationEventClientSide(anim, prevFrame, frame);
-        }
-    }
-
-    @SideOnly(Side.CLIENT)
-    public abstract void fireAnimationEventClientSide(Channel anim, float prevFrame, float frame);
-
-    public abstract void fireAnimationEventServerSide(Channel anim, float prevFrame, float frame);
 
     /**
      * Check if the animation event has already been called.
