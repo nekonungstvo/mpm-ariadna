@@ -56,8 +56,8 @@ public class RenderMPM extends RenderPlayer {
         setRenderManager(RenderManager.instance);
         this.modelBipedMain = new ModelMPM(0.0F);
         this.modelBipedMainNewFormat = new ModelMpmNewFormat();
-        this.modelArmor = new ModelMPM(0.5F);
-        this.modelArmorChestplate = new ModelMPM(1.0F);
+        this.modelArmor = new ModelMPM(0.3F);
+        this.modelArmorChestplate = new ModelMPM(0.4F);
     }
 
     public void setModelData(ModelData data, EntityLivingBase entity) {
