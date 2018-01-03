@@ -26,7 +26,7 @@ public class ModelMpmNewFormat extends ModelMPM {
         bipedHead.setRotationPoint(0.0F, 0.0F, 0.0F);
 
         bipedHeadwear = new ModelScaleRenderer(this, 32, 0);
-        bipedHeadwear.addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8, 0.5F);
+        bipedHeadwear.addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8, 0.25F);
         bipedHeadwear.setRotationPoint(0.0F, 0.0F, 0.0F);
 
         bipedBody = new ModelScaleRenderer(this, 16, 16);

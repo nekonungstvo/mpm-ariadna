@@ -61,12 +61,13 @@ public class ModelMPM extends ModelBiped {
         this.bipedEars = new ModelRenderer(this, 24, 0);
         this.bipedEars.addBox(-3.0F, -6.0F, -1.0F, 6, 6, 1, z);
 
+        final float headZ = isArmor ? z + 0.3f : z;
         this.bipedHead = new ModelScaleRenderer(this, 0, 0);
-        this.bipedHead.addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8, z);
+        this.bipedHead.addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8, headZ);
         this.bipedHead.setRotationPoint(0.0F, 0.0F, 0.0F);
 
         this.bipedHeadwear = new ModelScaleRenderer(this, 32, 0);
-        this.bipedHeadwear.addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8, z + 0.5F);
+        this.bipedHeadwear.addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8, z + 0.25F);
         this.bipedHeadwear.setRotationPoint(0.0F, 0.0F, 0.0F);
 
         this.bipedBody = new ModelScaleRenderer(this, 16, 16);
