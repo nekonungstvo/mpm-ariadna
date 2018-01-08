@@ -30,7 +30,7 @@ public class RenderEvent {
 
     private ModelData data;
 
-    @SubscribeEvent(priority = EventPriority.LOWEST)
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void pre(RenderPlayerEvent.Pre event) {
         EntityPlayer player = event.entityPlayer;
         this.data = PlayerDataController.instance.getPlayerData(player);

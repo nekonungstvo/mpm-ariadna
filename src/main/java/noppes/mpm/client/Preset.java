@@ -13,6 +13,23 @@ public class Preset {
     public static void FillDefault(HashMap<String, Preset> presets) {
         ModelData data = new ModelData();
         Preset preset = new Preset();
+        preset.name = "Human Male";
+        preset.data = data;
+        presets.put("human male", preset);
+
+        data = new ModelData();
+        preset = new Preset();
+        preset.name = "Human Female";
+        preset.data = data;
+        data.breasts = 2;
+        data.head.setScale(0.95F, 0.95F);
+        data.legs.setScale(0.92F, 0.92F);
+        data.arms.setScale(0.8F, 0.92F);
+        data.body.setScale(0.92F, 0.92F);
+        presets.put("human female", preset);
+
+        data = new ModelData();
+        preset = new Preset();
         preset.name = "Elf Male";
         preset.data = data;
         data.legs.setScale(0.85F, 1.15F);
@@ -72,23 +89,6 @@ public class Preset {
         data.arms.setScale(1.1F, 1.0F);
         data.body.setScale(1.1F, 1.0F, 1.25F);
         presets.put("orc female", preset);
-
-        data = new ModelData();
-        preset = new Preset();
-        preset.name = "Human Male";
-        preset.data = data;
-        presets.put("human male", preset);
-
-        data = new ModelData();
-        preset = new Preset();
-        preset.name = "Human Female";
-        preset.data = data;
-        data.breasts = 2;
-        data.head.setScale(0.95F, 0.95F);
-        data.legs.setScale(0.92F, 0.92F);
-        data.arms.setScale(0.8F, 0.92F);
-        data.body.setScale(0.92F, 0.92F);
-        presets.put("human female", preset);
 
         data = new ModelData();
         preset = new Preset();
