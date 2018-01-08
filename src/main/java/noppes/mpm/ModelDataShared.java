@@ -1,5 +1,6 @@
 package noppes.mpm;
 
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -94,11 +95,11 @@ public class ModelDataShared {
         this.entityClass = null;
         this.entity = null;
         try {
-            Class<?> cls = Class.forName(string);
-            if (cls.isAssignableFrom(EntityLivingBase.class)) {
-                setEntityClass(cls.asSubclass(EntityLivingBase.class));
+            final Class<?> c = Class.forName(string);
+            if (EntityLiving.class.isAssignableFrom(c)) {
+                setEntityClass(c.asSubclass(EntityLivingBase.class));
             }
-        } catch (ClassNotFoundException e) {
+        } catch (Exception ignored) {
         }
     }
 
