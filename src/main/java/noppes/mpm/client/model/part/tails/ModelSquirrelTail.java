@@ -4,14 +4,11 @@ import net.minecraft.client.model.ModelRenderer;
 import noppes.mpm.client.model.ModelMPM;
 
 public class ModelSquirrelTail extends ModelRenderer {
-    private ModelMPM base;
-
     public ModelSquirrelTail(ModelMPM base) {
         super(base);
-        this.base = base;
 
-        this.textureWidth = 64.0F;
-        this.textureHeight = 32.0F;
+        this.textureWidth = 64;
+        this.textureHeight = 64;
 
         ModelRenderer Shape1 = new ModelRenderer(base, 0, 0);
         Shape1.addBox(-1.0F, -1.0F, -1.0F, 2, 2, 3);
@@ -44,12 +41,7 @@ public class ModelSquirrelTail extends ModelRenderer {
         Shape4.addChild(Shape5);
     }
 
-
-    public void setRotationAngles(float par1, float par2, float par3, float par4, float par5, float par6, net.minecraft.entity.Entity entity) {
-    }
-
-
-    private void setRotation(ModelRenderer model, float x, float y, float z) {
+    private static void setRotation(ModelRenderer model, float x, float y, float z) {
         model.rotateAngleX = x;
         model.rotateAngleY = y;
         model.rotateAngleZ = z;

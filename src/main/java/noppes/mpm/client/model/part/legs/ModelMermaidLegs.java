@@ -13,8 +13,8 @@ public class ModelMermaidLegs extends ModelRenderer {
 
     public ModelMermaidLegs(ModelBase base) {
         super(base);
-        this.textureWidth = 64.0F;
-        this.textureHeight = 32.0F;
+        this.textureWidth = 64;
+        this.textureHeight = 64;
 
         this.top = new ModelRenderer(base, 0, 16);
         this.top.addBox(-2.0F, -2.5F, -2.0F, 8, 9, 4);

@@ -11,7 +11,7 @@ public class ModelFin extends ModelPartInterface {
 
     public ModelFin(ModelMPM base) {
         super(base);
-        this.model = new Model2DRenderer(base, 56.0F, 20.0F, 8, 12, 64.0F, 32.0F);
+        this.model = new Model2DRenderer(base, 56.0F, 20.0F, 8, 12, 64, 64);
         this.model.setRotationPoint(-0.5F, 12.0F, 10.0F);
         this.model.setScale(0.74F);
         this.model.rotateAngleY = 1.5707964F;

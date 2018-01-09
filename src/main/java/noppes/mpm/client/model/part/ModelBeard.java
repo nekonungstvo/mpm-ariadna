@@ -11,7 +11,7 @@ public class ModelBeard extends ModelPartInterface {
 
     public ModelBeard(ModelMPM base) {
         super(base);
-        this.model = new Model2DRenderer(base, 56.0F, 20.0F, 8, 12, 64.0F, 32.0F);
+        this.model = new Model2DRenderer(base, 56.0F, 20.0F, 8, 12, 64, 64);
         this.model.setRotationPoint(-3.99F, 11.9F, -4.0F);
         this.model.setScale(0.74F);
         addChild(this.model);
