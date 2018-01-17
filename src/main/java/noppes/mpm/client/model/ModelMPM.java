@@ -67,7 +67,7 @@ public class ModelMPM extends ModelBiped {
         this.bipedHead.setRotationPoint(0.0F, 0.0F, 0.0F);
 
         this.bipedHeadwear = new ModelScaleRenderer(this, 32, 0);
-        this.bipedHeadwear.addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8, z + 0.25F);
+        this.bipedHeadwear.addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8, headZ + 0.25F);
         this.bipedHeadwear.setRotationPoint(0.0F, 0.0F, 0.0F);
 
         this.bipedBody = new ModelScaleRenderer(this, 16, 16);
