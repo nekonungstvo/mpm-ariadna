@@ -15,6 +15,9 @@ import noppes.mpm.client.model.extrapart.ctenotail.ChannelCtenoIdle;
 import noppes.mpm.client.model.extrapart.ctenotail.ChannelCtenoLowered;
 import noppes.mpm.client.model.extrapart.ctenotail.ChannelCtenoSit;
 import noppes.mpm.client.model.extrapart.ctenotail.ModelCtenoTail;
+import noppes.mpm.client.model.extrapart.flufftail.ChannelFluffyLie;
+import noppes.mpm.client.model.extrapart.flufftail.ChannelFluffySit;
+import noppes.mpm.client.model.extrapart.flufftail.ModelFluffyTail;
 import noppes.mpm.client.model.part.tails.ModelDragonTail;
 import noppes.mpm.client.model.part.tails.ModelRodentTail;
 import noppes.mpm.client.model.part.tails.ModelSquirrelTail;
@@ -37,6 +40,7 @@ public class ModelTail extends ModelScaleRenderer {
     private ModelRenderer rodent;
 
     private ModelCtenoTail cteno;
+    private ModelFluffyTail fluffy;
 
     private int color = 16777215;
 
@@ -80,6 +84,7 @@ public class ModelTail extends ModelScaleRenderer {
         addChild(this.fin = new ModelTailFin(base));
         addChild(this.rodent = new ModelRodentTail(base));
         addChild(this.cteno = new ModelCtenoTail(base));
+        addChild(this.fluffy = new ModelFluffyTail(base));
     }
 
     public void setData(ModelData data, EntityLivingBase entity) {
@@ -92,6 +97,8 @@ public class ModelTail extends ModelScaleRenderer {
         // Special Cteno idle wiggle
         if (!cteno.isHidden) {
             AnimationHandler.performAnimationInModel(cteno.parts, data.animationHandler);
+        } else if (!fluffy.isHidden) {
+            AnimationHandler.performAnimationInModel(fluffy.parts, data.animationHandler);
         } else {
             this.rotateAngleX = (MathHelper.sin(par3 * 0.067F) * 0.05F); // Idle vert wiggle
         }
@@ -142,6 +149,7 @@ public class ModelTail extends ModelScaleRenderer {
         fin.isHidden = (config.type != 4);
         rodent.isHidden = (config.type != 5);
         cteno.isHidden = (config.type != 6);
+        fluffy.isHidden = (config.type != 7);
 
         if (config.type > 5) { // Premium extra parts gets extra texture
             this.location = data.playerExtraTexture;
@@ -158,6 +166,14 @@ public class ModelTail extends ModelScaleRenderer {
                 .forEach(data.animationHandler::stopAnimation);
 
             data.animationHandler.keepAnimation(anim, 0);
+        }
+        if (!fluffy.isHidden) {
+            final String anim = ModelFluffyTail.getAnimation(data.animation);
+            Stream.of(ChannelFluffySit.ANIM_NAME, ChannelFluffyLie.ANIM_NAME)
+                    .filter(s -> !s.equals(anim))
+                    .forEach(data.animationHandler::stopAnimation);
+            if (anim != null)
+                data.animationHandler.keepAnimation(anim, 0);
         }
     }
 
@@ -181,7 +197,10 @@ public class ModelTail extends ModelScaleRenderer {
             GL11.glColor4f(red, green, blue, 1.0F);
         }
 
-        AnimationHandler.performAnimationInModel(cteno.parts, data.animationHandler);
+        if (!cteno.isHidden)
+            AnimationHandler.performAnimationInModel(cteno.parts, data.animationHandler);
+        if (!fluffy.isHidden)
+            AnimationHandler.performAnimationInModel(fluffy.parts, data.animationHandler);
 
         super.render(par1);
 

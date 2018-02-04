@@ -10,7 +10,9 @@ import org.lwjgl.input.Keyboard;
 
 public class GuiModelLegs extends GuiModelInterface {
     private final String[] arrLegs = {"gui.no", "Player", "Player Naga", "Spider", "Horse", "Naga", "Mermaid", "Digitigrade"};
-    private final String[] arrTail = {"gui.no", "Player", "Player Dragon", "Cat", "Wolf", "Horse", "Dragon", "Squirrel", "Fin", "Rodent", "Cteno"};
+    private final String[] arrTail = {
+            "gui.no", "Player", "Player Dragon", "Cat", "Wolf", "Horse", "Dragon", "Squirrel", "Fin", "Rodent",
+            "Cteno", "Fluffy"};
     private GuiScreen parent;
 
     public GuiModelLegs(GuiScreen parent) {
@@ -30,10 +32,12 @@ public class GuiModelLegs extends GuiModelInterface {
         }
 
         ModelPartData tail = this.playerdata.getPartData("tail");
+
         y += 22;
         addButton(new GuiNpcButton(2, this.guiLeft + 50, y, 70, 20, this.arrTail, getTailIndex(tail)));
         addLabel(new noppes.mpm.client.gui.util.GuiNpcLabel(2, "Tail", this.guiLeft, y + 5, 16777215));
         if (tail != null) {
+            tail.extraTexture = tail.type >= 6; // Extra parts: Cteno, Fluffy
             addButton(new GuiNpcButton(12, this.guiLeft + 122, y, 40, 20, tail.getColor()));
         }
     }
@@ -71,6 +75,8 @@ public class GuiModelLegs extends GuiModelInterface {
             return 9;
         if (data.type == 6)
             return 10; // Cteno
+        if (data.type == 7)
+            return 11; // Fluffy
 
         return 0;
     }
@@ -129,17 +135,14 @@ public class GuiModelLegs extends GuiModelInterface {
                     data.setTexture("tail/rodent1", 5);
 
                 // Premium parts
-                data.extraTexture = false;
-                if (value > 9) {
-                    if (Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-                        if (value == 10) {
-                            data.setTexture("", 6);
-                            data.extraTexture = true;
-                        }
-                    } else {
-                        button.setValue(0);
-                        data.setTexture("", 0);
-                    }
+                if (value == 10) { // Secret Cteno tail
+                    if (Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))
+                        data.setTexture("", 6);
+                    else
+                        value++;
+                }
+                if (value == 11) { // Fluffy
+                    data.setTexture("", 7);
                 }
 
                 initGui();
