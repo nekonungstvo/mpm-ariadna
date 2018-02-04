@@ -57,13 +57,13 @@ public class GuiModelInterface
     public void drawScreen(int par1, int par2, float par3) {
         if (Mouse.isButtonDown(0)) {
             if (this.left.mousePressed(this.mc, par1, par2)) {
-                rotation += 1;
+                rotation += 2;
             } else if (this.right.mousePressed(this.mc, par1, par2)) {
-                rotation -= 1;
+                rotation -= 2;
             } else if (this.zoom.mousePressed(this.mc, par1, par2)) {
-                zoomed += 1.0F;
+                zoomed += 2.0F;
             } else if ((this.unzoom.mousePressed(this.mc, par1, par2)) && (zoomed > 10.0F))
-                zoomed -= 1.0F;
+                zoomed -= 2.0F;
         }
         drawDefaultBackground();
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);

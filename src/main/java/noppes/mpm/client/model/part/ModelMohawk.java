@@ -4,8 +4,9 @@ import noppes.mpm.ModelData;
 import noppes.mpm.ModelPartData;
 import noppes.mpm.client.model.Model2DRenderer;
 import noppes.mpm.client.model.ModelMPM;
+import noppes.mpm.client.model.ModelPartInterface;
 
-public class ModelMohawk extends noppes.mpm.client.model.ModelPartInterface {
+public class ModelMohawk extends ModelPartInterface {
     private Model2DRenderer model;
 
     public ModelMohawk(ModelMPM base) {
