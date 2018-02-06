@@ -15,6 +15,7 @@ public class GuiModelHead extends GuiModelInterface {
     private final String[] arrEars = {"gui.no", "Player", "Player Bunny", "Bunny", "Type1"};
     private final String[] arrHorns = {"gui.no", "Player Bull", "Player Antlers", "Player AntennasB", "Player AntennasF", "Bull", "Antlers", "AntennasB", "AntennasF"};
     private final String[] arrDoubleHead = {"gui.no", "gui.yes"};
+    private final String[] arrBrainHead = {"gui.no", "gui.yes"};
     private GuiScreen parent;
 
     public GuiModelHead(GuiScreen parent) {
@@ -78,6 +79,11 @@ public class GuiModelHead extends GuiModelInterface {
         y += 22;
         addButton(new GuiNpcButton(7, this.guiLeft + 50, y, 70, 20, this.arrDoubleHead, doubleHead ? 1 : 0));
         addLabel(new GuiNpcLabel(7, "Doubled", this.guiLeft, y + 5, 16777215));
+
+        boolean brainHead = this.playerdata.brainHead;
+        y += 22;
+        addButton(new GuiNpcButton(8, this.guiLeft + 50, y, 70, 20, this.arrBrainHead, brainHead ? 1 : 0));
+        addLabel(new GuiNpcLabel(8, "Brained", this.guiLeft, y + 5, 16777215));
     }
 
     private int getEars(ModelPartData data) {
@@ -207,6 +213,11 @@ public class GuiModelHead extends GuiModelInterface {
 
         if (button.id == 7) {
             this.playerdata.doubleHead = !playerdata.doubleHead;
+            initGui();
+        }
+
+        if (button.id == 8) {
+            this.playerdata.brainHead = !playerdata.brainHead;
             initGui();
         }
 

@@ -109,7 +109,8 @@ public class ModelData extends ModelDataShared implements IExtendedEntityPropert
                     // Ari extra
                     .append(newSkinFormat)
                     .append(armsAmputee)
-                    .append(doubleHead);
+                    .append(doubleHead)
+                    .append(brainHead);
 
             for (String name : this.parts.keySet()) {
                 toHash.append(name)

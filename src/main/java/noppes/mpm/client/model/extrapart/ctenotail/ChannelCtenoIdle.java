@@ -8,8 +8,8 @@ import noppes.mpm.client.MCALibrary.math.Vector3f;
 public class ChannelCtenoIdle extends Channel {
     public static final String ANIM_NAME = "ctenotail-idle";
 
-    public ChannelCtenoIdle(float _fps, int _totalFrames, Mode _mode) {
-        super(ANIM_NAME, _fps, _totalFrames, _mode);
+    public ChannelCtenoIdle() {
+        super(ANIM_NAME, 1, 3, Channel.Mode.LOOP_SIN);
     }
 
     @Override

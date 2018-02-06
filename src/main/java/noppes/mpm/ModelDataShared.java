@@ -20,6 +20,7 @@ public class ModelDataShared {
     public boolean newSkinFormat = false;
     public byte armsAmputee = 0;
     public boolean doubleHead = false;
+    public boolean brainHead = false;
     protected EntityLivingBase entity;
     protected HashMap<String, ModelPartData> parts = new HashMap<>();
 
@@ -50,6 +51,7 @@ public class ModelDataShared {
         compound.setBoolean("NewSkinFormat", this.newSkinFormat);
         compound.setByte("ArmsAmputee", this.armsAmputee);
         compound.setBoolean("DoubleHead", this.doubleHead);
+        compound.setBoolean("BrainHead", this.brainHead);
 
         return compound;
     }
@@ -66,7 +68,7 @@ public class ModelDataShared {
         this.breasts = compound.getByte("Breasts");
         this.extra = compound.getCompoundTag("ExtraData");
 
-        HashMap<String, ModelPartData> parts = new HashMap();
+        HashMap<String, ModelPartData> parts = new HashMap<>();
         NBTTagList list = compound.getTagList("Parts", 10);
         for (int i = 0; i < list.tagCount(); i++) {
             NBTTagCompound item = list.getCompoundTagAt(i);
@@ -79,6 +81,7 @@ public class ModelDataShared {
         this.newSkinFormat = compound.getBoolean("NewSkinFormat");
         this.armsAmputee = compound.getByte("ArmsAmputee");
         this.doubleHead = compound.getBoolean("DoubleHead");
+        this.brainHead = compound.getBoolean("BrainHead");
     }
 
     public Class<? extends EntityLivingBase> getEntityClass() {

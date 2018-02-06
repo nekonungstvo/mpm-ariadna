@@ -3,6 +3,7 @@ package noppes.mpm.client.model;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,6 +16,8 @@ import noppes.mpm.client.animation.AniHug;
 import noppes.mpm.client.model.part.*;
 import noppes.mpm.constants.EnumAnimation;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
+import org.lwjgl.opengl.GL14;
 
 import java.util.Random;
 
@@ -22,7 +25,7 @@ public class ModelMPM extends ModelBiped {
     public ModelData data;
     public ModelBase entityModel;
     public EntityLivingBase entity;
-    public boolean currentlyPlayerTexture;
+    public boolean currentlyPlayerTexture = false;
     public boolean isArmor;
 
     protected ModelPartInterface wings;
@@ -62,9 +65,7 @@ public class ModelMPM extends ModelBiped {
         this.bipedEars.addBox(-3.0F, -6.0F, -1.0F, 6, 6, 1, z);
 
         final float headZ = isArmor ? z + 0.3f : z;
-        this.bipedHead = new ModelScaleRenderer(this, 0, 0);
-        this.bipedHead.addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8, headZ);
-        this.bipedHead.setRotationPoint(0.0F, 0.0F, 0.0F);
+        this.bipedHead = new ModelHead(this, headZ);
 
         this.bipedHeadwear = new ModelScaleRenderer(this, 32, 0);
         this.bipedHeadwear.addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8, headZ + 0.25F);
@@ -138,6 +139,8 @@ public class ModelMPM extends ModelBiped {
             this.skirt.setData(data, entity);
             this.horns.setData(data, entity);
         }
+
+        ((ModelHead) this.bipedHead).setData(data, entity);
         this.breasts.setData(data, entity);
         this.legs.setData(data, entity);
     }
@@ -159,9 +162,9 @@ public class ModelMPM extends ModelBiped {
             }
             return;
         }
+
         this.currentlyPlayerTexture = true;
         setRotationAngles(par2, par3, par4, par5, par6, par7, par1Entity);
-
 
         if (this.data.animation == EnumAnimation.BOW) {
             GL11.glPushMatrix();
@@ -247,14 +250,14 @@ public class ModelMPM extends ModelBiped {
     }
 
     public void loadPlayerTexture() {
-        if ((!this.isArmor) && (!this.currentlyPlayerTexture)) {
+        if (!this.isArmor && !this.currentlyPlayerTexture) {
             ClientProxy.bindTexture(this.data.playerResource);
             this.currentlyPlayerTexture = true;
         }
     }
 
     private void renderHead(Entity entity, float f) {
-        loadPlayerTexture();
+//        loadPlayerTexture();
 
         float x = 0.0F;
         float y = this.data.getBodyY();

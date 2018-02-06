@@ -1,6 +1,5 @@
 package noppes.mpm.client.model.part;
 
-import net.minecraft.client.model.ModelRenderer;
 import noppes.mpm.client.model.Model2DRenderer;
 import noppes.mpm.client.model.ModelScaleRenderer;
 
@@ -49,10 +48,4 @@ public class ModelHeadwear extends ModelScaleRenderer {
         setRotation(bottom, -1.5707964F, 0.0F, 0.0F);
         addChild(bottom);
     }
-
-//    public void setRotation(ModelRenderer model, float x, float y, float z) {
-//        model.rotateAngleX = x;
-//        model.rotateAngleY = y;
-//        model.rotateAngleZ = z;
-//    }
 }

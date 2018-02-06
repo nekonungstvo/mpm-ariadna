@@ -48,8 +48,7 @@ public abstract class AnimationHandler {
      * Update animation values. Return false if the animation should stop.
      */
     public static boolean updateAnimation(Channel channel, HashMap<String, Long> prevTimeAnim, HashMap<String, Float> prevFrameAnim) {
-        Side side = FMLCommonHandler.instance().getEffectiveSide();
-        if (side.isServer() || (side.isClient() && !isGamePaused())) {
+        if (!isGamePaused()) {
             if (channel.mode != Channel.Mode.CUSTOM) {
                 long prevTime = prevTimeAnim.get(channel.name);
                 float prevFrame = prevFrameAnim.get(channel.name);
