@@ -48,7 +48,6 @@ public class ModelDataShared {
         }
         compound.setTag("Parts", list);
 
-        compound.setBoolean("NewSkinFormat", this.newSkinFormat);
         compound.setByte("ArmsAmputee", this.armsAmputee);
         compound.setBoolean("DoubleHead", this.doubleHead);
         compound.setBoolean("BrainHead", this.brainHead);
@@ -78,7 +77,6 @@ public class ModelDataShared {
         }
         this.parts = parts;
 
-        this.newSkinFormat = compound.getBoolean("NewSkinFormat");
         this.armsAmputee = compound.getByte("ArmsAmputee");
         this.doubleHead = compound.getBoolean("DoubleHead");
         this.brainHead = compound.getBoolean("BrainHead");

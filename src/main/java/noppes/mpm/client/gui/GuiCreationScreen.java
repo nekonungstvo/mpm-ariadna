@@ -132,10 +132,6 @@ public class GuiCreationScreen extends GuiModelInterface implements ITextfieldLi
         addLabel(new GuiNpcLabel(4, "Legs", this.guiLeft, y + 5, 16777215));
 
         y += 22;
-        addButton(new GuiNpcButton(9, this.guiLeft + 50, y, 50, 20, new String[]{"Old", "New"}, this.playerdata.newSkinFormat ? 1 : 0));
-        addLabel(new GuiNpcLabel(5, "Format", this.guiLeft, y + 5, 16777215));
-
-        y += 22;
         addButton(new GuiNpcButton(10, this.guiLeft + 50, y, 50, 20, new String[]{"Default", "Female", "Male", "Goblin Male"}, this.playerdata.soundType));
         addLabel(new GuiNpcLabel(6, "Sounds", this.guiLeft, y + 5, 16777215));
     }
@@ -236,10 +232,6 @@ public class GuiCreationScreen extends GuiModelInterface implements ITextfieldLi
         }
         if (button.id == 8) {
             this.mc.displayGuiScreen(new GuiModelScale(this, this.playerdata));
-        }
-        if (button.id == 9) {
-            this.playerdata.newSkinFormat = !playerdata.newSkinFormat;
-            this.playerdata.reloadBoxes = true;
         }
         if (button.id == 10) {
             this.playerdata.soundType = ((short) button.getValue());

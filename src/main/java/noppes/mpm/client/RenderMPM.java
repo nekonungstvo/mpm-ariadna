@@ -96,10 +96,23 @@ public class RenderMPM extends RenderPlayer {
             ChatMessages.getChatMessages(player.getCommandSenderName()).renderMessages(x, y + 0.7D + player.height, z);
     }
 
-    private void func_110301_a(File file, ResourceLocation resource, String par1Str) {
-        TextureManager texturemanager = Minecraft.getMinecraft().getTextureManager();
-        ITextureObject object = new ThreadDownloadImageData(file, par1Str, SkinManager.field_152793_a, new ImageBufferDownloadAlt());
+    /**
+     * @param data pass data for main skin, null otherwise
+     */
+    private void loadPlayerTexture(ModelData data, File file, ResourceLocation resource, String par1Str) {
+        final TextureManager texturemanager = Minecraft.getMinecraft().getTextureManager();
+        final ImageBufferDownloadAlt imageBuffer = new ImageBufferDownloadAlt(data);
+        final ThreadDownloadImageData object = new ThreadDownloadImageData(file, par1Str, SkinManager.field_152793_a, imageBuffer);
         texturemanager.loadTexture(resource, object);
+    }
+
+    public static File getSkinFileForName(String name) {
+        final SkinManager skinmanager = Minecraft.getMinecraft().func_152342_ad();
+
+        final String skinSubfolder = name.substring(0, 2);
+        final File skinsDir = new File((File) ObfuscationReflectionHelper.getPrivateValue(SkinManager.class, skinmanager, 3), skinSubfolder);
+
+        return new File(skinsDir, name);
     }
 
     public ResourceLocation loadResource(AbstractClientPlayer player) {
@@ -111,8 +124,6 @@ public class RenderMPM extends RenderPlayer {
         final GameProfile gp = player.getGameProfile();
         final Map map = skinmanager.func_152788_a(gp);
 
-        final File skinsDir = new File((File) ObfuscationReflectionHelper.getPrivateValue(SkinManager.class, skinmanager, 3), gp.getName().substring(0, 2));
-
         final String url;
 
         if ((this.data.url != null) && (!this.data.url.isEmpty())) {
@@ -121,20 +132,22 @@ public class RenderMPM extends RenderPlayer {
             final MinecraftProfileTexture profile_skin = (MinecraftProfileTexture) map.get(MinecraftProfileTexture.Type.SKIN);
             if (profile_skin == null) {
                 this.data.loaded = true;
-                return player.getLocationSkin();
+                data.playerResource = player.getLocationSkin();
+                return data.playerResource;
             } else {
                 url = profile_skin.getUrl();
             }
         }
 
-        final File skinFile = new File(skinsDir, gp.getName());
+        final File skinFile = getSkinFileForName(gp.getName());
         if (skinFile.exists())
             skinFile.delete();
 
         final ResourceLocation location = new ResourceLocation("skins/" + gp.getName());
-        func_110301_a(skinFile, location, url);
+        loadPlayerTexture(data, skinFile, location, url);
         player.func_152121_a(MinecraftProfileTexture.Type.SKIN, location);
 
+        data.newSkinFormat = false; // Temporary, until skin is not loaded in other thread
         data.playerResource = location;
         data.loaded = true;
         return location;
@@ -155,7 +168,7 @@ public class RenderMPM extends RenderPlayer {
             skinFile.delete();
 
         final ResourceLocation location = new ResourceLocation("skins/" + fileName);
-        func_110301_a(skinFile, location, data.extraUrl);
+        loadPlayerTexture(null, skinFile, location, data.extraUrl);
 
         data.playerExtraTexture = location;
         data.extraLoaded = true;

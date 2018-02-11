@@ -1,51 +1,26 @@
 package noppes.mpm.client;
 
 import net.minecraft.client.renderer.ImageBufferDownload;
+import noppes.mpm.ModelData;
 
 import java.awt.image.BufferedImage;
 
-public class ImageBufferDownloadAlt
-        extends ImageBufferDownload {
-    private int[] imageData;
-    private int imageWidth;
-    private int imageHeight;
+public class ImageBufferDownloadAlt extends ImageBufferDownload {
+    private ModelData data;
 
-    public BufferedImage parseUserSkin(BufferedImage bufferedimage) {
-//        this.imageWidth = bufferedimage.getWidth(null);
-//        this.imageHeight = (this.imageWidth / 2);
-//
-//        BufferedImage bufferedimage1 = new BufferedImage(this.imageWidth, this.imageHeight, 2);
-//        Graphics g = bufferedimage1.getGraphics();
-//        g.drawImage(bufferedimage, 0, 0, null);
-//        g.dispose();
-//        this.imageData = ((DataBufferInt) bufferedimage1.getRaster().getDataBuffer()).getData();
-//        setAreaTransparent(this.imageWidth / 2, 0, this.imageWidth, this.imageHeight / 2);
-//        return bufferedimage1;
-
-        return bufferedimage;
+    public ImageBufferDownloadAlt(ModelData data) {
+        this.data = data;
     }
 
-    private void setAreaTransparent(int par1, int par2, int par3, int par4) {
-        if (!hasTransparency(par1, par2, par3, par4)) {
-            for (int i1 = par1; i1 < par3; i1++) {
-                for (int j1 = par2; j1 < par4; j1++) {
-                    this.imageData[(i1 + j1 * this.imageWidth)] &= 0xFFFFFF;
-                }
-            }
-        }
-    }
+    @Override
+    public BufferedImage parseUserSkin(BufferedImage bufferedImage) {
+        if (bufferedImage == null) return null;
 
-    private boolean hasTransparency(int par1, int par2, int par3, int par4) {
-        for (int i1 = par1; i1 < par3; i1++) {
-            for (int j1 = par2; j1 < par4; j1++) {
-                int k1 = this.imageData[(i1 + j1 * this.imageWidth)];
+        boolean newSkinFormat = bufferedImage.getWidth() == bufferedImage.getHeight();
+        if (data.newSkinFormat != newSkinFormat)
+            data.reloadBoxes = true;
+        data.newSkinFormat = newSkinFormat;
 
-                if ((k1 >> 24 & 0xFF) < 128) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
+        return bufferedImage;
     }
 }
