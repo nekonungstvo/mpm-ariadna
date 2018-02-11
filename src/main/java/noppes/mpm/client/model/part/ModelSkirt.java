@@ -18,11 +18,11 @@ public class ModelSkirt
         super(base);
         float pi = 0.62831855F;
 
-        this.Shape1 = new ModelPlaneRenderer(base, 58, 18);
-        this.Shape1.addSidePlane(0.0F, 0.0F, 0.0F, 9, 2);
+        this.Shape1 = new ModelPlaneRenderer(base, 62, 0);
+        this.Shape1.addSidePlane(0.0F, 0.0F, 0.0F, 8, 2);
 
-        ModelPlaneRenderer part1 = new ModelPlaneRenderer(base, 58, 18);
-        part1.addSidePlane(2.0F, 0.0F, 0.0F, 9, 2);
+        ModelPlaneRenderer part1 = new ModelPlaneRenderer(base, 62, 0);
+        part1.addSidePlane(2.0F, 0.0F, 0.0F, 8, 2);
         part1.rotateAngleY = -1.5707964F;
         this.Shape1.addChild(part1);
 
