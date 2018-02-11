@@ -58,22 +58,20 @@ public class ModelTail extends ModelScaleRenderer {
         addChild(this.tail);
 
         this.horse = new ModelRenderer(base);
-        this.horse.setTextureSize(32, 32);
         this.horse.setRotationPoint(0.0F, -1.0F, 1.0F);
         addChild(this.horse);
 
         ModelRenderer tailBase = new ModelRenderer(base, 0, 26);
-        tailBase.setTextureSize(32, 32);
         tailBase.addBox(-1.0F, -1.0F, 0.0F, 2, 2, 3);
         setRotation(tailBase, -1.134464F, 0.0F, 0.0F);
         this.horse.addChild(tailBase);
+
         ModelRenderer tailMiddle = new ModelRenderer(base, 0, 13);
-        tailMiddle.setTextureSize(32, 32);
         tailMiddle.addBox(-1.5F, -2.0F, 3.0F, 3, 4, 7);
         setRotation(tailMiddle, -1.134464F, 0.0F, 0.0F);
         this.horse.addChild(tailMiddle);
+
         ModelRenderer tailTip = new ModelRenderer(base, 0, 0);
-        tailTip.setTextureSize(32, 32);
         tailTip.addBox(-1.5F, -4.5F, 9.0F, 3, 4, 7);
         setRotation(tailTip, -1.40215F, 0.0F, 0.0F);
         this.horse.addChild(tailTip);

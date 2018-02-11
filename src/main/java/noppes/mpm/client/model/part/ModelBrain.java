@@ -15,7 +15,6 @@ public class ModelBrain extends ModelScaleRenderer {
         super(base, "Brain", 0, 0);
         this.base = base;
 
-        setTextureSize(64, 64);
         addBox(-2.5F, -6.0F, -2.5F, 5, 4, 5);
         setRotationPoint(0.0F, 0.0F, 0.0F);
     }
