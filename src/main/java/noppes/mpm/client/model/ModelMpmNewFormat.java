@@ -1,7 +1,6 @@
 package noppes.mpm.client.model;
 
 import net.minecraft.client.model.ModelRenderer;
-import noppes.mpm.client.model.part.ModelHead;
 
 public class ModelMpmNewFormat extends ModelMPM {
     private ModelScaleRenderer bipedLeftArmwear;
@@ -22,7 +21,9 @@ public class ModelMpmNewFormat extends ModelMPM {
         bipedEars = new ModelRenderer(this, 24, 0);
         bipedEars.addBox(-3.0F, -6.0F, -1.0F, 6, 6, 1, 0);
 
-        this.bipedHead = new ModelHead(this, 0);
+        bipedHead = new ModelScaleRenderer(this, 0, 0);
+        bipedHead.addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8, 0);
+        bipedHead.setRotationPoint(0.0F, 0.0F, 0.0F);
 
         bipedHeadwear = new ModelScaleRenderer(this, 32, 0);
         bipedHeadwear.addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8, 0.25F);

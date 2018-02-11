@@ -80,11 +80,6 @@ public class ModelDragonTail extends ModelRenderer {
         dragon.addChild(DragonTail4);
     }
 
-
-//    public void setRotationAngles(float par1, float par2, float par3, float par4, float par5, float par6, net.minecraft.entity.Entity entity) {
-//    }
-
-
     private void setRotation(ModelRenderer model, float x, float y, float z) {
         model.rotateAngleX = x;
         model.rotateAngleY = y;

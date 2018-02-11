@@ -10,8 +10,7 @@ import noppes.mpm.client.model.ModelPlaneRenderer;
 import org.lwjgl.opengl.GL11;
 
 
-public class ModelSkirt
-        extends ModelPartInterface {
+public class ModelSkirt extends ModelPartInterface {
     private ModelPlaneRenderer Shape1;
 
     public ModelSkirt(ModelMPM base) {

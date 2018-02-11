@@ -73,7 +73,7 @@ public class MCAModelRenderer extends ModelScaleRenderer {
                     this.DDScompileDisplayList(par1);
                 }
 
-                //GL11.glPushMatrix();
+                GL11.glPushMatrix();
                 GL11.glTranslatef(this.offsetX, this.offsetY, this.offsetZ);
                 int i;
 
@@ -87,7 +87,7 @@ public class MCAModelRenderer extends ModelScaleRenderer {
                             }
                         }
                     } else {
-                        //GL11.glPushMatrix();
+                        GL11.glPushMatrix();
                         GL11.glTranslatef(this.rotationPointX * par1, this.rotationPointY * par1, this.rotationPointZ * par1);
                         GL11.glCallList(this.DDSdisplayList);
 
@@ -98,7 +98,7 @@ public class MCAModelRenderer extends ModelScaleRenderer {
                         }
 
                         GL11.glTranslatef(-this.rotationPointX * par1, -this.rotationPointY * par1, -this.rotationPointZ * par1);
-                        //GL11.glPopMatrix();
+                        GL11.glPopMatrix();
                     }
                 } else {
                     GL11.glPushMatrix();
@@ -118,7 +118,7 @@ public class MCAModelRenderer extends ModelScaleRenderer {
                 }
 
                 GL11.glTranslatef(-this.offsetX, -this.offsetY, -this.offsetZ);
-                //GL11.glPopMatrix();
+                GL11.glPopMatrix();
 
                 this.prevRotationMatrix = this.rotationMatrix;
             }

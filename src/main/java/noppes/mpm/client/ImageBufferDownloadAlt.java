@@ -16,10 +16,13 @@ public class ImageBufferDownloadAlt extends ImageBufferDownload {
     public BufferedImage parseUserSkin(BufferedImage bufferedImage) {
         if (bufferedImage == null) return null;
 
-        boolean newSkinFormat = bufferedImage.getWidth() == bufferedImage.getHeight();
-        if (data.newSkinFormat != newSkinFormat)
-            data.reloadBoxes = true;
-        data.newSkinFormat = newSkinFormat;
+        // If main skin texture
+        if (data != null) {
+            boolean newSkinFormat = bufferedImage.getWidth() == bufferedImage.getHeight();
+            if (data.newSkinFormat != newSkinFormat)
+                data.reloadBoxes = true;
+            data.newSkinFormat = newSkinFormat;
+        }
 
         return bufferedImage;
     }

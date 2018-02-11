@@ -131,11 +131,11 @@ public class GuiModelBody extends noppes.mpm.client.gui.util.GuiModelInterface {
             if (value == 0) {
                 this.playerdata.removePart("skirt");
             } else {
-                ModelPartData particles = this.playerdata.getOrCreatePart("skirt");
+                ModelPartData skirt = this.playerdata.getOrCreatePart("skirt");
                 if (value == 1)
-                    particles.setTexture("", 0);
+                    skirt.setTexture("", 0);
                 if (value == 2)
-                    particles.setTexture("skirt/skirt1", 0);
+                    skirt.setTexture("skirt/skirt1", 0);
             }
             initGui();
         }

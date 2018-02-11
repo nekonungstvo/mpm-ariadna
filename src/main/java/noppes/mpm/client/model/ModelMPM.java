@@ -3,7 +3,6 @@ package noppes.mpm.client.model;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,8 +15,6 @@ import noppes.mpm.client.animation.AniHug;
 import noppes.mpm.client.model.part.*;
 import noppes.mpm.constants.EnumAnimation;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
-import org.lwjgl.opengl.GL14;
 
 import java.util.Random;
 
@@ -25,7 +22,7 @@ public class ModelMPM extends ModelBiped {
     public ModelData data;
     public ModelBase entityModel;
     public EntityLivingBase entity;
-    public boolean currentlyPlayerTexture = false;
+    public boolean currentlyPlayerTexture;
     public boolean isArmor;
 
     protected ModelPartInterface wings;
@@ -43,6 +40,8 @@ public class ModelMPM extends ModelBiped {
     protected ModelLegs legs;
     protected ModelScaleRenderer headwear;
     protected ModelTail tail;
+
+    protected ModelBrain brain;
 
     private float z;
 
@@ -65,7 +64,9 @@ public class ModelMPM extends ModelBiped {
         this.bipedEars.addBox(-3.0F, -6.0F, -1.0F, 6, 6, 1, z);
 
         final float headZ = isArmor ? z + 0.3f : z;
-        this.bipedHead = new ModelHead(this, headZ);
+        this.bipedHead = new ModelScaleRenderer(this, 0, 0);
+        this.bipedHead.addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8, headZ);
+        this.bipedHead.setRotationPoint(0.0F, 0.0F, 0.0F);
 
         this.bipedHeadwear = new ModelScaleRenderer(this, 32, 0);
         this.bipedHeadwear.addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8, headZ + 0.25F);
@@ -109,6 +110,7 @@ public class ModelMPM extends ModelBiped {
             bipedHead.addChild(beard = new ModelBeard(this));
             bipedHead.addChild(snout = new ModelSnout(this));
             bipedHead.addChild(horns = new ModelHorns(this));
+            bipedHead.addChild(brain = new ModelBrain(this));
 
             bipedBody.addChild(tail = new ModelTail(this));
             bipedBody.addChild(wings = new ModelWings(this));
@@ -138,9 +140,9 @@ public class ModelMPM extends ModelBiped {
             this.clawsR.setData(data, entity);
             this.skirt.setData(data, entity);
             this.horns.setData(data, entity);
+            this.brain.setData(data, entity);
         }
 
-        ((ModelHead) this.bipedHead).setData(data, entity);
         this.breasts.setData(data, entity);
         this.legs.setData(data, entity);
     }
@@ -176,7 +178,12 @@ public class ModelMPM extends ModelBiped {
             GL11.glRotatef(60.0F * ticks, 1.0F, 0.0F, 0.0F);
             GL11.glTranslatef(0.0F, -12.0F * scale * par7, 0.0F);
         }
-        renderHead(par1Entity, par7);
+
+        final float doubleHeadOffset = data.doubleHead ? data.head.scaleX * 0.3f : 0;
+        renderHead(par1Entity, par7, doubleHeadOffset);
+        if (data.doubleHead)
+            renderHead(par1Entity, par7, -doubleHeadOffset);
+
         renderArms(par1Entity, par7, false);
         renderBody(par1Entity, par7);
         if (this.data.animation == EnumAnimation.BOW) {
@@ -256,14 +263,12 @@ public class ModelMPM extends ModelBiped {
         }
     }
 
-    private void renderHead(Entity entity, float f) {
-//        loadPlayerTexture();
+    private void renderHead(Entity entity, float f, float xOffset) {
+        loadPlayerTexture();
 
-        float x = 0.0F;
+        float x = xOffset;
         float y = this.data.getBodyY();
         float z = 0.0F;
-
-        float doubleHeadOffset = data.doubleHead ? data.head.scaleX * 0.3f : 0;
 
         GL11.glPushMatrix();
         if (this.data.animation == EnumAnimation.DANCING) {
@@ -273,12 +278,8 @@ public class ModelMPM extends ModelBiped {
         ModelPartConfig head = this.data.head;
         if ((this.bipedHeadwear.showModel) && (!this.bipedHeadwear.isHidden)) {
             if ((this.data.headwear == 1) || (this.isArmor)) {
-                ((ModelScaleRenderer) this.bipedHeadwear).setConfig(head, x - doubleHeadOffset, y, z);
+                ((ModelScaleRenderer) this.bipedHeadwear).setConfig(head, x, y, z);
                 ((ModelScaleRenderer) this.bipedHeadwear).render(f);
-                if (data.doubleHead) {
-                    ((ModelScaleRenderer) this.bipedHeadwear).setConfig(head, x + doubleHeadOffset, y, z);
-                    ((ModelScaleRenderer) this.bipedHeadwear).render(f);
-                }
             } else if (this.data.headwear == 2) {
                 this.headwear.rotateAngleX = this.bipedHeadwear.rotateAngleX;
                 this.headwear.rotateAngleY = this.bipedHeadwear.rotateAngleY;
@@ -286,20 +287,12 @@ public class ModelMPM extends ModelBiped {
                 this.headwear.rotationPointX = this.bipedHeadwear.rotationPointX;
                 this.headwear.rotationPointY = this.bipedHeadwear.rotationPointY;
                 this.headwear.rotationPointZ = this.bipedHeadwear.rotationPointZ;
-                this.headwear.setConfig(head, x - doubleHeadOffset, y, z);
+                this.headwear.setConfig(head, x, y, z);
                 this.headwear.render(f);
-                if (data.doubleHead) {
-                    this.headwear.setConfig(head, x + doubleHeadOffset, y, z);
-                    this.headwear.render(f);
-                }
             }
         }
-        ((ModelScaleRenderer) this.bipedHead).setConfig(head, x - doubleHeadOffset, y, z);
+        ((ModelScaleRenderer) this.bipedHead).setConfig(head, x, y, z);
         ((ModelScaleRenderer) this.bipedHead).render(f);
-        if (data.doubleHead) {
-            ((ModelScaleRenderer) this.bipedHead).setConfig(head, x + doubleHeadOffset, y, z);
-            ((ModelScaleRenderer) this.bipedHead).render(f);
-        }
 
         GL11.glPopMatrix();
     }

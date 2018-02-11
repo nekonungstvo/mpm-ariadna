@@ -10,7 +10,6 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.ThreadDownloadImageData;
 import net.minecraft.client.renderer.entity.*;
-import net.minecraft.client.renderer.texture.ITextureObject;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySkullRenderer;
 import net.minecraft.client.resources.SkinManager;
