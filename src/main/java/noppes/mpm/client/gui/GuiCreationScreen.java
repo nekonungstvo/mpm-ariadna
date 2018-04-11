@@ -75,8 +75,8 @@ public class GuiCreationScreen extends GuiModelInterface implements ITextfieldLi
         addLabel(new GuiNpcLabel(47, "Point of View", this.guiLeft + 270, this.guiTop + 139, 16777215));
         addButton(new GuiNpcButton(47, this.guiLeft + 350, this.guiTop + 134, 50, 20, new String[]{"gui.no", "gui.yes"}, MorePlayerModels.EnablePOV ? 1 : 0));
 
-        addLabel(new GuiNpcLabel(48, "Chatbubbles", this.guiLeft + 270, this.guiTop + 161, 16777215));
-        addButton(new GuiNpcButton(48, this.guiLeft + 350, this.guiTop + 156, 50, 20, new String[]{"gui.no", "gui.yes"}, MorePlayerModels.EnableChatBubbles ? 1 : 0));
+//        addLabel(new GuiNpcLabel(48, "Chatbubbles", this.guiLeft + 270, this.guiTop + 161, 16777215));
+//        addButton(new GuiNpcButton(48, this.guiLeft + 350, this.guiTop + 156, 50, 20, new String[]{"gui.no", "gui.yes"}, MorePlayerModels.EnableChatBubbles ? 1 : 0));
 
         addLabel(new GuiNpcLabel(49, "BackItem", this.guiLeft + 270, this.guiTop + 183, 16777215));
         addButton(new GuiNpcButton(49, this.guiLeft + 350, this.guiTop + 178, 50, 20, new String[]{"gui.no", "gui.yes"}, MorePlayerModels.EnableBackItem ? 1 : 0));
