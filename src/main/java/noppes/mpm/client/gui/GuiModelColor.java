@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class GuiModelColor extends GuiModelInterface implements ITextfieldListener {
-    private static final ResourceLocation color = new ResourceLocation("moreplayermodels:textures/gui/color.png");
+    private static final ResourceLocation color = new ResourceLocation("moreplayermodels_km:textures/gui/color.png");
     private GuiScreen parent;
     private int colorX;
     private int colorY;

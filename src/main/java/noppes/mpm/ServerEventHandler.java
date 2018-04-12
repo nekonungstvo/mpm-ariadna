@@ -51,18 +51,18 @@ public class ServerEventHandler {
             return;
         if ((player.getHealth() <= 1.0F) || (player.isDead)) {
             if (data.soundType == 1) {
-                event.name = "moreplayermodels:human.female.death";
+                event.name = "moreplayermodels_km:human.female.death";
             } else if (data.soundType == 2) {
-                event.name = "moreplayermodels:human.male.death";
+                event.name = "moreplayermodels_km:human.male.death";
             } else if (data.soundType == 3) {
-                event.name = "moreplayermodels:goblin.male.death";
+                event.name = "moreplayermodels_km:goblin.male.death";
             }
         } else if (data.soundType == 1) {
-            event.name = "moreplayermodels:human.female.hurt";
+            event.name = "moreplayermodels_km:human.female.hurt";
         } else if (data.soundType == 2) {
-            event.name = "moreplayermodels:human.male.hurt";
+            event.name = "moreplayermodels_km:human.male.hurt";
         } else if (data.soundType == 3) {
-            event.name = "moreplayermodels:goblin.male.hurt";
+            event.name = "moreplayermodels_km:goblin.male.hurt";
         }
     }
 
@@ -80,11 +80,11 @@ public class ServerEventHandler {
             return;
         String sound = "";
         if (data.soundType == 1) {
-            sound = "moreplayermodels:human.female.attack";
+            sound = "moreplayermodels_km:human.female.attack";
         } else if (data.soundType == 2) {
-            sound = "moreplayermodels:human.male.attack";
+            sound = "moreplayermodels_km:human.male.attack";
         } else if (data.soundType == 3) {
-            sound = "moreplayermodels:goblin.male.attack";
+            sound = "moreplayermodels_km:goblin.male.attack";
         }
         float pitch = (player.getRNG().nextFloat() - player.getRNG().nextFloat()) * 0.2F + 1.0F;
         player.worldObj.playSoundAtEntity(player, sound, 0.9876543F, pitch);

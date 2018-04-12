@@ -9,7 +9,7 @@ import noppes.mpm.client.ClientProxy;
 import org.lwjgl.opengl.GL11;
 
 public class EntityEnderFX extends EntityPortalFX {
-    private static final ResourceLocation resource = new ResourceLocation("textures/particle/particles.png");
+    private static final ResourceLocation resource = new ResourceLocation("moreplayermodels_km:textures/particle/particles.png");
     private final ResourceLocation location;
     private float portalParticleScale;
     private int particleNumber;

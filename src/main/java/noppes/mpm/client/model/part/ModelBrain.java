@@ -8,7 +8,7 @@ import noppes.mpm.client.model.ModelMPM;
 import noppes.mpm.client.model.ModelScaleRenderer;
 
 public class ModelBrain extends ModelScaleRenderer {
-    private static final ResourceLocation texture = new ResourceLocation("moreplayermodels:textures/head/brain.png");
+    private static final ResourceLocation texture = new ResourceLocation("moreplayermodels_km:textures/head/brain.png");
     private ModelMPM base;
 
     public ModelBrain(ModelMPM base) {
