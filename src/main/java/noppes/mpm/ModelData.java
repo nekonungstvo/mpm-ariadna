@@ -107,7 +107,6 @@ public class ModelData extends ModelDataShared implements IExtendedEntityPropert
                     .append(this.url)
                     .append(this.extraUrl)
                     // Ari extra
-                    .append(newSkinFormat)
                     .append(armsAmputee)
                     .append(doubleHead)
                     .append(brainHead);

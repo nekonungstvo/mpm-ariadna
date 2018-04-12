@@ -17,7 +17,7 @@ public class ModelDataShared {
     public NBTTagCompound extra = new NBTTagCompound();
     public byte breasts = 0;
     public byte headwear = 2;
-    public boolean newSkinFormat = false;
+
     public byte armsAmputee = 0;
     public boolean doubleHead = false;
     public boolean brainHead = false;

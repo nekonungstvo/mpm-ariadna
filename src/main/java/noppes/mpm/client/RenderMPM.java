@@ -146,7 +146,6 @@ public class RenderMPM extends RenderPlayer {
         loadPlayerTexture(data, skinFile, location, url);
         player.func_152121_a(MinecraftProfileTexture.Type.SKIN, location);
 
-        data.newSkinFormat = false; // Temporary, until skin is not loaded in other thread
         data.playerResource = location;
         data.loaded = true;
         return location;
@@ -188,7 +187,7 @@ public class RenderMPM extends RenderPlayer {
         }
         setModelData(this.data, player);
 
-        ModelMPM playerModel = data.newSkinFormat ? modelBipedMainNewFormat : modelBipedMain;
+        ModelMPM playerModel = modelBipedMainNewFormat;
 
         float f = 1.0F;
         GL11.glColor3f(f, f, f);
@@ -207,7 +206,7 @@ public class RenderMPM extends RenderPlayer {
             float x = (1.0F - this.data.body.scaleX) * 0.25F + (1.0F - this.data.arms.scaleX) * 0.075F;
             GL11.glTranslatef(x, this.data.getBodyY(), 0.0F);
 
-            ModelMPM playerModel = data.newSkinFormat ? modelBipedMainNewFormat : modelBipedMain;
+            ModelMPM playerModel = modelBipedMainNewFormat;
             playerModel.bipedRightArm.postRender(0.0625F);
 
             GL11.glTranslatef(-0.0625F, 0.4375F + y, 0.0625F);
@@ -344,7 +343,7 @@ public class RenderMPM extends RenderPlayer {
         GL11.glPushMatrix();
         GL11.glTranslatef(0.0F, this.data.getBodyY(), 0.0F);
 
-        ModelMPM playerModel = data.newSkinFormat ? modelBipedMainNewFormat : modelBipedMain;
+        ModelMPM playerModel = modelBipedMainNewFormat;
         playerModel.bipedHead.postRender(0.0625F);
 
         GL11.glScalef(this.data.head.scaleX, this.data.head.scaleY, this.data.head.scaleZ);
@@ -406,7 +405,7 @@ public class RenderMPM extends RenderPlayer {
 
         GL11.glTranslatef(0.0F, this.data.getBodyY(), 0.14299999F * this.data.body.scaleZ);
 
-        ModelMPM playerModel = data.newSkinFormat ? modelBipedMainNewFormat : modelBipedMain;
+        ModelMPM playerModel = modelBipedMainNewFormat;
         playerModel.bipedBody.postRender(0.065F);
 
         if (itemstack.getItem() == Items.bow) {
@@ -445,7 +444,7 @@ public class RenderMPM extends RenderPlayer {
             this.renderpass.entity = entity;
         }
 
-        ModelMPM playerModel = data.newSkinFormat ? modelBipedMainNewFormat : modelBipedMain;
+        ModelMPM playerModel = modelBipedMainNewFormat;
         playerModel.entityModel = (this.modelArmorChestplate.entityModel = this.modelArmor.entityModel = model);
         playerModel.entity = (this.modelArmorChestplate.entity = this.modelArmor.entity = entity);
     }

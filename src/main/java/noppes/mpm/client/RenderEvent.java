@@ -35,7 +35,7 @@ public class RenderEvent {
         EntityPlayer player = event.entityPlayer;
         this.data = PlayerDataController.instance.getPlayerData(player);
         renderer.setModelData(this.data, player);
-        setModels(event.renderer, this.data.newSkinFormat);
+        setModels(event.renderer);
         if (!this.data.loaded) {
             if (player.ticksExisted > 20) {
                 this.data.playerResource = renderer.loadResource((AbstractClientPlayer) player);
@@ -63,8 +63,8 @@ public class RenderEvent {
         }
     }
 
-    private void setModels(RenderPlayer render, boolean newFormat) {
-        ModelMPM playerModel = data.newSkinFormat ? renderer.modelBipedMainNewFormat : renderer.modelBipedMain;
+    private void setModels(RenderPlayer render) {
+        ModelMPM playerModel = renderer.modelBipedMainNewFormat;
         if (MPMRendererHelper.getMainModel(render) == playerModel)
             return;
         ReflectionHelper.setPrivateValue(RenderPlayer.class, render, playerModel, 1);
