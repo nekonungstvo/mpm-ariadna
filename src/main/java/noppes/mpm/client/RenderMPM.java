@@ -235,7 +235,7 @@ public class RenderMPM extends RenderPlayer {
                 float f3 = 0.625F;
                 GL11.glTranslatef(0.0F, 0.125F, 0.3125F);
                 GL11.glRotatef(-20.0F, 0.0F, 1.0F, 0.0F);
-                GL11.glScalef(f3, -f3, f3);
+                GL11.glScalef(-f3, -f3, f3);
                 GL11.glRotatef(-100.0F, 1.0F, 0.0F, 0.0F);
                 GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
             } else if (itemstack1.getItem().isFull3D()) {
@@ -254,7 +254,7 @@ public class RenderMPM extends RenderPlayer {
                 }
 
                 GL11.glTranslatef(0.0F, 0.1875F, 0.0F);
-                GL11.glScalef(f3, -f3, f3);
+                GL11.glScalef(-f3, -f3, f3);
                 GL11.glRotatef(-100.0F, 1.0F, 0.0F, 0.0F);
                 GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
             } else {
