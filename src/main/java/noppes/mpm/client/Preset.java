@@ -166,9 +166,9 @@ public class Preset {
         preset.data = data;
         data.legs.setScale(0.65F, 0.75F);
         data.arms.setScale(0.5F, 1.45F);
-        ModelPartData part = data.getOrCreatePart("particles");
-        part.setTexture("particle/type1", 1);
-        part.color = 16711680;
+//        ModelPartData part = data.getOrCreatePart("particles");
+//        part.setTexture("particle/type1", 1);
+//        part.color = 16711680;
         presets.put("enderchibi", preset);
     }
 

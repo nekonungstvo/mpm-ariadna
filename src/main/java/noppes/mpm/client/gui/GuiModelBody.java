@@ -8,7 +8,7 @@ import noppes.mpm.client.gui.util.GuiNpcLabel;
 public class GuiModelBody extends noppes.mpm.client.gui.util.GuiModelInterface {
     private final String[] arrWing = {"gui.no", "Player", "Type1", "Type2", "Type3"};
     private final String[] arrBreasts = {"gui.no", "Type1", "Type2", "Type3"};
-    private final String[] arrParticles = {"gui.no", "Player", "Type1", "Type2", "Rainbow"};
+    //    private final String[] arrParticles = {"gui.no", "Player", "Type1", "Type2", "Rainbow"};
     private final String[] arrfins = {"gui.no", "Player", "Type1"};
     private final String[] arrskirt = {"gui.no", "Player", "Type1"};
     private GuiScreen parent;
@@ -32,13 +32,15 @@ public class GuiModelBody extends noppes.mpm.client.gui.util.GuiModelInterface {
         if (wing != null) {
             addButton(new GuiNpcButton(11, this.guiLeft + 122, y, 40, 20, wing.getColor()));
         }
-        ModelPartData particles = this.playerdata.getPartData("particles");
-        y += 22;
-        addButton(new GuiNpcButton(2, this.guiLeft + 50, y, 70, 20, this.arrParticles, getParticleIndex(particles)));
-        addLabel(new GuiNpcLabel(2, "Particles", this.guiLeft, y + 5, 16777215));
-        if ((particles != null) && (particles.type != 1)) {
-            addButton(new GuiNpcButton(12, this.guiLeft + 122, y, 40, 20, particles.getColor()));
-        }
+
+//        ModelPartData particles = this.playerdata.getPartData("particles");
+//        y += 22;
+//        addButton(new GuiNpcButton(2, this.guiLeft + 50, y, 70, 20, this.arrParticles, getParticleIndex(particles)));
+//        addLabel(new GuiNpcLabel(2, "Particles", this.guiLeft, y + 5, 16777215));
+//        if ((particles != null) && (particles.type != 1)) {
+//            addButton(new GuiNpcButton(12, this.guiLeft + 122, y, 40, 20, particles.getColor()));
+//        }
+
         ModelPartData fin = this.playerdata.getPartData("fin");
         y += 22;
         addButton(new GuiNpcButton(3, this.guiLeft + 50, y, 70, 20, this.arrfins, getFinIndex(fin)));
@@ -98,19 +100,19 @@ public class GuiModelBody extends noppes.mpm.client.gui.util.GuiModelInterface {
         }
         if (button.id == 2) {
             int value = button.getValue();
-            if (value == 0) {
-                this.playerdata.removePart("particles");
-            } else {
-                ModelPartData particles = this.playerdata.getOrCreatePart("particles");
-                if (value == 1)
-                    particles.setTexture("", 0);
-                if (value == 2)
-                    particles.setTexture("particle/type1", 0);
-                if (value == 3)
-                    particles.setTexture("particle/type2", 0);
-                if (value == 4)
-                    particles.setTexture("", 1);
-            }
+//            if (value == 0) {
+//                this.playerdata.removePart("particles");
+//            } else {
+//                ModelPartData particles = this.playerdata.getOrCreatePart("particles");
+//                if (value == 1)
+//                    particles.setTexture("", 0);
+//                if (value == 2)
+//                    particles.setTexture("particle/type1", 0);
+//                if (value == 3)
+//                    particles.setTexture("particle/type2", 0);
+//                if (value == 4)
+//                    particles.setTexture("", 1);
+//            }
             initGui();
         }
         if (button.id == 3) {
@@ -143,9 +145,9 @@ public class GuiModelBody extends noppes.mpm.client.gui.util.GuiModelInterface {
         if (button.id == 11) {
             this.mc.displayGuiScreen(new GuiModelColor(this, this.playerdata.getPartData("wings")));
         }
-        if (button.id == 12) {
-            this.mc.displayGuiScreen(new GuiModelColor(this, this.playerdata.getPartData("particles")));
-        }
+//        if (button.id == 12) {
+//            this.mc.displayGuiScreen(new GuiModelColor(this, this.playerdata.getPartData("particles")));
+//        }
         if (button.id == 13) {
             this.mc.displayGuiScreen(new GuiModelColor(this, this.playerdata.getPartData("fin")));
         }

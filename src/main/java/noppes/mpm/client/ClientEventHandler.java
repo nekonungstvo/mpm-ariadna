@@ -7,23 +7,19 @@ import cpw.mods.fml.common.gameevent.TickEvent.Phase;
 import cpw.mods.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.RenderTickEvent;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import noppes.mpm.ModelData;
-import noppes.mpm.ModelPartData;
 import noppes.mpm.MorePlayerModels;
 import noppes.mpm.PlayerDataController;
 import noppes.mpm.client.MCALibrary.animation.AnimationHandler;
-import noppes.mpm.client.fx.EntityEnderFX;
 import noppes.mpm.client.gui.GuiCreationScreen;
 import noppes.mpm.constants.EnumAnimation;
 import noppes.mpm.constants.EnumPackets;
 
 import java.util.List;
-import java.util.Random;
 
 public class ClientEventHandler {
     public static float partialTicks = 0.0F;
@@ -171,34 +167,34 @@ public class ClientEventHandler {
         if (data.animation != EnumAnimation.NONE) {
             noppes.mpm.ServerEventHandler.checkAnimation(player, data);
         }
-        ModelPartData particles = data.getPartData("particles");
-        if (particles != null)
-            spawnParticles(player, data, particles);
+//        ModelPartData particles = data.getPartData("particles");
+//        if (particles != null)
+//            spawnParticles(player, data, particles);
     }
 
-    private void spawnParticles(EntityPlayer player, ModelData data, ModelPartData particles) {
-        Minecraft minecraft = Minecraft.getMinecraft();
-        double height = player.getYOffset() + data.getBodyY();
-        Random rand = player.getRNG();
-        if (particles.type == 0) {
-            for (int i = 0; i < 2; i++) {
-                EntityEnderFX fx = new EntityEnderFX((AbstractClientPlayer) player, (rand.nextDouble() - 0.5D) * player.width, rand.nextDouble() * player.height - height - 0.25D, (rand.nextDouble() - 0.5D) * player.width, (rand.nextDouble() - 0.5D) * 2.0D, -rand.nextDouble(), (rand.nextDouble() - 0.5D) * 2.0D, particles);
-                minecraft.effectRenderer.addEffect(fx);
-            }
-
-        } else if (particles.type == 1) {
-            for (int i = 0; i < 2; i++) {
-                double x = player.posX + (rand.nextDouble() - 0.5D) * 0.9D;
-                double y = player.posY + rand.nextDouble() * 1.9D - 0.25D - height;
-                double z = player.posZ + (rand.nextDouble() - 0.5D) * 0.9D;
-
-
-                double f = (rand.nextDouble() - 0.5D) * 2.0D;
-                double f1 = -rand.nextDouble();
-                double f2 = (rand.nextDouble() - 0.5D) * 2.0D;
-
-                minecraft.effectRenderer.addEffect(new noppes.mpm.client.fx.EntityRainbowFX(player.worldObj, x, y, z, f, f1, f2));
-            }
-        }
-    }
+//    private void spawnParticles(EntityPlayer player, ModelData data, ModelPartData particles) {
+//        Minecraft minecraft = Minecraft.getMinecraft();
+//        double height = player.getYOffset() + data.getBodyY();
+//        Random rand = player.getRNG();
+//        if (particles.type == 0) {
+//            for (int i = 0; i < 2; i++) {
+//                EntityEnderFX fx = new EntityEnderFX((AbstractClientPlayer) player, (rand.nextDouble() - 0.5D) * player.width, rand.nextDouble() * player.height - height - 0.25D, (rand.nextDouble() - 0.5D) * player.width, (rand.nextDouble() - 0.5D) * 2.0D, -rand.nextDouble(), (rand.nextDouble() - 0.5D) * 2.0D, particles);
+//                minecraft.effectRenderer.addEffect(fx);
+//            }
+//
+//        } else if (particles.type == 1) {
+//            for (int i = 0; i < 2; i++) {
+//                double x = player.posX + (rand.nextDouble() - 0.5D) * 0.9D;
+//                double y = player.posY + rand.nextDouble() * 1.9D - 0.25D - height;
+//                double z = player.posZ + (rand.nextDouble() - 0.5D) * 0.9D;
+//
+//
+//                double f = (rand.nextDouble() - 0.5D) * 2.0D;
+//                double f1 = -rand.nextDouble();
+//                double f2 = (rand.nextDouble() - 0.5D) * 2.0D;
+//
+//                minecraft.effectRenderer.addEffect(new noppes.mpm.client.fx.EntityRainbowFX(player.worldObj, x, y, z, f, f1, f2));
+//            }
+//        }
+//    }
 }
